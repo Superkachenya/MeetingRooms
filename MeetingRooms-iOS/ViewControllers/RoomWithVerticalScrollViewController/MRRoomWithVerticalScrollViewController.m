@@ -7,9 +7,11 @@
 //
 
 #import "MRRoomWithVerticalScrollViewController.h"
+#import "UIViewController+MRErrorAlert.h"
 #import "MRTableViewCustomCell.h"
 #import "MRMeeting.h"
 #import "MRUser.h"
+#import "MRNetworkManager.h"
 
 @interface MRRoomWithVerticalScrollViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -30,64 +32,14 @@
     // Do any additional setup after loading the view.
     
     [self setNeedsStatusBarAppearanceUpdate];
-    self.arrayOfHours = [[NSArray alloc] initWithObjects:@"8:00",@"9:00",@"10:00",@"11:00",@"12:00",@"13:00",@"14:00",@"15:00", @"16:00",@"17:00",@"18:00",@"19:00",@"20:00", @"21:00", nil];
-    self.tableView.allowsSelection = NO;
     self.hours = [[NSMutableDictionary alloc] init];
-    
     self.arrayMeetings = [[NSMutableArray alloc] init];
     self.arrayMeetingsCurrentHour = [[NSMutableArray alloc] init];
-    MRMeeting* meetOnTheDay = [MRMeeting new];
-    meetOnTheDay.meetingInfo = @"first";
-    NSString *dateStr = @"9:30";
-    NSDateFormatter *dateFormat = [NSDateFormatter new];
-    dateFormat.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:2];
-    [dateFormat setDateFormat:@"HH:mm"];
-    NSDate *date = [dateFormat dateFromString:dateStr];
-    meetOnTheDay.meetingStart = date;
-    dateStr = @"10:15";
-    [dateFormat setDateFormat:@"HH:mm"];
-    date = [dateFormat dateFromString:dateStr];
-    meetOnTheDay.meetingFinish = date;
-    MRUser* userInfo = [MRUser new];
-    userInfo.firstName = @"first";
-    userInfo.lastName = @"last";
-    userInfo.avatar = [NSURL URLWithString:@"test url"];
-    meetOnTheDay.meetingOwner = userInfo;
-    [self.arrayMeetings addObject:meetOnTheDay];
-    
-    MRMeeting* from915 = [MRMeeting new];
-    from915.meetingInfo = @"first2";
-    NSString *dateStrq = @"9:45";
-    NSDate *dateq = [dateFormat dateFromString:dateStrq];
-    from915.meetingStart = dateq;
-    dateStrq = @"10:30";
-    dateq = [dateFormat dateFromString:dateStrq];
-    from915.meetingFinish = dateq;
-    MRUser* userInfoq = [MRUser new];
-    userInfoq.firstName = @"first45";
-    userInfoq.lastName = @"last45";
-    userInfoq.avatar = [NSURL URLWithString:@"test url2"];
-    from915.meetingOwner = userInfoq;
-    [self.arrayMeetings addObject:from915];
-    
-    
-    MRMeeting* smeetOnTheDayq = [MRMeeting new];
-    smeetOnTheDayq.meetingInfo = @"firsasdasddasdast2";
-    NSString *dateStrqq = @"9:00";
-    NSDate *dateqq = [dateFormat dateFromString:dateStrqq];
-    smeetOnTheDayq.meetingStart = dateqq;
-    dateStrqq = @"9:15";
-    dateqq = [dateFormat dateFromString:dateStrqq];
-    smeetOnTheDayq.meetingFinish = dateqq;
-    MRUser* userInfoqq = [MRUser new];
-    userInfoqq.firstName = @"Hehe";
-    userInfoqq.lastName = @"lheeeee";
-    userInfoqq.avatar = [NSURL URLWithString:@"tesaasdasdrl2"];
-    smeetOnTheDayq.meetingOwner = userInfoqq;
-    [self.arrayMeetings addObject:smeetOnTheDayq];
-    
-    self.arrayMeetings =  [self sortArrayOfMeetingsCurrentHour:self.arrayMeetings];
-    [self fillDictionaryHours];
+    self.arrayOfHours = [[NSArray alloc] initWithObjects:@"8:00",@"9:00",@"10:00",@"11:00",@"12:00",@"13:00",@"14:00",@"15:00", @"16:00",@"17:00",@"18:00",@"19:00",@"20:00", @"21:00", nil];
+    self.tableView.allowsSelection = NO;
+    [self loadMeetings];
+   // self.arrayMeetings =  [self sortArrayOfMeetingsCurrentHour:self.arrayMeetings];
+    //[self fillDictionaryHours];
     NSLog(@"ert");
 }
 
@@ -154,6 +106,20 @@
         }
     }
     //NSLog(@"dateInHour - %@", dateInHour.description);
+}
+
+- (void)loadMeetings {
+    NSDate *date = [[NSDate alloc] init];
+    [[MRNetworkManager sharedManager] getRoomInfoById:self.room.roomId toDate:date completion:^(id success, NSError *error) {
+        if (error) {
+            [self createAlertForError:error];
+        } else {
+            [self.arrayMeetings addObjectsFromArray:success];
+            [self sortArrayOfMeetingsCurrentHour:self.arrayMeetings];
+            [self fillDictionaryHours];
+            [self.tableView reloadData];
+        }
+    }];
 }
 
 @end

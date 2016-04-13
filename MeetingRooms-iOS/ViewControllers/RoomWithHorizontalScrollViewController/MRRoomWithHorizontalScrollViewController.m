@@ -37,7 +37,6 @@ static const double kWidthOfCell = 20;
 @property (strong, nonatomic) NSMutableDictionary* dictonaryOfMeeting;
 @property (strong, nonatomic) NSIndexPath* indexPathOfLastShowCell;
 @property (strong, nonatomic) NSIndexPath* indexPathOfCentralCell;
-@property (strong, nonatomic) NSMutableArray* arrayOfMeeting;
 @property (strong, nonatomic) MRMeeting* meetting;
 @property (assign, nonatomic) long countOfCellOnView;
 @end
@@ -50,8 +49,8 @@ static const double kWidthOfCell = 20;
     [super viewDidLoad];
     
     self.navigationItem.title = self.room.roomTitle;
+    self.room.meetings = [NSMutableArray new];
     self.dictonaryOfMeeting = [NSMutableDictionary new];
-    self.arrayOfMeeting = [NSMutableArray new];
     self.countOfCellOnView = ([self.horizontalTableView bounds].size.width / kWidthOfCell);
     self.hieghtOfTableView.constant = self.horizontalTableView.frame.size.width;
     self.tableView.frame = self.horizontalTableView.frame;
@@ -95,9 +94,10 @@ static const double kWidthOfCell = 20;
         }
         [self showInfo:self.meetting];
     }
-    if (!self.meetting) {
-        for (long i = 0; i < [self.arrayOfMeeting count]; i++) {
-            self.meetting = self.arrayOfMeeting[i];
+    if ([self.room.meetings count]) {
+        for (long i = 0; i < [self.room.meetings count]; i++) {
+            self.meetting = [MRMeeting new];
+            self.meetting = self.room.meetings[i];
             NSNumber* startAbstractTime = [NSNumber numberWithLong:([[self timeToAbstractTime:self.meetting.meetingStart] longValue] + self.countOfCellOnView/2)];
             NSNumber* endAbstractTime = [NSNumber numberWithFloat:([[self timeToAbstractTime:self.meetting.meetingFinish] longValue] + self.countOfCellOnView/2)];
             if ((indexPath.row >= startAbstractTime.integerValue) && (indexPath.row < endAbstractTime.integerValue)) {
@@ -232,7 +232,8 @@ static const double kWidthOfCell = 20;
 
 - (void) showInfo:(MRMeeting*) meet {
     if (meet) {
-        self.name.text = [NSString stringWithFormat:@"%@ %@", meet.meetingOwner.firstName, meet.meetingOwner.lastName];
+        NSArray *components = [meet.meetingOwner.email componentsSeparatedByString: @"@"];
+        self.name.text = components[0];
         self.detail.text = [NSString stringWithFormat:@"<< %@ >>", meet.meetingInfo];
         NSDateFormatter *formatter = [NSDateFormatter new];
         [formatter setDateFormat:@"HH:mm"];
@@ -241,6 +242,10 @@ static const double kWidthOfCell = 20;
         self.time.text = [NSString stringWithFormat:@"%@ - %@",timeFirst , timeSecond];
         self.userAvatare.image = [UIImage imageNamed:@"Google+"];
         self.userAvatare.image = [UIImage imageWithData:[[NSData alloc] initWithContentsOfURL:meet.meetingOwner.avatar]];
+        CALayer * l = [self.userAvatare layer];
+        [l setMasksToBounds:YES];
+        [l setCornerRadius:self.userAvatare.frame.size.width / 2];
+
         self.viewOfDetail.hidden = NO;
     } else {
         self.viewOfDetail.hidden = YES;
@@ -248,14 +253,14 @@ static const double kWidthOfCell = 20;
 }
 
 - (void) downloadAndUpdateDate {
-//    [[MRNetworkManager sharedManager] getRoomInfoById:self.room.roomId toDate:nil completion:^(id success, NSError *error) {
-//        if (error) {
-//            [self createAlertForError:error];
-//        } else {
-//            self.arrayOfMeeting = success;
-//            [self.tableView reloadData];
-//        }
-//    }];
+    [[MRNetworkManager sharedManager] getRoomInfoById:self.room.roomId toDate:nil completion:^(id success, NSError *error) {
+        if (error) {
+            [self createAlertForError:error];
+        } else {
+            self.room.meetings = [success copy];
+            [self.tableView reloadData];
+        }
+    }];
 }
 
 #pragma mark - Navigation -
