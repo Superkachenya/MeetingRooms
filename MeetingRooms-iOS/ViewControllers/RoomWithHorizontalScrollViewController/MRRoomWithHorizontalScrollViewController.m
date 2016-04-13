@@ -235,6 +235,8 @@ static const double kWidthOfCell = 20;
         NSArray *components = [meet.meetingOwner.email componentsSeparatedByString: @"@"];
         self.name.text = components[0];
         self.detail.text = [NSString stringWithFormat:@"<< %@ >>", meet.meetingInfo];
+        [self.detail setTextAlignment:NSTextAlignmentCenter];
+        [self.detail setTextColor:[UIColor lightGrayColor]];
         NSDateFormatter *formatter = [NSDateFormatter new];
         [formatter setDateFormat:@"HH:mm"];
         NSString* timeFirst = [formatter stringFromDate:meet.meetingStart];
