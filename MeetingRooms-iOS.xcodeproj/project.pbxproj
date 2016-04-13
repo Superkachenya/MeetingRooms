@@ -1,0 +1,908 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		820673661CB63F5400D1D205 /* MRLoginViewConroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 820673621CB63F5400D1D205 /* MRLoginViewConroller.m */; };
+		820673671CB63F5400D1D205 /* MRRoomWithHorizontalScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 820673651CB63F5400D1D205 /* MRRoomWithHorizontalScrollViewController.m */; };
+		8206736C1CB6423800D1D205 /* GlacialIndifference-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 820673691CB6423800D1D205 /* GlacialIndifference-Bold.otf */; };
+		8206736D1CB6423800D1D205 /* GlacialIndifference-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8206736A1CB6423800D1D205 /* GlacialIndifference-Italic.otf */; };
+		8206736E1CB6423800D1D205 /* GlacialIndifference-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8206736B1CB6423800D1D205 /* GlacialIndifference-Regular.otf */; };
+		828843B21CB79DEF00AD961E /* MRRoomWithVerticalScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828843B11CB79DEF00AD961E /* MRRoomWithVerticalScrollViewController.m */; };
+		828843B61CB7BEB000AD961E /* MRTableViewCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828843B51CB7BEB000AD961E /* MRTableViewCustomCell.m */; };
+		82C5ACCD1CBCE1E90074D2FB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82C5ACCB1CBCE1E90074D2FB /* Main.storyboard */; };
+		82E79F3F1CB570CC00D687DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 82E79F3E1CB570CC00D687DC /* main.m */; };
+		8E1987761CBD103500D33ECC /* NSDate+MRNextMinute.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1987751CBD103500D33ECC /* NSDate+MRNextMinute.m */; };
+		8E19877E1CBD2C3000D33ECC /* MROwner.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E19877D1CBD2C3000D33ECC /* MROwner.m */; };
+		8E36488C1CB50D7C00746EF9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E36488B1CB50D7C00746EF9 /* AppDelegate.m */; };
+		8E3648941CB50D7C00746EF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E3648931CB50D7C00746EF9 /* Assets.xcassets */; };
+		8E3648A21CB50D7C00746EF9 /* MeetingRooms_iOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3648A11CB50D7C00746EF9 /* MeetingRooms_iOSTests.m */; };
+		8E3648AD1CB50D7C00746EF9 /* MeetingRooms_iOSUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3648AC1CB50D7C00746EF9 /* MeetingRooms_iOSUITests.m */; };
+		8E3648BF1CB5281900746EF9 /* MRUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3648BE1CB5281900746EF9 /* MRUser.m */; };
+		8E3648C31CB528AF00746EF9 /* MRRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3648C21CB528AF00746EF9 /* MRRoom.m */; };
+		8E3648C71CB5295500746EF9 /* MRMeeting.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3648C61CB5295500746EF9 /* MRMeeting.m */; };
+		8EBB9E9F1CB640100033C839 /* MRNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB9E9E1CB640100033C839 /* MRNetworkManager.m */; };
+		8EBB9EA11CB6401E0033C839 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8EBB9EA01CB6401E0033C839 /* GoogleService-Info.plist */; };
+		8EBB9EA61CB69E350033C839 /* UIViewController+MRErrorAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB9EA51CB69E350033C839 /* UIViewController+MRErrorAlert.m */; };
+		8EE5615D1CB7A308005DB87C /* MRRoomsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE5615C1CB7A308005DB87C /* MRRoomsViewController.m */; };
+		8EE561611CB7C9B5005DB87C /* MRCustomRoomsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE561601CB7C9B5005DB87C /* MRCustomRoomsCell.m */; };
+		8EE561651CB7DD92005DB87C /* UIColor+MRColorFromHEX.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE561641CB7DD92005DB87C /* UIColor+MRColorFromHEX.m */; };
+		C0EC914DB4BD60AD637D5C35 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E3C8F6943ABB5A4801193165 /* libPods.a */; };
+		CFF471781CB54A70006A6D39 /* MRTableViewHorizontalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CFF471771CB54A70006A6D39 /* MRTableViewHorizontalCell.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8E36489E1CB50D7C00746EF9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8E36487C1CB50D7C00746EF9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8E3648831CB50D7C00746EF9;
+			remoteInfo = "MeetingRooms-iOS";
+		};
+		8E3648A91CB50D7C00746EF9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8E36487C1CB50D7C00746EF9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8E3648831CB50D7C00746EF9;
+			remoteInfo = "MeetingRooms-iOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3E6EE169CB2170F36EC6F5EC /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		820673611CB63F5400D1D205 /* MRLoginViewConroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRLoginViewConroller.h; sourceTree = "<group>"; };
+		820673621CB63F5400D1D205 /* MRLoginViewConroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRLoginViewConroller.m; sourceTree = "<group>"; };
+		820673641CB63F5400D1D205 /* MRRoomWithHorizontalScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRRoomWithHorizontalScrollViewController.h; sourceTree = "<group>"; };
+		820673651CB63F5400D1D205 /* MRRoomWithHorizontalScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRRoomWithHorizontalScrollViewController.m; sourceTree = "<group>"; };
+		820673691CB6423800D1D205 /* GlacialIndifference-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GlacialIndifference-Bold.otf"; sourceTree = "<group>"; };
+		8206736A1CB6423800D1D205 /* GlacialIndifference-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GlacialIndifference-Italic.otf"; sourceTree = "<group>"; };
+		8206736B1CB6423800D1D205 /* GlacialIndifference-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GlacialIndifference-Regular.otf"; sourceTree = "<group>"; };
+		828843B01CB79DEE00AD961E /* MRRoomWithVerticalScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRRoomWithVerticalScrollViewController.h; path = RoomWithVerticalScrollViewController/MRRoomWithVerticalScrollViewController.h; sourceTree = "<group>"; };
+		828843B11CB79DEF00AD961E /* MRRoomWithVerticalScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRRoomWithVerticalScrollViewController.m; path = RoomWithVerticalScrollViewController/MRRoomWithVerticalScrollViewController.m; sourceTree = "<group>"; };
+		828843B41CB7BEB000AD961E /* MRTableViewCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTableViewCustomCell.h; path = View/TableViewCustomCell/MRTableViewCustomCell.h; sourceTree = "<group>"; };
+		828843B51CB7BEB000AD961E /* MRTableViewCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTableViewCustomCell.m; path = View/TableViewCustomCell/MRTableViewCustomCell.m; sourceTree = "<group>"; };
+		82C5ACCC1CBCE1E90074D2FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		82E79F3E1CB570CC00D687DC /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "Supporting Files/main.m"; sourceTree = "<group>"; };
+		8E1987741CBD103500D33ECC /* NSDate+MRNextMinute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+MRNextMinute.h"; path = "Managers/NSDate+NextMinute/NSDate+MRNextMinute.h"; sourceTree = "<group>"; };
+		8E1987751CBD103500D33ECC /* NSDate+MRNextMinute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+MRNextMinute.m"; path = "Managers/NSDate+NextMinute/NSDate+MRNextMinute.m"; sourceTree = "<group>"; };
+		8E19877C1CBD2C3000D33ECC /* MROwner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MROwner.h; path = Model/Owner/MROwner.h; sourceTree = "<group>"; };
+		8E19877D1CBD2C3000D33ECC /* MROwner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MROwner.m; path = Model/Owner/MROwner.m; sourceTree = "<group>"; };
+		8E3648841CB50D7C00746EF9 /* MeetingRooms-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MeetingRooms-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E36488A1CB50D7C00746EF9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		8E36488B1CB50D7C00746EF9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		8E3648931CB50D7C00746EF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8E3648981CB50D7C00746EF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8E36489D1CB50D7C00746EF9 /* MeetingRooms-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MeetingRooms-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E3648A11CB50D7C00746EF9 /* MeetingRooms_iOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeetingRooms_iOSTests.m; sourceTree = "<group>"; };
+		8E3648A31CB50D7C00746EF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8E3648A81CB50D7C00746EF9 /* MeetingRooms-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MeetingRooms-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E3648AC1CB50D7C00746EF9 /* MeetingRooms_iOSUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeetingRooms_iOSUITests.m; sourceTree = "<group>"; };
+		8E3648AE1CB50D7C00746EF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8E3648BD1CB5281900746EF9 /* MRUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRUser.h; path = Model/User/MRUser.h; sourceTree = "<group>"; };
+		8E3648BE1CB5281900746EF9 /* MRUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRUser.m; path = Model/User/MRUser.m; sourceTree = "<group>"; };
+		8E3648C11CB528AE00746EF9 /* MRRoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRRoom.h; path = Model/Room/MRRoom.h; sourceTree = "<group>"; };
+		8E3648C21CB528AF00746EF9 /* MRRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRRoom.m; path = Model/Room/MRRoom.m; sourceTree = "<group>"; };
+		8E3648C51CB5295500746EF9 /* MRMeeting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRMeeting.h; path = Model/Meeting/MRMeeting.h; sourceTree = "<group>"; };
+		8E3648C61CB5295500746EF9 /* MRMeeting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRMeeting.m; path = Model/Meeting/MRMeeting.m; sourceTree = "<group>"; };
+		8EBB9E9D1CB640100033C839 /* MRNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRNetworkManager.h; path = Managers/GoogleAccountManager/MRNetworkManager.h; sourceTree = "<group>"; };
+		8EBB9E9E1CB640100033C839 /* MRNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRNetworkManager.m; path = Managers/GoogleAccountManager/MRNetworkManager.m; sourceTree = "<group>"; };
+		8EBB9EA01CB6401E0033C839 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8EBB9EA41CB69E350033C839 /* UIViewController+MRErrorAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MRErrorAlert.h"; sourceTree = "<group>"; };
+		8EBB9EA51CB69E350033C839 /* UIViewController+MRErrorAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MRErrorAlert.m"; sourceTree = "<group>"; };
+		8EE5615B1CB7A308005DB87C /* MRRoomsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRRoomsViewController.h; path = "MeetingRooms-iOS/ViewControllers/RoomsViewController/MRRoomsViewController.h"; sourceTree = SOURCE_ROOT; };
+		8EE5615C1CB7A308005DB87C /* MRRoomsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRRoomsViewController.m; path = "MeetingRooms-iOS/ViewControllers/RoomsViewController/MRRoomsViewController.m"; sourceTree = SOURCE_ROOT; };
+		8EE5615F1CB7C9B5005DB87C /* MRCustomRoomsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRCustomRoomsCell.h; path = View/CustomRoomsCell/MRCustomRoomsCell.h; sourceTree = "<group>"; };
+		8EE561601CB7C9B5005DB87C /* MRCustomRoomsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRCustomRoomsCell.m; path = View/CustomRoomsCell/MRCustomRoomsCell.m; sourceTree = "<group>"; };
+		8EE561631CB7DD92005DB87C /* UIColor+MRColorFromHEX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+MRColorFromHEX.h"; path = "View/Helpers/UIColorCategory/UIColor+MRColorFromHEX.h"; sourceTree = "<group>"; };
+		8EE561641CB7DD92005DB87C /* UIColor+MRColorFromHEX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+MRColorFromHEX.m"; path = "View/Helpers/UIColorCategory/UIColor+MRColorFromHEX.m"; sourceTree = "<group>"; };
+		CD31C6FD15C593F4C7A1924D /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		CFF471761CB54A70006A6D39 /* MRTableViewHorizontalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTableViewHorizontalCell.h; path = View/TableViewHorizontalCell/MRTableViewHorizontalCell.h; sourceTree = "<group>"; };
+		CFF471771CB54A70006A6D39 /* MRTableViewHorizontalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTableViewHorizontalCell.m; path = View/TableViewHorizontalCell/MRTableViewHorizontalCell.m; sourceTree = "<group>"; };
+		E3C8F6943ABB5A4801193165 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8E3648811CB50D7C00746EF9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C0EC914DB4BD60AD637D5C35 /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8E36489A1CB50D7C00746EF9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8E3648A51CB50D7C00746EF9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		69EF46298499468CC6CA2EC2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E3C8F6943ABB5A4801193165 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8206735F1CB63F5400D1D205 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				828843AF1CB79B5900AD961E /* RoomWithVerticalScrollViewController */,
+				820673601CB63F5400D1D205 /* LoginViewConroller */,
+				820673631CB63F5400D1D205 /* RoomWithHorizontalScrollViewController */,
+				8EE5615E1CB7A30C005DB87C /* RoomsViewContoller */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		820673601CB63F5400D1D205 /* LoginViewConroller */ = {
+			isa = PBXGroup;
+			children = (
+				820673611CB63F5400D1D205 /* MRLoginViewConroller.h */,
+				820673621CB63F5400D1D205 /* MRLoginViewConroller.m */,
+			);
+			path = LoginViewConroller;
+			sourceTree = "<group>";
+		};
+		820673631CB63F5400D1D205 /* RoomWithHorizontalScrollViewController */ = {
+			isa = PBXGroup;
+			children = (
+				820673641CB63F5400D1D205 /* MRRoomWithHorizontalScrollViewController.h */,
+				820673651CB63F5400D1D205 /* MRRoomWithHorizontalScrollViewController.m */,
+			);
+			path = RoomWithHorizontalScrollViewController;
+			sourceTree = "<group>";
+		};
+		820673681CB6423800D1D205 /* font_GlacialIndifference */ = {
+			isa = PBXGroup;
+			children = (
+				820673691CB6423800D1D205 /* GlacialIndifference-Bold.otf */,
+				8206736A1CB6423800D1D205 /* GlacialIndifference-Italic.otf */,
+				8206736B1CB6423800D1D205 /* GlacialIndifference-Regular.otf */,
+			);
+			name = font_GlacialIndifference;
+			path = "Supporting Files/font_GlacialIndifference";
+			sourceTree = "<group>";
+		};
+		828843AF1CB79B5900AD961E /* RoomWithVerticalScrollViewController */ = {
+			isa = PBXGroup;
+			children = (
+				828843B01CB79DEE00AD961E /* MRRoomWithVerticalScrollViewController.h */,
+				828843B11CB79DEF00AD961E /* MRRoomWithVerticalScrollViewController.m */,
+			);
+			name = RoomWithVerticalScrollViewController;
+			sourceTree = "<group>";
+		};
+		828843B31CB7BE5000AD961E /* CustomCell */ = {
+			isa = PBXGroup;
+			children = (
+				828843B41CB7BEB000AD961E /* MRTableViewCustomCell.h */,
+				828843B51CB7BEB000AD961E /* MRTableViewCustomCell.m */,
+			);
+			name = CustomCell;
+			sourceTree = "<group>";
+		};
+		8E1987771CBD103E00D33ECC /* NSDate+MRNextMinute */ = {
+			isa = PBXGroup;
+			children = (
+				8E1987741CBD103500D33ECC /* NSDate+MRNextMinute.h */,
+				8E1987751CBD103500D33ECC /* NSDate+MRNextMinute.m */,
+			);
+			name = "NSDate+MRNextMinute";
+			sourceTree = "<group>";
+		};
+		8E19877F1CBD2C3E00D33ECC /* Owner */ = {
+			isa = PBXGroup;
+			children = (
+				8E19877C1CBD2C3000D33ECC /* MROwner.h */,
+				8E19877D1CBD2C3000D33ECC /* MROwner.m */,
+			);
+			name = Owner;
+			sourceTree = "<group>";
+		};
+		8E36487B1CB50D7C00746EF9 = {
+			isa = PBXGroup;
+			children = (
+				8E3648861CB50D7C00746EF9 /* MeetingRooms-iOS */,
+				8E3648A01CB50D7C00746EF9 /* MeetingRooms-iOSTests */,
+				8E3648AB1CB50D7C00746EF9 /* MeetingRooms-iOSUITests */,
+				8E3648851CB50D7C00746EF9 /* Products */,
+				DBB22909E12EB9BEBD88240E /* Pods */,
+				69EF46298499468CC6CA2EC2 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		8E3648851CB50D7C00746EF9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8E3648841CB50D7C00746EF9 /* MeetingRooms-iOS.app */,
+				8E36489D1CB50D7C00746EF9 /* MeetingRooms-iOSTests.xctest */,
+				8E3648A81CB50D7C00746EF9 /* MeetingRooms-iOSUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8E3648861CB50D7C00746EF9 /* MeetingRooms-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				8E36488A1CB50D7C00746EF9 /* AppDelegate.h */,
+				8E36488B1CB50D7C00746EF9 /* AppDelegate.m */,
+				8EBB9EA31CB640350033C839 /* Managers */,
+				8E3648C91CB5297C00746EF9 /* Model */,
+				CFF471791CB54A83006A6D39 /* View */,
+				8206735F1CB63F5400D1D205 /* ViewControllers */,
+				8E3648931CB50D7C00746EF9 /* Assets.xcassets */,
+				82C5ACCB1CBCE1E90074D2FB /* Main.storyboard */,
+				8E3648981CB50D7C00746EF9 /* Info.plist */,
+				8EBB9EA01CB6401E0033C839 /* GoogleService-Info.plist */,
+				8E3648871CB50D7C00746EF9 /* Supporting Files */,
+			);
+			path = "MeetingRooms-iOS";
+			sourceTree = "<group>";
+		};
+		8E3648871CB50D7C00746EF9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				820673681CB6423800D1D205 /* font_GlacialIndifference */,
+				82E79F3E1CB570CC00D687DC /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8E3648A01CB50D7C00746EF9 /* MeetingRooms-iOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				8E3648A11CB50D7C00746EF9 /* MeetingRooms_iOSTests.m */,
+				8E3648A31CB50D7C00746EF9 /* Info.plist */,
+			);
+			path = "MeetingRooms-iOSTests";
+			sourceTree = "<group>";
+		};
+		8E3648AB1CB50D7C00746EF9 /* MeetingRooms-iOSUITests */ = {
+			isa = PBXGroup;
+			children = (
+				8E3648AC1CB50D7C00746EF9 /* MeetingRooms_iOSUITests.m */,
+				8E3648AE1CB50D7C00746EF9 /* Info.plist */,
+			);
+			path = "MeetingRooms-iOSUITests";
+			sourceTree = "<group>";
+		};
+		8E3648C01CB5281E00746EF9 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				8E3648BD1CB5281900746EF9 /* MRUser.h */,
+				8E3648BE1CB5281900746EF9 /* MRUser.m */,
+			);
+			name = User;
+			sourceTree = "<group>";
+		};
+		8E3648C41CB528B100746EF9 /* Room */ = {
+			isa = PBXGroup;
+			children = (
+				8E3648C11CB528AE00746EF9 /* MRRoom.h */,
+				8E3648C21CB528AF00746EF9 /* MRRoom.m */,
+			);
+			name = Room;
+			sourceTree = "<group>";
+		};
+		8E3648C81CB5297300746EF9 /* Meeting */ = {
+			isa = PBXGroup;
+			children = (
+				8E3648C51CB5295500746EF9 /* MRMeeting.h */,
+				8E3648C61CB5295500746EF9 /* MRMeeting.m */,
+			);
+			name = Meeting;
+			sourceTree = "<group>";
+		};
+		8E3648C91CB5297C00746EF9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8E3648C81CB5297300746EF9 /* Meeting */,
+				8E3648C41CB528B100746EF9 /* Room */,
+				8E3648C01CB5281E00746EF9 /* User */,
+				8E19877F1CBD2C3E00D33ECC /* Owner */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		8EBB9EA21CB640240033C839 /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+				8EBB9E9D1CB640100033C839 /* MRNetworkManager.h */,
+				8EBB9E9E1CB640100033C839 /* MRNetworkManager.m */,
+			);
+			name = NetworkManager;
+			sourceTree = "<group>";
+		};
+		8EBB9EA31CB640350033C839 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				8EBB9EA71CB6A1460033C839 /* ErrorAlert */,
+				8EBB9EA21CB640240033C839 /* NetworkManager */,
+				8E1987771CBD103E00D33ECC /* NSDate+MRNextMinute */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		8EBB9EA71CB6A1460033C839 /* ErrorAlert */ = {
+			isa = PBXGroup;
+			children = (
+				8EBB9EA41CB69E350033C839 /* UIViewController+MRErrorAlert.h */,
+				8EBB9EA51CB69E350033C839 /* UIViewController+MRErrorAlert.m */,
+			);
+			name = ErrorAlert;
+			sourceTree = "<group>";
+		};
+		8EE5615E1CB7A30C005DB87C /* RoomsViewContoller */ = {
+			isa = PBXGroup;
+			children = (
+				8EE5615B1CB7A308005DB87C /* MRRoomsViewController.h */,
+				8EE5615C1CB7A308005DB87C /* MRRoomsViewController.m */,
+			);
+			name = RoomsViewContoller;
+			path = RoomWithHorizontalScrollViewController;
+			sourceTree = "<group>";
+		};
+		8EE561621CB7C9B9005DB87C /* CustomRoomsCell */ = {
+			isa = PBXGroup;
+			children = (
+				8EE5615F1CB7C9B5005DB87C /* MRCustomRoomsCell.h */,
+				8EE561601CB7C9B5005DB87C /* MRCustomRoomsCell.m */,
+			);
+			name = CustomRoomsCell;
+			sourceTree = "<group>";
+		};
+		8EE561661CB7DD97005DB87C /* ColorCategory */ = {
+			isa = PBXGroup;
+			children = (
+				8EE561631CB7DD92005DB87C /* UIColor+MRColorFromHEX.h */,
+				8EE561641CB7DD92005DB87C /* UIColor+MRColorFromHEX.m */,
+			);
+			name = ColorCategory;
+			sourceTree = "<group>";
+		};
+		8EE561671CB7DDA3005DB87C /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				8EE561661CB7DD97005DB87C /* ColorCategory */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		CFF471791CB54A83006A6D39 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				828843B31CB7BE5000AD961E /* CustomCell */,
+				CFF4717A1CB54A8C006A6D39 /* TableViewHorizontalCell */,
+				8EE561621CB7C9B9005DB87C /* CustomRoomsCell */,
+				8EE561671CB7DDA3005DB87C /* Helpers */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		CFF4717A1CB54A8C006A6D39 /* TableViewHorizontalCell */ = {
+			isa = PBXGroup;
+			children = (
+				CFF471761CB54A70006A6D39 /* MRTableViewHorizontalCell.h */,
+				CFF471771CB54A70006A6D39 /* MRTableViewHorizontalCell.m */,
+			);
+			name = TableViewHorizontalCell;
+			sourceTree = "<group>";
+		};
+		DBB22909E12EB9BEBD88240E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CD31C6FD15C593F4C7A1924D /* Pods.debug.xcconfig */,
+				3E6EE169CB2170F36EC6F5EC /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8E3648831CB50D7C00746EF9 /* MeetingRooms-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8E3648B11CB50D7C00746EF9 /* Build configuration list for PBXNativeTarget "MeetingRooms-iOS" */;
+			buildPhases = (
+				EA5CAE9D9320CF7175690B27 /* Check Pods Manifest.lock */,
+				8E3648801CB50D7C00746EF9 /* Sources */,
+				8E3648811CB50D7C00746EF9 /* Frameworks */,
+				8E3648821CB50D7C00746EF9 /* Resources */,
+				D4321DD31E7C15D7DAE4ED62 /* Embed Pods Frameworks */,
+				5205C65F24C2348D09D7C267 /* Copy Pods Resources */,
+				8206736F1CB6496600D1D205 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "MeetingRooms-iOS";
+			productName = "MeetingRooms-iOS";
+			productReference = 8E3648841CB50D7C00746EF9 /* MeetingRooms-iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		8E36489C1CB50D7C00746EF9 /* MeetingRooms-iOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8E3648B41CB50D7C00746EF9 /* Build configuration list for PBXNativeTarget "MeetingRooms-iOSTests" */;
+			buildPhases = (
+				8E3648991CB50D7C00746EF9 /* Sources */,
+				8E36489A1CB50D7C00746EF9 /* Frameworks */,
+				8E36489B1CB50D7C00746EF9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8E36489F1CB50D7C00746EF9 /* PBXTargetDependency */,
+			);
+			name = "MeetingRooms-iOSTests";
+			productName = "MeetingRooms-iOSTests";
+			productReference = 8E36489D1CB50D7C00746EF9 /* MeetingRooms-iOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		8E3648A71CB50D7C00746EF9 /* MeetingRooms-iOSUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8E3648B71CB50D7C00746EF9 /* Build configuration list for PBXNativeTarget "MeetingRooms-iOSUITests" */;
+			buildPhases = (
+				8E3648A41CB50D7C00746EF9 /* Sources */,
+				8E3648A51CB50D7C00746EF9 /* Frameworks */,
+				8E3648A61CB50D7C00746EF9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8E3648AA1CB50D7C00746EF9 /* PBXTargetDependency */,
+			);
+			name = "MeetingRooms-iOSUITests";
+			productName = "MeetingRooms-iOSUITests";
+			productReference = 8E3648A81CB50D7C00746EF9 /* MeetingRooms-iOSUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8E36487C1CB50D7C00746EF9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = MR;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = Cleveroad;
+				TargetAttributes = {
+					8E3648831CB50D7C00746EF9 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					8E36489C1CB50D7C00746EF9 = {
+						CreatedOnToolsVersion = 7.3;
+						TestTargetID = 8E3648831CB50D7C00746EF9;
+					};
+					8E3648A71CB50D7C00746EF9 = {
+						CreatedOnToolsVersion = 7.3;
+						TestTargetID = 8E3648831CB50D7C00746EF9;
+					};
+				};
+			};
+			buildConfigurationList = 8E36487F1CB50D7C00746EF9 /* Build configuration list for PBXProject "MeetingRooms-iOS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8E36487B1CB50D7C00746EF9;
+			productRefGroup = 8E3648851CB50D7C00746EF9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8E3648831CB50D7C00746EF9 /* MeetingRooms-iOS */,
+				8E36489C1CB50D7C00746EF9 /* MeetingRooms-iOSTests */,
+				8E3648A71CB50D7C00746EF9 /* MeetingRooms-iOSUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8E3648821CB50D7C00746EF9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8206736C1CB6423800D1D205 /* GlacialIndifference-Bold.otf in Resources */,
+				8EBB9EA11CB6401E0033C839 /* GoogleService-Info.plist in Resources */,
+				8E3648941CB50D7C00746EF9 /* Assets.xcassets in Resources */,
+				82C5ACCD1CBCE1E90074D2FB /* Main.storyboard in Resources */,
+				8206736E1CB6423800D1D205 /* GlacialIndifference-Regular.otf in Resources */,
+				8206736D1CB6423800D1D205 /* GlacialIndifference-Italic.otf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8E36489B1CB50D7C00746EF9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8E3648A61CB50D7C00746EF9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5205C65F24C2348D09D7C267 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8206736F1CB6496600D1D205 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 57d870f5d279e8b9ebfcb19d998d7ba8d0ebd488 81136a296382a3f2d0e367d462ef8420aca2a7022b361529718fb8a8b1ad4626";
+		};
+		D4321DD31E7C15D7DAE4ED62 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EA5CAE9D9320CF7175690B27 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8E3648801CB50D7C00746EF9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8EE5615D1CB7A308005DB87C /* MRRoomsViewController.m in Sources */,
+				8E3648C71CB5295500746EF9 /* MRMeeting.m in Sources */,
+				8EE561611CB7C9B5005DB87C /* MRCustomRoomsCell.m in Sources */,
+				820673661CB63F5400D1D205 /* MRLoginViewConroller.m in Sources */,
+				8EE561651CB7DD92005DB87C /* UIColor+MRColorFromHEX.m in Sources */,
+				CFF471781CB54A70006A6D39 /* MRTableViewHorizontalCell.m in Sources */,
+				828843B61CB7BEB000AD961E /* MRTableViewCustomCell.m in Sources */,
+				8EBB9EA61CB69E350033C839 /* UIViewController+MRErrorAlert.m in Sources */,
+				8E19877E1CBD2C3000D33ECC /* MROwner.m in Sources */,
+				8E3648BF1CB5281900746EF9 /* MRUser.m in Sources */,
+				8E36488C1CB50D7C00746EF9 /* AppDelegate.m in Sources */,
+				8E1987761CBD103500D33ECC /* NSDate+MRNextMinute.m in Sources */,
+				828843B21CB79DEF00AD961E /* MRRoomWithVerticalScrollViewController.m in Sources */,
+				8EBB9E9F1CB640100033C839 /* MRNetworkManager.m in Sources */,
+				820673671CB63F5400D1D205 /* MRRoomWithHorizontalScrollViewController.m in Sources */,
+				82E79F3F1CB570CC00D687DC /* main.m in Sources */,
+				8E3648C31CB528AF00746EF9 /* MRRoom.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8E3648991CB50D7C00746EF9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8E3648A21CB50D7C00746EF9 /* MeetingRooms_iOSTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8E3648A41CB50D7C00746EF9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8E3648AD1CB50D7C00746EF9 /* MeetingRooms_iOSUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8E36489F1CB50D7C00746EF9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8E3648831CB50D7C00746EF9 /* MeetingRooms-iOS */;
+			targetProxy = 8E36489E1CB50D7C00746EF9 /* PBXContainerItemProxy */;
+		};
+		8E3648AA1CB50D7C00746EF9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8E3648831CB50D7C00746EF9 /* MeetingRooms-iOS */;
+			targetProxy = 8E3648A91CB50D7C00746EF9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		82C5ACCB1CBCE1E90074D2FB /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				82C5ACCC1CBCE1E90074D2FB /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		8E3648AF1CB50D7C00746EF9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		8E3648B01CB50D7C00746EF9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8E3648B21CB50D7C00746EF9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CD31C6FD15C593F4C7A1924D /* Pods.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MeetingRooms-iOS",
+				);
+				INFOPLIST_FILE = "MeetingRooms-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Cleveroad.MeetingRooms-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8E3648B31CB50D7C00746EF9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3E6EE169CB2170F36EC6F5EC /* Pods.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MeetingRooms-iOS",
+				);
+				INFOPLIST_FILE = "MeetingRooms-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Cleveroad.MeetingRooms-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		8E3648B51CB50D7C00746EF9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MeetingRooms-iOS",
+				);
+				INFOPLIST_FILE = "MeetingRooms-iOSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Cleveroad.MeetingRooms-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "";
+			};
+			name = Debug;
+		};
+		8E3648B61CB50D7C00746EF9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MeetingRooms-iOS",
+				);
+				INFOPLIST_FILE = "MeetingRooms-iOSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Cleveroad.MeetingRooms-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "";
+			};
+			name = Release;
+		};
+		8E3648B81CB50D7C00746EF9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MeetingRooms-iOS",
+				);
+				INFOPLIST_FILE = "MeetingRooms-iOSUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Cleveroad.MeetingRooms-iOSUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "MeetingRooms-iOS";
+			};
+			name = Debug;
+		};
+		8E3648B91CB50D7C00746EF9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MeetingRooms-iOS",
+				);
+				INFOPLIST_FILE = "MeetingRooms-iOSUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Cleveroad.MeetingRooms-iOSUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "MeetingRooms-iOS";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8E36487F1CB50D7C00746EF9 /* Build configuration list for PBXProject "MeetingRooms-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8E3648AF1CB50D7C00746EF9 /* Debug */,
+				8E3648B01CB50D7C00746EF9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8E3648B11CB50D7C00746EF9 /* Build configuration list for PBXNativeTarget "MeetingRooms-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8E3648B21CB50D7C00746EF9 /* Debug */,
+				8E3648B31CB50D7C00746EF9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8E3648B41CB50D7C00746EF9 /* Build configuration list for PBXNativeTarget "MeetingRooms-iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8E3648B51CB50D7C00746EF9 /* Debug */,
+				8E3648B61CB50D7C00746EF9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8E3648B71CB50D7C00746EF9 /* Build configuration list for PBXNativeTarget "MeetingRooms-iOSUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8E3648B81CB50D7C00746EF9 /* Debug */,
+				8E3648B91CB50D7C00746EF9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8E36487C1CB50D7C00746EF9 /* Project object */;
+}
