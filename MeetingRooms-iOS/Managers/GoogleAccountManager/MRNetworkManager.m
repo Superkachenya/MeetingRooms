@@ -93,7 +93,6 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3501";
             NSError *error = nil;
             copyBlock(nil, error);
         }
-        copyBlock(responseObject, nil);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         copyBlock(nil, error);
         NSLog(@"%@", error);
