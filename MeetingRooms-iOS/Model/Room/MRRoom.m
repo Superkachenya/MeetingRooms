@@ -10,13 +10,15 @@
 
 @implementation MRRoom
 
+static double const kMiliSecInSecond = 1000.0;
+
 - (instancetype)initRoomUsingJSON:(id)JSON {
     if (self = [super init]) {
         self.roomId = [JSON valueForKey:@"roomId"];
         self.roomTitle = [JSON valueForKey:@"roomTitle"];
         self.roomDescription = [JSON valueForKey:@"roomDescription"];
         NSNumber *response = [JSON valueForKey:@"nearestTime"];
-        NSDate *date = [NSDate dateWithTimeIntervalSince1970:(response.doubleValue / 1000.0)];
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:(response.doubleValue / kMiliSecInSecond)];
         self.nearestTime = date;
         self.empty = [JSON valueForKey:@"isEmpty"];
     }

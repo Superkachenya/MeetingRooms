@@ -11,6 +11,7 @@
 
 @interface MRMeeting : NSObject
 
+@property (strong, nonatomic) NSNumber *meetingId;
 @property (strong, nonatomic) MRUser *meetingOwner;
 @property (strong, nonatomic) NSString *meetingInfo;
 @property (strong, nonatomic) NSDate *meetingStart;

@@ -10,6 +10,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import "MROwner.h"
 #import "MRRoom.h"
+#import "MRMeeting.h"
 
 NSString *const baseURL = @"http://redmine.cleveroad.com:3501";
 
@@ -81,8 +82,18 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3501";
     }
     MRCompletion copyBlock = [block copy];
     [self.manager GET:tempString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if ([responseObject isKindOfClass:[NSArray class]]) {
+            NSMutableArray *meetings = [NSMutableArray new];
+            for (id booking in responseObject) {
+                MRMeeting *newMeeting = [[MRMeeting alloc] initMeetingWithJSON:booking];
+                [meetings addObject:newMeeting];
+            }
+            copyBlock([meetings copy], nil);
+        } else {
+            NSError *error = nil;
+            copyBlock(nil, error);
+        }
         copyBlock(responseObject, nil);
-        NSLog(@"%@", responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         copyBlock(nil, error);
         NSLog(@"%@", error);

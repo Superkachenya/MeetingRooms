@@ -32,6 +32,7 @@ static const double kWidthOfCell = 20;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *imageLine;
 @property (weak, nonatomic) IBOutlet UIImageView *userAvatare;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *hieghtOfTableView;
 
 @property (strong, nonatomic) NSMutableDictionary* dictonaryOfMeeting;
 @property (strong, nonatomic) NSIndexPath* indexPathOfLastShowCell;
@@ -51,7 +52,8 @@ static const double kWidthOfCell = 20;
     self.navigationItem.title = self.room.roomTitle;
     self.dictonaryOfMeeting = [NSMutableDictionary new];
     self.arrayOfMeeting = [NSMutableArray new];
-    self.countOfCellOnView = [self.horizontalTableView bounds].size.width / kWidthOfCell;
+    self.countOfCellOnView = ([self.horizontalTableView bounds].size.width / kWidthOfCell);
+    self.hieghtOfTableView.constant = self.horizontalTableView.frame.size.width;
     self.tableView.frame = self.horizontalTableView.frame;
     self.tableView.contentSize = self.horizontalTableView.contentSize;
     [self selectTimeOnTimeLine];
@@ -71,7 +73,7 @@ static const double kWidthOfCell = 20;
 
 - (UITableViewCell *)tableView:(PTEHorizontalTableView *)horizontalTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MRTableViewHorizontalCell * cell = [horizontalTableView.tableView dequeueReusableCellWithIdentifier:@"cell"];
-    [cell showTimeLineWithCountOfLine:kCountOfTimeSigmente sizeOfViewIs:self.countOfCellOnView/2 onIndexPathCell:indexPath.row];
+    [cell showTimeLineWithCountOfLine:kCountOfTimeSigmente sizeOfViewIs:(self.countOfCellOnView/2) onIndexPathCell:indexPath.row];
     if (indexPath > self.indexPathOfLastShowCell) {
         NSString* key = [NSString new];
         long keyOfCell = (long)indexPath.row - self.countOfCellOnView/2;

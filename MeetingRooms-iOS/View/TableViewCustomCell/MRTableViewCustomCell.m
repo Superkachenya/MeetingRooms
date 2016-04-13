@@ -55,7 +55,7 @@
     self.indicatorView.hidden = NO;
     self.timeIntervalLabel.hidden = NO;
     self.titleMeetingLabel.text = meeting.meetingInfo;
-    self.indicatorView.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C" alpha:1];
+  //  self.indicatorView.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C" alpha:1];
    // self.timeIntervalLabel.text = [NSString stringWithFormat:@"%@ - %@", meeting.meetingStart.description,
                                                                          //meeting.meetingFinish.description];
     self.timeIntervalLabel.text = [NSString stringWithFormat:@"11 - 12"];
