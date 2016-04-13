@@ -22,6 +22,8 @@
     [super viewDidLoad];
     
     self.timePickerButton.layer.borderWidth = 1.0;
+    self.timePickerButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.datePickerButton.layer.borderWidth = 1.0;
     self.datePickerButton.layer.borderColor = [UIColor whiteColor].CGColor;
 }
 
