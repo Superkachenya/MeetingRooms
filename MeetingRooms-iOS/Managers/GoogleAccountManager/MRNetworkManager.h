@@ -7,10 +7,13 @@
 //
 
 @import Foundation;
+@class MROwner;
 
 typedef void(^MRCompletion)(id success, NSError *error);
 
 @interface MRNetworkManager : NSObject
+
+@property (strong, nonatomic) MROwner *owner;
 
 + (instancetype)sharedManager;
 

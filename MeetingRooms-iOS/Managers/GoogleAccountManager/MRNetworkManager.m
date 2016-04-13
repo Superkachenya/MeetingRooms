@@ -17,7 +17,6 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3501";
 @interface MRNetworkManager ()
 
 @property (strong, nonatomic) AFHTTPSessionManager *manager;
-@property (strong, nonatomic) MROwner *owner;
 @property (strong, nonatomic) NSString *headerToken;
 
 @end
