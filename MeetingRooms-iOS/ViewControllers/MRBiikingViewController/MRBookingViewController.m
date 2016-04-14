@@ -57,7 +57,7 @@
     self.timeFormatter = [NSDateFormatter new];
     self.dateFormatter = [NSDateFormatter new];
     self.timeFormatter.dateFormat = @"HH:mm";
-    self.dateFormatter.dateFormat = @"dd/mm/yy";
+    self.dateFormatter.dateFormat = @"dd/MM/yy";
     self.timeButtonLabel.text = [self.timeFormatter stringFromDate:[NSDate date]];
     self.dateButtonLabel.text = [self.dateFormatter stringFromDate:[NSDate date]];
 
@@ -91,7 +91,7 @@
 - (IBAction)dateButtonDidTap:(UIButton *)sender {
     MRDatePickerViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"IDDatePickerVC"];
     controller.modalInPopover = NO;
-    controller.preferredContentSize = CGSizeMake(sender.bounds.size.width, self.view.bounds.size.height /3);
+    controller.preferredContentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height /3);
     controller.changedDate = ^(NSDate *date){
         self.dateButtonLabel.text = [self.dateFormatter stringFromDate:date];
     };

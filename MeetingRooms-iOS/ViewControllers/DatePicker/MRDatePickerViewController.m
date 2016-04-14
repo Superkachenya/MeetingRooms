@@ -8,8 +8,6 @@
 
 #import "MRDatePickerViewController.h"
 
-static double const kWeekInSeconds = 604800.0;
-
 @interface MRDatePickerViewController ()
 
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
@@ -22,7 +20,6 @@ static double const kWeekInSeconds = 604800.0;
     [super viewDidLoad];
     
     self.datePicker.minimumDate = [NSDate date];
-    self.datePicker.maximumDate = [NSDate dateWithTimeIntervalSinceNow:kWeekInSeconds];
 }
 - (IBAction)userDidChangeDate:(UIDatePicker *)sender {
     self.changedDate(sender.date);
