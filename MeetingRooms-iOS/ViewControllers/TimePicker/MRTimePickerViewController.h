@@ -8,10 +8,10 @@
 
 @import UIKit;
 
-typedef void(^MRChangedDateValue)(NSDate *time);
+typedef void(^MRChangedTimeValue)(NSDate *time);
 
 @interface MRTimePickerViewController : UIViewController
 
-@property (copy, nonatomic) MRChangedDateValue changedTime;
+@property (copy, nonatomic) MRChangedTimeValue changedTime;
 
 @end

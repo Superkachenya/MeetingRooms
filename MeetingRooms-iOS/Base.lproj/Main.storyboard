@@ -1715,7 +1715,7 @@
         <!--timePicker-->
         <scene sceneID="8Xc-rf-eRd">
             <objects>
-                <viewController storyboardIdentifier="IDTimePickerController" title="timePicker" useStoryboardIdentifierAsRestorationIdentifier="YES" id="xFP-YX-aJl" customClass="MRTimePickerViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="IDTimePickerVC" title="timePicker" useStoryboardIdentifierAsRestorationIdentifier="YES" id="xFP-YX-aJl" customClass="MRTimePickerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yGh-ug-jwH"/>
                         <viewControllerLayoutGuide type="bottom" id="sYj-t4-Ik0"/>
@@ -1730,9 +1730,9 @@
                                 <date key="date" timeIntervalSinceReferenceDate="482331056.060817">
                                     <!--2016-04-14 12:50:56 +0000-->
                                 </date>
-                                <locale key="locale" localeIdentifier="ru_UA"/>
+                                <locale key="locale" localeIdentifier="uk"/>
                                 <connections>
-                                    <action selector="userDidChangeDate:" destination="xFP-YX-aJl" eventType="valueChanged" id="FPi-gt-UVm"/>
+                                    <action selector="userDidChangeTime:" destination="xFP-YX-aJl" eventType="valueChanged" id="Xx1-bg-Ksu"/>
                                 </connections>
                             </datePicker>
                         </subviews>
@@ -1751,6 +1751,44 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xdo-IT-jj7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3153" y="-513"/>
+        </scene>
+        <!--Date Picker View Controller-->
+        <scene sceneID="f0b-lz-YCl">
+            <objects>
+                <viewController storyboardIdentifier="IDDatePickerVC" id="q5o-bx-Ldn" customClass="MRDatePickerViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5ou-Bp-8xC"/>
+                        <viewControllerLayoutGuide type="bottom" id="jIZ-Vd-ChJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Wxq-NE-bZo">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="9ya-Iu-HUd">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <date key="date" timeIntervalSinceReferenceDate="482339074.15570498">
+                                    <!--2016-04-14 15:04:34 +0000-->
+                                </date>
+                                <connections>
+                                    <action selector="userDidChangeDate:" destination="q5o-bx-Ldn" eventType="valueChanged" id="EMl-VU-JPf"/>
+                                </connections>
+                            </datePicker>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="9ya-Iu-HUd" secondAttribute="trailing" id="07f-Nw-FQN"/>
+                            <constraint firstItem="jIZ-Vd-ChJ" firstAttribute="top" secondItem="9ya-Iu-HUd" secondAttribute="bottom" id="Lro-Kz-7nq"/>
+                            <constraint firstItem="9ya-Iu-HUd" firstAttribute="top" secondItem="Wxq-NE-bZo" secondAttribute="top" id="dZY-Ss-e0q"/>
+                            <constraint firstItem="9ya-Iu-HUd" firstAttribute="leading" secondItem="Wxq-NE-bZo" secondAttribute="leading" id="doz-wE-BsI"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="datePicker" destination="9ya-Iu-HUd" id="erC-t0-2Cd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bfz-mX-IPp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3872" y="-513"/>
         </scene>
         <!--Booking-->
         <scene sceneID="pXU-bS-YLQ">

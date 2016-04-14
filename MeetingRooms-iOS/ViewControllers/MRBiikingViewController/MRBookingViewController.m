@@ -13,6 +13,7 @@
 #import "MRRoom.h"
 #import "WYPopoverController.h"
 #import "MRTimePickerViewController.h"
+#import "MRDatePickerViewController.h"
 
 @interface MRBookingViewController () <WYPopoverControllerDelegate>
 
@@ -20,8 +21,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *datePickerButton;
 @property (strong, nonatomic) IBOutletCollection(UIView) NSArray *timeCircles;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UIButton *timeButton;
-@property (weak, nonatomic) IBOutlet UIButton *dateButton;
 @property (weak, nonatomic) IBOutlet UILabel *checkInTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *checkOutTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeButtonLabel;
@@ -76,7 +75,7 @@
 }
 
 - (IBAction)timeButtonDidTap:(UIButton *)sender {
-    MRTimePickerViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"IDTimePickerController"];
+    MRTimePickerViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"IDTimePickerVC"];
     controller.modalInPopover = NO;
     controller.preferredContentSize = CGSizeMake(sender.bounds.size.width, self.view.bounds.size.height /3);
     controller.changedTime = ^(NSDate *date){
@@ -89,7 +88,17 @@
     [self.popover presentPopoverFromRect:sender.bounds inView:sender permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
 }
 
-- (IBAction)dateButtonDidTap:(id)sender {
+- (IBAction)dateButtonDidTap:(UIButton *)sender {
+    MRDatePickerViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"IDDatePickerVC"];
+    controller.modalInPopover = NO;
+    controller.preferredContentSize = CGSizeMake(sender.bounds.size.width, self.view.bounds.size.height /3);
+    controller.changedDate = ^(NSDate *date){
+        self.dateButtonLabel.text = [self.dateFormatter stringFromDate:date];
+    };
+    self.popover = [[WYPopoverController alloc] initWithContentViewController:controller];
+    self.popover.delegate = self;
+    self.popover.wantsDefaultContentAppearance = NO;
+    [self.popover presentPopoverFromRect:sender.bounds inView:sender permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
 }
 
 @end

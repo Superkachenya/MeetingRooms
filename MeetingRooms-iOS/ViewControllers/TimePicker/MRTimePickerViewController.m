@@ -22,7 +22,7 @@
     self.timePicker.minimumDate = [NSDate date];
 }
 
-- (IBAction)userDidChangeDate:(UIDatePicker *)sender {
+- (IBAction)userDidChangeTime:(UIDatePicker *)sender {
     self.changedTime(sender.date);
 }
 
