@@ -7,11 +7,13 @@
 //
 
 #import "MRBookingViewController.h"
+#import "UIColor+MRColorFromHEX.h"
 
 @interface MRBookingViewController ()
 
 @property (weak, nonatomic) IBOutlet UIButton *timePickerButton;
 @property (weak, nonatomic) IBOutlet UIButton *datePickerButton;
+@property (strong, nonatomic) IBOutletCollection(UIView) NSArray *timeCircles;
 
 
 @end
@@ -25,6 +27,14 @@
     self.timePickerButton.layer.borderColor = [UIColor whiteColor].CGColor;
     self.datePickerButton.layer.borderWidth = 1.0;
     self.datePickerButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    
+    
+    for (UIView *circle in self.timeCircles) {
+    circle.layer.borderWidth = 1.0;
+    circle.layer.borderColor = [UIColor grayColor].CGColor;
+    circle.backgroundColor = [UIColor getUIColorFromHexString:@"#302D44" alpha:1.0];
+    circle.layer.cornerRadius = circle.frame.size.width / 2;
+    }
 }
 
 @end
