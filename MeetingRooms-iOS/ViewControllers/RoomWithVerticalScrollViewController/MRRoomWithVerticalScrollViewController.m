@@ -12,6 +12,7 @@
 #import "MRMeeting.h"
 #import "MRUser.h"
 #import "MRNetworkManager.h"
+#import "UIColor+MRColorFromHEX.h"
 
 @interface MRRoomWithVerticalScrollViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -20,6 +21,7 @@
 @property (strong, nonatomic) NSMutableArray *arrayMeetings;
 @property (strong, nonatomic) NSMutableArray *arrayMeetingsCurrentHour;
 @property (strong, nonatomic) NSMutableDictionary *hours;
+@property (assign, nonatomic) NSUInteger count;
 
 @end
 
@@ -31,6 +33,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.count = 8;
     [self setNeedsStatusBarAppearanceUpdate];
     self.hours = [[NSMutableDictionary alloc] init];
     self.arrayMeetings = [[NSMutableArray alloc] init];
@@ -58,9 +61,9 @@
     return  self.arrayOfHours.count - 1;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [self.arrayOfHours objectAtIndex:section];
-}
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+//    return [self.arrayOfHours objectAtIndex:section];
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSString *sectionTitle = [self.arrayOfHours objectAtIndex:section];
@@ -87,21 +90,41 @@
     return  array;
 }
 
+- (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
+    /* Create custom view to display section header... */
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, tableView.frame.size.width, 18)];
+    [label setFont:[UIFont boldSystemFontOfSize:12]];
+    [label setTextColor:[UIColor whiteColor]];
+    NSString *string = [self.arrayOfHours objectAtIndex:section];
+    /* Section header is in 0th index... */
+    [label setText:string];
+    [view addSubview:label];
+    return view;
+}
+
 - (void)fillDictionaryHours {
     for (int i = 0; i < self.arrayOfHours.count - 1; ++i) {
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        dateFormat.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:2];
-        [dateFormat setDateFormat:@"HH:mm"];
-        NSDate *dateCurrent = [dateFormat dateFromString:self.arrayOfHours[i]];
-        NSDate *dateInHour = [dateFormat dateFromString:self.arrayOfHours[i + 1]];
-        self.arrayMeetingsCurrentHour = [[NSMutableArray alloc] init];
-        [self.hours setObject:self.arrayMeetingsCurrentHour forKey:self.arrayOfHours[i]];
+        NSDate *date = [NSDate date];
+        NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier: NSCalendarIdentifierGregorian];
+        NSDateComponents *components = [gregorian components: NSUIntegerMax fromDate: date];
+        [components setHour: self.count++];
+        [components setMinute: 0];
+        [components setSecond: 0];
+        NSDate *dateCurrent = [gregorian dateFromComponents: components];
+        NSLog(@"newDate - %@", dateCurrent.description);
+        [components setHour: self.count];
+        NSDate *dateInHour = [gregorian dateFromComponents: components];
+        NSLog(@"dateInHour - %@", dateInHour.description);
+        
+        NSMutableArray *array = [[NSMutableArray alloc] init];
+        [self.hours setObject:array forKey:self.arrayOfHours[i]];
         //[array addObject:@"withOutMeetings"];
         for (MRMeeting *meeting in self.arrayMeetings) {
             if (([meeting.meetingStart compare:dateCurrent] ==  NSOrderedDescending ||
                  [meeting.meetingStart compare:dateCurrent] ==  NSOrderedSame) &&
                 [meeting.meetingStart compare:dateInHour] ==  NSOrderedAscending) {
-                [self.arrayMeetingsCurrentHour addObject:meeting];
+                [array addObject:meeting];
             }
         }
     }

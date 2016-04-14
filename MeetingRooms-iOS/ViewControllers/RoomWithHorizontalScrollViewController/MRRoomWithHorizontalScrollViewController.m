@@ -16,6 +16,7 @@
 #import "MRNetworkManager.h"
 #import "UIViewController+MRErrorAlert.h"
 #import "MRRoomWithVerticalScrollViewController.h"
+#import "UIColor+MRColorFromHEX.h"
 
 static const double kCountOfTimeSigmente = 48;
 static const double kWidthOfCell = 20;
@@ -33,6 +34,7 @@ static const double kWidthOfCell = 20;
 @property (weak, nonatomic) IBOutlet UIImageView *imageLine;
 @property (weak, nonatomic) IBOutlet UIImageView *userAvatare;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *hieghtOfTableView;
+@property (weak, nonatomic) IBOutlet UIView *bounseOfPicture;
 
 @property (strong, nonatomic) NSMutableDictionary* dictonaryOfMeeting;
 @property (strong, nonatomic) NSIndexPath* indexPathOfLastShowCell;
@@ -81,16 +83,28 @@ static const double kWidthOfCell = 20;
         self.timeLabel.text = [self abstractTimeToTimeAfterNow:[NSNumber numberWithInteger:indexPath.row - self.countOfCellOnView/2]];
         if (![[self abstractTimeToTimeAfterNow:[NSNumber numberWithInteger:indexPath.row - self.countOfCellOnView/2]] isEqualToString:@"Past"]) {
             self.imageLine.image = [UIImage imageNamed:@"ic_curve_blue_red"];
+            self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F" alpha:1.0];
+            if ([self.meetting.meetingOwner isEqual:[MRNetworkManager sharedManager].owner]) {
+                [cell showYelloy];
+                self.imageLine.image = [UIImage imageNamed:@"ic_curve_yellow"];
+                self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"F8E71C" alpha:1.0];
+            }
         }
         [self showInfo:self.meetting];
     } else {
         NSString* key = [NSString new];
-        long keyOfCell = (long)indexPath.row + self.countOfCellOnView/2;
+        long keyOfCell = (long)indexPath.row + self.countOfCellOnView / 2;
         key = [NSString stringWithFormat:@"%ld",keyOfCell];
         self.meetting = [self.dictonaryOfMeeting objectForKey:key];
         self.timeLabel.text = [self abstractTimeToTimeAfterNow:[NSNumber numberWithInteger:indexPath.row + self.countOfCellOnView/2]];
         if (![[self abstractTimeToTimeAfterNow:[NSNumber numberWithInteger:indexPath.row + self.countOfCellOnView/2]] isEqualToString:@"Past"]) {
             self.imageLine.image = [UIImage imageNamed:@"ic_curve_blue_red"];
+            self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F" alpha:1.0];
+            if ([self.meetting.meetingOwner isEqual:[MRNetworkManager sharedManager].owner]) {
+                [cell showYelloy];
+                self.imageLine.image = [UIImage imageNamed:@"ic_curve_yellow"];
+                self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"F8E71C" alpha:1.0];
+            }
         }
         [self showInfo:self.meetting];
     }
@@ -103,21 +117,23 @@ static const double kWidthOfCell = 20;
             if ((indexPath.row >= startAbstractTime.integerValue) && (indexPath.row < endAbstractTime.integerValue)) {
                 [cell addMeeting];
                 self.imageLine.image = [UIImage imageNamed:@"ic_curve_blue"];
+                self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"008FFB" alpha:1.0];
                 NSString* key = [NSString new];
                 key = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
                 [self.dictonaryOfMeeting setObject:self.meetting forKey:key];
-                if ((startAbstractTime.integerValue < self.indexPathOfCentralCell.row) && (endAbstractTime.integerValue >= self.indexPathOfCentralCell.row)) {
-                    [cell showYelloy];
-                    self.imageLine.image = [UIImage imageNamed:@"ic_curve_yellow"];
-                }
             }
         }
     }
     if (indexPath < self.indexPathOfCentralCell) {
         [cell pastTime];
         self.imageLine.image = [UIImage imageNamed:@"ic_curve_grey"];
+        self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"4E4B62" alpha:1.0];
+    } else {
+        if (indexPath == self.indexPathOfCentralCell) {
+            [cell nowLineShow];
+        }
     }
-        self.indexPathOfLastShowCell = indexPath;
+    self.indexPathOfLastShowCell = indexPath;
     return cell;
 }
 
