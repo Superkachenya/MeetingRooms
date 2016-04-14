@@ -33,7 +33,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>Cleveroad.MeetingRooms-iOS</string>
+				<string>Cleveroad.MeetingRooms</string>
 			</array>
 		</dict>
 	</array>

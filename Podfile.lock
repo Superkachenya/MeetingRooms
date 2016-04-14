@@ -43,6 +43,7 @@ PODS:
   - GoogleUtilities (1.2.0):
     - GoogleSymbolUtilities (~> 1.0)
   - PTEHorizontalTableView (1.0.0)
+  - WYPopoverController (0.3.9)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.1)
@@ -50,6 +51,7 @@ DEPENDENCIES:
   - Fabric
   - Google/SignIn
   - PTEHorizontalTableView (~> 1.0)
+  - WYPopoverController (~> 0.3)
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
@@ -64,5 +66,6 @@ SPEC CHECKSUMS:
   GoogleSymbolUtilities: eb3965ea12710569c7b80db198a39e39b18613f7
   GoogleUtilities: 85f8ad6b251544286a97163133d042ec95f889c5
   PTEHorizontalTableView: 2c65c4360282223628dabc664508dde922f98efd
+  WYPopoverController: a9db25ac2841a686acdc0f3a99bdb21545db32f4
 
 COCOAPODS: 0.39.0

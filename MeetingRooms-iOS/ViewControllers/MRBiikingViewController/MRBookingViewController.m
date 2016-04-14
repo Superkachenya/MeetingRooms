@@ -11,15 +11,27 @@
 #import "MRNetworkManager.h"
 #import "MROwner.h"
 #import "MRRoom.h"
+#import "WYPopoverController.h"
+#import "MRTimePickerViewController.h"
 
-@interface MRBookingViewController ()
+@interface MRBookingViewController () <WYPopoverControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *timePickerButton;
 @property (weak, nonatomic) IBOutlet UIButton *datePickerButton;
 @property (strong, nonatomic) IBOutletCollection(UIView) NSArray *timeCircles;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIButton *timeButton;
+@property (weak, nonatomic) IBOutlet UIButton *dateButton;
+@property (weak, nonatomic) IBOutlet UILabel *checkInTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *checkOutTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeButtonLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dateButtonLabel;
 
 @property (strong, nonatomic) MRNetworkManager *manager;
+@property (strong, nonatomic) NSDateFormatter *timeFormatter;
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
+@property (strong, nonatomic) WYPopoverController *popover;
+
 
 @end
 
@@ -28,6 +40,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.title = self.room.roomTitle;
     self.timePickerButton.layer.borderWidth = 1.0;
     self.timePickerButton.layer.borderColor = [UIColor whiteColor].CGColor;
     self.datePickerButton.layer.borderWidth = 1.0;
@@ -41,7 +54,42 @@
     }
     self.manager = [MRNetworkManager sharedManager];
     self.nameLabel.text = self.manager.owner.firstName;
-    self.navigationItem.title = self.room.roomTitle;
+    
+    self.timeFormatter = [NSDateFormatter new];
+    self.dateFormatter = [NSDateFormatter new];
+    self.timeFormatter.dateFormat = @"HH:mm";
+    self.dateFormatter.dateFormat = @"dd/mm/yy";
+    self.timeButtonLabel.text = [self.timeFormatter stringFromDate:[NSDate date]];
+    self.dateButtonLabel.text = [self.dateFormatter stringFromDate:[NSDate date]];
+
+}
+
+#pragma mark - WYPopoverControllerDelegate
+
+- (BOOL)popoverControllerShouldDismissPopover:(WYPopoverController *)controller {
+    return YES;
+}
+
+- (void)popoverControllerDidDismissPopover:(WYPopoverController *)controller {
+    self.popover.delegate = nil;
+    self.popover = nil;
+}
+
+- (IBAction)timeButtonDidTap:(UIButton *)sender {
+    MRTimePickerViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"IDTimePickerController"];
+    controller.modalInPopover = NO;
+    controller.preferredContentSize = CGSizeMake(sender.bounds.size.width, self.view.bounds.size.height /3);
+    controller.changedTime = ^(NSDate *date){
+        self.timeButtonLabel.text = [self.timeFormatter stringFromDate:date];
+        self.checkInTimeLabel.text = [self.timeFormatter stringFromDate:date];
+    };
+    self.popover = [[WYPopoverController alloc] initWithContentViewController:controller];
+    self.popover.delegate = self;
+    self.popover.wantsDefaultContentAppearance = NO;
+    [self.popover presentPopoverFromRect:sender.bounds inView:sender permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
+}
+
+- (IBAction)dateButtonDidTap:(id)sender {
 }
 
 @end

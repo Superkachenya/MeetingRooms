@@ -42,6 +42,8 @@
             <string>GlacialIndifference-Regular</string>
             <string>GlacialIndifference-Regular</string>
             <string>GlacialIndifference-Regular</string>
+            <string>GlacialIndifference-Regular</string>
+            <string>GlacialIndifference-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -1710,6 +1712,46 @@
             </objects>
             <point key="canvasLocation" x="1644" y="-441"/>
         </scene>
+        <!--timePicker-->
+        <scene sceneID="8Xc-rf-eRd">
+            <objects>
+                <viewController storyboardIdentifier="IDTimePickerController" title="timePicker" useStoryboardIdentifierAsRestorationIdentifier="YES" id="xFP-YX-aJl" customClass="MRTimePickerViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="yGh-ug-jwH"/>
+                        <viewControllerLayoutGuide type="bottom" id="sYj-t4-Ik0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="IRZ-Kl-f7v">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="30" translatesAutoresizingMaskIntoConstraints="NO" id="6ET-2P-qQx">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
+                                <date key="date" timeIntervalSinceReferenceDate="482331056.060817">
+                                    <!--2016-04-14 12:50:56 +0000-->
+                                </date>
+                                <locale key="locale" localeIdentifier="ru_UA"/>
+                                <connections>
+                                    <action selector="userDidChangeDate:" destination="xFP-YX-aJl" eventType="valueChanged" id="FPi-gt-UVm"/>
+                                </connections>
+                            </datePicker>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="6ET-2P-qQx" secondAttribute="trailing" id="IT0-wu-dVK"/>
+                            <constraint firstItem="6ET-2P-qQx" firstAttribute="leading" secondItem="IRZ-Kl-f7v" secondAttribute="leading" id="sjG-wp-TUj"/>
+                            <constraint firstItem="sYj-t4-Ik0" firstAttribute="top" secondItem="6ET-2P-qQx" secondAttribute="bottom" id="vRx-BZ-8TD"/>
+                            <constraint firstItem="6ET-2P-qQx" firstAttribute="top" secondItem="IRZ-Kl-f7v" secondAttribute="top" id="y1v-ti-jWy"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="timePicker" destination="6ET-2P-qQx" id="02w-N2-6vk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xdo-IT-jj7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3153" y="-513"/>
+        </scene>
         <!--Booking-->
         <scene sceneID="pXU-bS-YLQ">
             <objects>
@@ -1741,7 +1783,7 @@
                                             </mask>
                                         </variation>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="14:45" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vge-aj-3pN">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vge-aj-3pN">
                                         <rect key="frame" x="522" y="10" width="50" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="22" id="Xae-hb-M3j"/>
@@ -1813,7 +1855,6 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="ynO-fM-8e6"/>
                                 </constraints>
-                                <state key="normal" title="  Today"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.CornerRadius">
                                         <integer key="value" value="15"/>
@@ -1824,6 +1865,9 @@
                                         <include reference="ynO-fM-8e6"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="dateButtonDidTap:" destination="WRU-M0-dhZ" eventType="touchUpInside" id="OPg-CE-EMv"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JJV-3G-tAL">
                                 <rect key="frame" x="28" y="261" width="257" height="40"/>
@@ -1831,7 +1875,6 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="g74-yt-bWW"/>
                                 </constraints>
-                                <state key="normal" title="  14:30"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.CornerRadius">
                                         <integer key="value" value="15"/>
@@ -1842,7 +1885,22 @@
                                         <include reference="g74-yt-bWW"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="timeButtonDidTap:" destination="WRU-M0-dhZ" eventType="touchUpInside" id="OeY-Pi-YI5"/>
+                                </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aer-w0-VZ7">
+                                <rect key="frame" x="48" y="271" width="34" height="22"/>
+                                <fontDescription key="fontDescription" name="GlacialIndifference-Regular" family="Glacial Indifference" pointSize="18"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dXz-va-bMw">
+                                <rect key="frame" x="335" y="272" width="37" height="22"/>
+                                <fontDescription key="fontDescription" name="GlacialIndifference-Regular" family="Glacial Indifference" pointSize="18"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qbg-Ix-9kU" userLabel="CheckIn">
                                 <rect key="frame" x="0.0" y="204" width="600" height="40"/>
                                 <subviews>
@@ -1862,8 +1920,8 @@
                                             </mask>
                                         </variation>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="14:45" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ux0-2M-URP">
-                                        <rect key="frame" x="542" y="9" width="43" height="22"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ux0-2M-URP">
+                                        <rect key="frame" x="585" y="9" width="0.0" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="22" id="Hed-SB-VvT"/>
                                             <constraint firstAttribute="width" constant="50" id="goN-ry-JVc"/>
@@ -1929,12 +1987,6 @@
                                 <rect key="frame" x="520" y="160" width="52" height="24"/>
                                 <fontDescription key="fontDescription" name="GlacialIndifference-Bold" family="Glacial Indifference" pointSize="20"/>
                                 <color key="textColor" red="1" green="0.3529411764705882" blue="0.37254901960784315" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Who:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PRF-mM-YZE">
-                                <rect key="frame" x="28" y="160" width="43" height="24"/>
-                                <fontDescription key="fontDescription" name="GlacialIndifference-Regular" family="Glacial Indifference" pointSize="20"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5FP-SC-l8K">
@@ -2059,6 +2111,12 @@
                                     </mask>
                                 </variation>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Who:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PRF-mM-YZE">
+                                <rect key="frame" x="28" y="160" width="43" height="24"/>
+                                <fontDescription key="fontDescription" name="GlacialIndifference-Regular" family="Glacial Indifference" pointSize="20"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.18823529411764706" green="0.1764705882352941" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -2072,6 +2130,7 @@
                                 <variation key="heightClass=compact" constant="15"/>
                             </constraint>
                             <constraint firstItem="b2h-Wf-HNh" firstAttribute="leading" secondItem="she-yP-8jG" secondAttribute="leading" id="7fw-Py-hDg"/>
+                            <constraint firstItem="yfa-yJ-DqA" firstAttribute="leading" secondItem="dXz-va-bMw" secondAttribute="leading" constant="-20" id="7ou-05-TbE"/>
                             <constraint firstItem="R4B-Ep-k9w" firstAttribute="leading" secondItem="vQL-Bi-0Uz" secondAttribute="trailing" id="86p-8t-7Lo"/>
                             <constraint firstItem="qbg-Ix-9kU" firstAttribute="top" secondItem="Ng4-Al-eOy" secondAttribute="bottom" constant="20" id="8AC-yz-3MC">
                                 <variation key="heightClass=compact" constant="2"/>
@@ -2105,7 +2164,9 @@
                                 <variation key="heightClass=compact" constant="8"/>
                             </constraint>
                             <constraint firstAttribute="trailing" secondItem="R4B-Ep-k9w" secondAttribute="trailing" constant="28" id="OFJ-Tz-CcB"/>
+                            <constraint firstItem="yfa-yJ-DqA" firstAttribute="top" secondItem="dXz-va-bMw" secondAttribute="top" constant="-10" id="PPC-sK-Y5g"/>
                             <constraint firstItem="vQL-Bi-0Uz" firstAttribute="width" secondItem="cad-3b-3rs" secondAttribute="width" id="Q69-ui-PmJ"/>
+                            <constraint firstItem="JJV-3G-tAL" firstAttribute="top" secondItem="Aer-w0-VZ7" secondAttribute="top" constant="-10" id="QtW-uC-8Ug"/>
                             <constraint firstItem="qVN-2O-TpZ" firstAttribute="top" secondItem="yfa-yJ-DqA" secondAttribute="bottom" constant="-35" id="RLx-Td-hL8"/>
                             <constraint firstItem="qbg-Ix-9kU" firstAttribute="top" secondItem="PRF-mM-YZE" secondAttribute="bottom" constant="20" id="SSx-Oh-3dI"/>
                             <constraint firstItem="cad-3b-3rs" firstAttribute="leading" secondItem="5FP-SC-l8K" secondAttribute="trailing" constant="-2" id="T4T-Uw-DoC"/>
@@ -2140,6 +2201,7 @@
                             <constraint firstAttribute="trailing" secondItem="Ng4-Al-eOy" secondAttribute="trailing" constant="28" id="p8W-Mj-cPZ"/>
                             <constraint firstItem="PIN-zK-jj9" firstAttribute="leading" secondItem="she-yP-8jG" secondAttribute="leading" constant="28" id="pYe-ut-iSn"/>
                             <constraint firstAttribute="trailing" secondItem="qbg-Ix-9kU" secondAttribute="trailing" id="paB-Tf-aYf"/>
+                            <constraint firstItem="JJV-3G-tAL" firstAttribute="leading" secondItem="Aer-w0-VZ7" secondAttribute="leading" constant="-20" id="pbp-jr-jP7"/>
                             <constraint firstItem="b2h-Wf-HNh" firstAttribute="top" secondItem="i0m-AY-Xby" secondAttribute="bottom" constant="16" id="rB3-4J-bjb">
                                 <variation key="heightClass=compact" constant="15"/>
                             </constraint>
@@ -2213,11 +2275,11 @@
                                 <include reference="2ss-Pz-Wzu"/>
                                 <include reference="8ua-dc-LQu"/>
                                 <include reference="Auu-EZ-bFb"/>
+                                <include reference="53B-F9-H84"/>
+                                <include reference="KWu-Mn-ogd"/>
                                 <include reference="pYe-ut-iSn"/>
                                 <include reference="DFV-EO-PAc"/>
                                 <include reference="F5X-Rt-VDu"/>
-                                <include reference="53B-F9-H84"/>
-                                <include reference="KWu-Mn-ogd"/>
                                 <include reference="G3l-If-6cj"/>
                                 <include reference="Q69-ui-PmJ"/>
                                 <exclude reference="tcA-8a-MDt"/>
@@ -2234,9 +2296,13 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="checkInTimeLabel" destination="Ux0-2M-URP" id="4G4-2v-TUh"/>
+                        <outlet property="checkOutTimeLabel" destination="Vge-aj-3pN" id="0NJ-0L-IgJ"/>
+                        <outlet property="dateButtonLabel" destination="dXz-va-bMw" id="JxC-zW-w0W"/>
                         <outlet property="datePickerButton" destination="yfa-yJ-DqA" id="k5H-Bi-Yb1"/>
                         <outlet property="nameLabel" destination="Ng4-Al-eOy" id="vOb-BV-Vlm"/>
-                        <outlet property="timePickerButton" destination="JJV-3G-tAL" id="1bC-Yf-QQN"/>
+                        <outlet property="timeButtonLabel" destination="Aer-w0-VZ7" id="ito-N1-g9e"/>
+                        <outlet property="timePickerButton" destination="JJV-3G-tAL" id="rYH-eZ-zN4"/>
                         <outletCollection property="timeCircles" destination="bDE-7W-cB7" id="YbV-kq-4ap"/>
                         <outletCollection property="timeCircles" destination="lEX-hb-Lad" id="yfg-6R-sTN"/>
                         <outletCollection property="timeCircles" destination="4VC-HY-25B" id="mLx-Rt-yy7"/>
