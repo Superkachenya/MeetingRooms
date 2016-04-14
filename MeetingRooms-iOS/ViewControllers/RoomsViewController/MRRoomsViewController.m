@@ -28,6 +28,8 @@
 
 @implementation MRRoomsViewController
 
+#pragma mark - UIViewLifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

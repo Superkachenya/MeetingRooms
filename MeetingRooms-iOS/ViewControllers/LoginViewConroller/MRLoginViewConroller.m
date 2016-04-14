@@ -29,6 +29,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - GoogleSignIn
+
 - (IBAction)googleSignInDidTap:(id)sender {
     [[GIDSignIn sharedInstance] signIn];
 }
@@ -39,6 +41,8 @@
 - (IBAction)prepareForUnwindToLogIn:(UIStoryboardSegue *)segue {
     [[GIDSignIn sharedInstance] signOut];
 }
+
+#pragma mark - helpers
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;

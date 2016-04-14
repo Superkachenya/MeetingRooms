@@ -1071,7 +1071,7 @@
                                                     <constraint firstAttribute="height" constant="91" id="z4a-SE-A3B"/>
                                                 </constraints>
                                                 <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
-                                                    <rect key="frame" x="0.0" y="354" width="375" height="92"/>
+                                                    <rect key="frame" x="0.0" y="354" width="375" height="91"/>
                                                 </variation>
                                                 <connections>
                                                     <outlet property="delegate" destination="J39-kR-jLk" id="8Jl-dK-J0s"/>
@@ -1178,7 +1178,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <segue destination="WRU-M0-dhZ" kind="show" id="8vz-cP-bkE"/>
+                                                    <segue destination="WRU-M0-dhZ" kind="show" identifier="toBookingVC" id="8vz-cP-bkE"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -1788,35 +1788,11 @@
                                 <fontDescription key="fontDescription" name="GlacialIndifference-Regular" family="Glacial Indifference" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PIN-zK-jj9">
-                                <rect key="frame" x="28" y="456" width="142" height="50"/>
-                                <color key="backgroundColor" red="1" green="0.3529411764705882" blue="0.37254901960784315" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="142" id="Yzl-fS-Xno"/>
-                                    <constraint firstAttribute="height" constant="50" id="dQO-N9-5bH"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="GlacialIndifference-Regular" family="Glacial Indifference" pointSize="26"/>
-                                <state key="normal" title="Cancel">
-                                    <color key="titleColor" red="0.18823529411764706" green="0.1764705882352941" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.CornerRadius">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <variation key="heightClass=regular-widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="Yzl-fS-Xno"/>
-                                        <include reference="dQO-N9-5bH"/>
-                                    </mask>
-                                </variation>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sl9-62-dRK">
-                                <rect key="frame" x="430" y="456" width="142" height="50"/>
+                                <rect key="frame" x="315" y="456" width="257" height="50"/>
                                 <color key="backgroundColor" red="0.0" green="0.5607843137254902" blue="0.98431372549019602" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="g0G-Dq-blV"/>
-                                    <constraint firstAttribute="width" constant="142" id="iUN-hR-DF0"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="GlacialIndifference-Bold" family="Glacial Indifference" pointSize="24"/>
                                 <state key="normal" title="Book"/>
@@ -1828,15 +1804,31 @@
                                 <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="constraints">
                                         <include reference="g0G-Dq-blV"/>
-                                        <include reference="iUN-hR-DF0"/>
+                                    </mask>
+                                </variation>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yfa-yJ-DqA">
+                                <rect key="frame" x="315" y="262" width="257" height="40"/>
+                                <color key="backgroundColor" red="0.18823529411764706" green="0.1764705882352941" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="ynO-fM-8e6"/>
+                                </constraints>
+                                <state key="normal" title="  Today"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.CornerRadius">
+                                        <integer key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="ynO-fM-8e6"/>
                                     </mask>
                                 </variation>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JJV-3G-tAL">
-                                <rect key="frame" x="28" y="261" width="142" height="40"/>
+                                <rect key="frame" x="28" y="261" width="257" height="40"/>
                                 <color key="backgroundColor" red="0.18823529411764706" green="0.1764705882352941" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="142" id="fcR-dp-V8x"/>
                                     <constraint firstAttribute="height" constant="40" id="g74-yt-bWW"/>
                                 </constraints>
                                 <state key="normal" title="  14:30"/>
@@ -1847,7 +1839,6 @@
                                 </userDefinedRuntimeAttributes>
                                 <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="constraints">
-                                        <include reference="fcR-dp-V8x"/>
                                         <include reference="g74-yt-bWW"/>
                                     </mask>
                                 </variation>
@@ -1911,35 +1902,15 @@
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="Uuf-3z-AsU"/>
-                                        <exclude reference="MwC-ed-aKr"/>
-                                        <include reference="OCu-8z-Zo6"/>
-                                        <include reference="V5h-5b-Wfj"/>
                                         <include reference="AHh-Jd-UfO"/>
                                         <include reference="boH-NH-xbi"/>
                                         <exclude reference="yJW-kW-6VZ"/>
+                                        <exclude reference="MwC-ed-aKr"/>
+                                        <include reference="OCu-8z-Zo6"/>
+                                        <include reference="V5h-5b-Wfj"/>
                                     </mask>
                                 </variation>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yfa-yJ-DqA">
-                                <rect key="frame" x="430" y="262" width="142" height="40"/>
-                                <color key="backgroundColor" red="0.18823529411764706" green="0.1764705882352941" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="142" id="Kv1-De-PAw"/>
-                                    <constraint firstAttribute="height" constant="40" id="ynO-fM-8e6"/>
-                                </constraints>
-                                <state key="normal" title="  Today"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.CornerRadius">
-                                        <integer key="value" value="15"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <variation key="heightClass=regular-widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="Kv1-De-PAw"/>
-                                        <include reference="ynO-fM-8e6"/>
-                                    </mask>
-                                </variation>
-                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_calendar" translatesAutoresizingMaskIntoConstraints="NO" id="qVN-2O-TpZ">
                                 <rect key="frame" x="542" y="267" width="20" height="20"/>
                                 <constraints>
@@ -1948,7 +1919,7 @@
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_time" translatesAutoresizingMaskIntoConstraints="NO" id="0jR-3O-nkp">
-                                <rect key="frame" x="140" y="266" width="20" height="20"/>
+                                <rect key="frame" x="255" y="266" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="cFZ-uH-U2d"/>
                                     <constraint firstAttribute="width" constant="20" id="pmN-ER-1uc"/>
@@ -2067,10 +2038,32 @@
                                     <constraint firstAttribute="width" constant="20" id="ite-C5-BR8"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PIN-zK-jj9">
+                                <rect key="frame" x="28" y="456" width="257" height="50"/>
+                                <color key="backgroundColor" red="1" green="0.3529411764705882" blue="0.37254901960784315" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="dQO-N9-5bH"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="GlacialIndifference-Regular" family="Glacial Indifference" pointSize="26"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" red="0.18823529411764706" green="0.1764705882352941" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.CornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="dQO-N9-5bH"/>
+                                    </mask>
+                                </variation>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.18823529411764706" green="0.1764705882352941" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="nsH-3i-3nb" firstAttribute="leading" secondItem="she-yP-8jG" secondAttribute="leading" constant="28" id="2ss-Pz-Wzu"/>
+                            <constraint firstItem="yfa-yJ-DqA" firstAttribute="leading" secondItem="JJV-3G-tAL" secondAttribute="trailing" constant="30" id="3If-Bc-aNh"/>
                             <constraint firstAttribute="trailing" secondItem="sl9-62-dRK" secondAttribute="trailing" constant="28" id="3Ks-Sj-5Vq"/>
                             <constraint firstItem="JJV-3G-tAL" firstAttribute="leading" secondItem="she-yP-8jG" secondAttribute="leading" constant="28" id="3ur-Gf-w6y"/>
                             <constraint firstAttribute="trailing" secondItem="yfa-yJ-DqA" secondAttribute="trailing" constant="28" id="53B-F9-H84"/>
@@ -2085,7 +2078,6 @@
                             </constraint>
                             <constraint firstItem="qbg-Ix-9kU" firstAttribute="leading" secondItem="she-yP-8jG" secondAttribute="leading" id="8Re-dW-bsm"/>
                             <constraint firstItem="nsH-3i-3nb" firstAttribute="top" secondItem="b2h-Wf-HNh" secondAttribute="bottom" constant="8" id="8ua-dc-LQu"/>
-                            <constraint firstItem="PRF-mM-YZE" firstAttribute="leading" secondItem="she-yP-8jG" secondAttribute="leading" constant="28" id="9Fg-4J-2V2"/>
                             <constraint firstItem="b2h-Wf-HNh" firstAttribute="top" secondItem="vQL-Bi-0Uz" secondAttribute="bottom" constant="16" id="9GN-ot-0tB">
                                 <variation key="heightClass=compact" constant="15"/>
                             </constraint>
@@ -2142,7 +2134,9 @@
                             <constraint firstItem="R4B-Ep-k9w" firstAttribute="leading" secondItem="vQL-Bi-0Uz" secondAttribute="trailing" id="lBK-ra-Tkd"/>
                             <constraint firstItem="qbg-Ix-9kU" firstAttribute="top" secondItem="PRF-mM-YZE" secondAttribute="bottom" constant="2" id="lWv-0D-4RU"/>
                             <constraint firstItem="i0m-AY-Xby" firstAttribute="leading" secondItem="4VC-HY-25B" secondAttribute="trailing" constant="-20" id="ljM-YV-tjW"/>
+                            <constraint firstItem="yfa-yJ-DqA" firstAttribute="width" secondItem="JJV-3G-tAL" secondAttribute="width" id="mmm-bK-S5g"/>
                             <constraint firstItem="sl9-62-dRK" firstAttribute="top" secondItem="nsH-3i-3nb" secondAttribute="bottom" constant="8" id="nDS-J0-yBg"/>
+                            <constraint firstItem="sl9-62-dRK" firstAttribute="leading" secondItem="PIN-zK-jj9" secondAttribute="trailing" constant="30" id="nUu-aM-BRY"/>
                             <constraint firstAttribute="trailing" secondItem="Ng4-Al-eOy" secondAttribute="trailing" constant="28" id="p8W-Mj-cPZ"/>
                             <constraint firstItem="PIN-zK-jj9" firstAttribute="leading" secondItem="she-yP-8jG" secondAttribute="leading" constant="28" id="pYe-ut-iSn"/>
                             <constraint firstAttribute="trailing" secondItem="qbg-Ix-9kU" secondAttribute="trailing" id="paB-Tf-aYf"/>
@@ -2160,10 +2154,10 @@
                             <constraint firstItem="nGg-D9-IBw" firstAttribute="leading" secondItem="0rq-Ys-wH0" secondAttribute="trailing" id="toK-oZ-eIg"/>
                             <constraint firstItem="R4B-Ep-k9w" firstAttribute="top" secondItem="yzd-xl-6zE" secondAttribute="bottom" constant="-25" id="uWX-LL-mlb"/>
                             <constraint firstItem="bDE-7W-cB7" firstAttribute="top" secondItem="5FP-SC-l8K" secondAttribute="bottom" constant="-25" id="zQ3-rU-nqg"/>
+                            <constraint firstItem="sl9-62-dRK" firstAttribute="width" secondItem="PIN-zK-jj9" secondAttribute="width" id="zTF-1Z-E8R"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="9Fg-4J-2V2"/>
                                 <exclude reference="lWv-0D-4RU"/>
                                 <exclude reference="J7N-pk-BJ8"/>
                                 <exclude reference="6Gq-Hf-GDq"/>
@@ -2172,7 +2166,6 @@
                         </variation>
                         <variation key="heightClass=compact">
                             <mask key="constraints">
-                                <include reference="9Fg-4J-2V2"/>
                                 <exclude reference="SSx-Oh-3dI"/>
                                 <include reference="lWv-0D-4RU"/>
                                 <exclude reference="AOV-Zd-fHk"/>
@@ -2183,11 +2176,10 @@
                             <mask key="subviews">
                                 <include reference="b2h-Wf-HNh"/>
                                 <include reference="nsH-3i-3nb"/>
-                                <include reference="PIN-zK-jj9"/>
                                 <include reference="sl9-62-dRK"/>
+                                <include reference="yfa-yJ-DqA"/>
                                 <include reference="JJV-3G-tAL"/>
                                 <include reference="qbg-Ix-9kU"/>
-                                <include reference="yfa-yJ-DqA"/>
                                 <include reference="5FP-SC-l8K"/>
                                 <include reference="0rq-Ys-wH0"/>
                                 <include reference="i0m-AY-Xby"/>
@@ -2195,6 +2187,7 @@
                                 <include reference="nGg-D9-IBw"/>
                                 <include reference="vQL-Bi-0Uz"/>
                                 <include reference="cad-3b-3rs"/>
+                                <include reference="PIN-zK-jj9"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="8Re-dW-bsm"/>
@@ -2231,17 +2224,18 @@
                                 <include reference="teP-is-1zh"/>
                                 <include reference="hQi-i8-dbv"/>
                                 <include reference="thJ-Bm-Fz2"/>
+                                <include reference="3Ks-Sj-5Vq"/>
+                                <include reference="nDS-J0-yBg"/>
                                 <include reference="86p-8t-7Lo"/>
                                 <include reference="OFJ-Tz-CcB"/>
                                 <exclude reference="lBK-ra-Tkd"/>
                                 <include reference="sog-gP-Xb2"/>
-                                <include reference="3Ks-Sj-5Vq"/>
-                                <include reference="nDS-J0-yBg"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
                         <outlet property="datePickerButton" destination="yfa-yJ-DqA" id="k5H-Bi-Yb1"/>
+                        <outlet property="nameLabel" destination="Ng4-Al-eOy" id="vOb-BV-Vlm"/>
                         <outlet property="timePickerButton" destination="JJV-3G-tAL" id="1bC-Yf-QQN"/>
                         <outletCollection property="timeCircles" destination="bDE-7W-cB7" id="YbV-kq-4ap"/>
                         <outletCollection property="timeCircles" destination="lEX-hb-Lad" id="yfg-6R-sTN"/>
@@ -2251,7 +2245,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M4e-XP-Wy7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3300" y="249"/>
+            <point key="canvasLocation" x="3153" y="169"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="syS-dd-BVS">

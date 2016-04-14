@@ -6,8 +6,11 @@
 //  Copyright © 2016 Cleveroad. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
+@class MRRoom;
 
 @interface MRBookingViewController : UIViewController
+
+@property (strong, nonatomic) MRRoom *room;
 
 @end

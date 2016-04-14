@@ -17,6 +17,7 @@
 #import "UIViewController+MRErrorAlert.h"
 #import "MRRoomWithVerticalScrollViewController.h"
 #import "UIColor+MRColorFromHEX.h"
+#import "MRBookingViewController.h"
 
 static const double kCountOfTimeSigmente = 48;
 static const double kWidthOfCell = 20;
@@ -62,7 +63,7 @@ static const double kWidthOfCell = 20;
     [self downloadAndUpdateDate];
 }
 
-#pragma mark - UITableViewDataSource - 
+#pragma mark - UITableViewDataSource -
 
 - (NSInteger)tableView:(PTEHorizontalTableView *)horizontalTableView numberOfRowsInSection:(NSInteger)section {
     return kCountOfTimeSigmente + self.countOfCellOnView ;
@@ -263,7 +264,7 @@ static const double kWidthOfCell = 20;
         CALayer * l = [self.userAvatare layer];
         [l setMasksToBounds:YES];
         [l setCornerRadius:self.userAvatare.frame.size.width / 2];
-
+        
         self.viewOfDetail.hidden = NO;
     } else {
         self.viewOfDetail.hidden = YES;
@@ -275,7 +276,7 @@ static const double kWidthOfCell = 20;
         if (error) {
             [self createAlertForError:error];
         } else {
-            self.room.meetings = [success copy];
+            self.room.meetings = success;
             [self.tableView reloadData];
         }
     }];
@@ -287,6 +288,9 @@ static const double kWidthOfCell = 20;
     if ([segue.identifier isEqualToString:@"horizontalView"]) {
         MRRoomWithVerticalScrollViewController *details = segue.destinationViewController;
         details.room = self.room;
+    } else if ([segue.identifier isEqualToString:@"toBookingVC"]) {
+        MRBookingViewController *booking = segue.destinationViewController;
+        booking.room = self.room;
     }
 }
 
