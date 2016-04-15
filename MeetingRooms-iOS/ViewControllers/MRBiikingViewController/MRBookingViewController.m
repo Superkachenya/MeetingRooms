@@ -13,9 +13,9 @@
 #import "MRRoom.h"
 #import "WYPopoverController.h"
 #import "MRTimePickerViewController.h"
-#import "MRDatePickerViewController.h"
+#import "FSCalendar.h"
 
-typedef NS_ENUM(NSUInteger, MRRedCircles) {
+typedef NS_ENUM(NSUInteger, MRRedCircle) {
     MRFifteenMinutesRedCircle,
     MRThirtyMinutesRedCircle,
     MRFourtyFiveMinutesRedCircle,
@@ -27,7 +27,7 @@ static NSTimeInterval const kThirtyMinutes     = 1800.0f;
 static NSTimeInterval const kFourtyFiveMinutes = 2700.0f;
 static NSTimeInterval const kSixtyMinutes      = 3600.0f;
 
-@interface MRBookingViewController () <WYPopoverControllerDelegate>
+@interface MRBookingViewController () <WYPopoverControllerDelegate, FSCalendarDelegate, FSCalendarDataSource>
 
 @property (weak, nonatomic) IBOutlet UIButton *timePickerButton;
 @property (weak, nonatomic) IBOutlet UIButton *datePickerButton;
@@ -44,6 +44,11 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0f;
 @property (strong, nonatomic) WYPopoverController *popover;
 @property (strong, nonatomic) NSDateFormatter *timeFormatter;
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
+//@property (strong, nonatomic) NSDateComponents *timeComponents;
+//@property (strong, nonatomic) NSDateComponents *dateComponents;
+//@property (strong, nonatomic) NSCalendar *myCalendar;
+@property (strong, nonatomic) NSDate *calendarDate;
+@property (strong, nonatomic) NSDate *timePickerTime;
 @property (strong, nonatomic) NSDate *startDate;
 @property (strong, nonatomic) NSDate *finishDate;
 
@@ -76,6 +81,8 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0f;
     self.dateFormatter.dateFormat = @"dd/MM/yy";
     self.timeButtonLabel.text = [self.timeFormatter stringFromDate:[NSDate date]];
     self.dateButtonLabel.text = [self.dateFormatter stringFromDate:[NSDate date]];
+    //    self.myCalendar = [NSCalendar currentCalendar];
+    //    self.dateComponents = [NSDateComponents new];
 }
 
 #pragma mark - WYPopoverControllerDelegate
@@ -89,6 +96,23 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0f;
     self.popover = nil;
 }
 
+#pragma mark - FSCalendarDelegate
+
+- (void)calendar:(FSCalendar *)calendar didSelectDate:(NSDate *)date {
+    self.calendarDate = date;
+    self.startDate = [self createDateFromTime:self.timePickerTime andDate:self.calendarDate];
+    self.dateButtonLabel.text = [self.dateFormatter stringFromDate:date];
+    self.finishDate = [NSDate dateWithTimeInterval:kFifteenMinutes sinceDate:self.startDate];
+    self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
+    [self.popover dismissPopoverAnimated:YES];
+}
+
+#pragma mark - FSCalendarDataSource
+
+- (NSDate *)minimumDateForCalendar:(FSCalendar *)calendar {
+    return [NSDate date];
+}
+
 #pragma mark - Handle Events
 
 - (IBAction)timeButtonDidTap:(UIButton *)sender {
@@ -96,7 +120,9 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0f;
     controller.modalInPopover = NO;
     controller.preferredContentSize = CGSizeMake(sender.bounds.size.width, self.view.bounds.size.height /3);
     controller.changedTime = ^(NSDate *date){
-        self.startDate = date;
+        [self showInRedCircle:MRFifteenMinutesRedCircle];
+        self.timePickerTime = date;
+        self.startDate = [self createDateFromTime:self.timePickerTime andDate:self.calendarDate];
         self.finishDate = [NSDate dateWithTimeInterval:kFifteenMinutes sinceDate:self.startDate];
         self.timeButtonLabel.text = [self.timeFormatter stringFromDate:date];
         self.checkInTimeLabel.text = [self.timeFormatter stringFromDate:self.startDate];
@@ -105,16 +131,18 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0f;
     self.popover = [[WYPopoverController alloc] initWithContentViewController:controller];
     self.popover.delegate = self;
     self.popover.wantsDefaultContentAppearance = NO;
-    [self.popover presentPopoverFromRect:sender.bounds inView:sender permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
+    [self.popover presentPopoverFromRect:sender.bounds inView:sender permittedArrowDirections:WYPopoverArrowDirectionUp animated:YES];
 }
 
 - (IBAction)dateButtonDidTap:(UIButton *)sender {
-    MRDatePickerViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"IDDatePickerVC"];
+    [self showInRedCircle:MRFifteenMinutesRedCircle];
+    UIViewController *controller = [[UIViewController alloc] init];
     controller.modalInPopover = NO;
-    controller.preferredContentSize = CGSizeMake(280.0, self.view.bounds.size.height /3);
-    controller.changedDate = ^(NSDate *date){
-        self.dateButtonLabel.text = [self.dateFormatter stringFromDate:date];
-    };
+    controller.preferredContentSize = CGSizeMake(280.0, self.view.frame.size.height/2);
+    FSCalendar *calendarView = [[FSCalendar alloc] initWithFrame:CGRectMake(0, 0, 280.0, self.view.bounds.size.height /2)];
+    calendarView.delegate = self;
+    calendarView.dataSource = self;
+    controller.view = calendarView;
     self.popover = [[WYPopoverController alloc] initWithContentViewController:controller];
     self.popover.delegate = self;
     self.popover.wantsDefaultContentAppearance = NO;
@@ -122,51 +150,61 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0f;
 }
 
 - (IBAction)addFifteenMinutes:(id)sender {
-    for (UIImageView *redCircle in self.redCircles) {
-        if ([redCircle isEqual:self.redCircles[MRFifteenMinutesRedCircle]]) {
-            redCircle.hidden = NO;
-        } else {
-            redCircle.hidden = YES;
-        }
-    }
+    [self showInRedCircle:MRFifteenMinutesRedCircle];
     self.finishDate = [NSDate dateWithTimeInterval:kFifteenMinutes sinceDate:self.startDate];
     self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
 }
 
 - (IBAction)addThirtyMinutes:(id)sender {
-    for (UIImageView *redCircle in self.redCircles) {
-        if ([redCircle isEqual:self.redCircles[MRThirtyMinutesRedCircle]]) {
-            redCircle.hidden = NO;
-        } else {
-            redCircle.hidden = YES;
-        }
-    }
+    [self showInRedCircle:MRThirtyMinutesRedCircle];
     self.finishDate = [NSDate dateWithTimeInterval:kThirtyMinutes sinceDate:self.startDate];
     self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
 }
 
 - (IBAction)addFourtyFiveMinutes:(id)sender {
-    for (UIImageView *redCircle in self.redCircles) {
-        if ([redCircle isEqual:self.redCircles[MRFourtyFiveMinutesRedCircle]]) {
-            redCircle.hidden = NO;
-        } else {
-            redCircle.hidden = YES;
-        }
-    }
+    [self showInRedCircle:MRFourtyFiveMinutesRedCircle];
     self.finishDate = [NSDate dateWithTimeInterval:kFourtyFiveMinutes sinceDate:self.startDate];
     self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
 }
 
 - (IBAction)addSixtyMinutes:(id)sender {
+    [self showInRedCircle:MRSixtyMinutesRedCircle];
+    self.finishDate = [NSDate dateWithTimeInterval:kSixtyMinutes sinceDate:self.startDate];
+    self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
+}
+
+#pragma mark - Helpers
+
+- (void)showInRedCircle:(MRRedCircle)circle {
     for (UIImageView *redCircle in self.redCircles) {
-        if ([redCircle isEqual:self.redCircles[MRSixtyMinutesRedCircle]]) {
+        if ([redCircle isEqual:self.redCircles[circle]]) {
             redCircle.hidden = NO;
         } else {
             redCircle.hidden = YES;
         }
     }
-    self.finishDate = [NSDate dateWithTimeInterval:kSixtyMinutes sinceDate:self.startDate];
-    self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
+}
+
+- (NSDate *)createDateFromTime:(NSDate *)time andDate:(NSDate *)date {
+    if (!date) {
+        date = [NSDate date];
+    }
+    if (!time) {
+        time = [NSDate date];
+    }
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *resultComponents = [NSDateComponents new];
+    NSDateComponents *timeComponents = [NSDateComponents new];
+    NSDateComponents *dateComponents = [NSDateComponents new];
+    timeComponents = [calendar components:NSCalendarUnitHour|NSCalendarUnitMinute fromDate:time];
+    dateComponents = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:date];
+    resultComponents.hour = timeComponents.hour;
+    resultComponents.minute = timeComponents.minute;
+    resultComponents.day = dateComponents.day;
+    resultComponents.month = dateComponents.month;
+    resultComponents.year = dateComponents.year;
+    NSDate *result = [calendar dateFromComponents:resultComponents];
+    return result;
 }
 
 @end

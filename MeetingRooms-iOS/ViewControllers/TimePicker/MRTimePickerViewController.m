@@ -18,8 +18,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.timePicker.minimumDate = [NSDate date];
 }
 
 - (IBAction)userDidChangeTime:(UIDatePicker *)sender {

@@ -27,7 +27,6 @@
 		8E3648C71CB5295500746EF9 /* MRMeeting.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3648C61CB5295500746EF9 /* MRMeeting.m */; };
 		8E6B01B81CBE892200CC2C4B /* MRBookingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B01B71CBE892200CC2C4B /* MRBookingViewController.m */; };
 		8E7294551CBFCAC4004D5A71 /* MRTimePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7294541CBFCAC4004D5A71 /* MRTimePickerViewController.m */; };
-		8E7294591CBFE855004D5A71 /* MRDatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7294581CBFE855004D5A71 /* MRDatePickerViewController.m */; };
 		8EBB9E9F1CB640100033C839 /* MRNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB9E9E1CB640100033C839 /* MRNetworkManager.m */; };
 		8EBB9EA11CB6401E0033C839 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8EBB9EA01CB6401E0033C839 /* GoogleService-Info.plist */; };
 		8EBB9EA61CB69E350033C839 /* UIViewController+MRErrorAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB9EA51CB69E350033C839 /* UIViewController+MRErrorAlert.m */; };
@@ -95,8 +94,6 @@
 		8E6B01B71CBE892200CC2C4B /* MRBookingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRBookingViewController.m; path = ViewControllers/MRBiikingViewController/MRBookingViewController.m; sourceTree = "<group>"; };
 		8E7294531CBFCAC4004D5A71 /* MRTimePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTimePickerViewController.h; path = ViewControllers/TimePicker/MRTimePickerViewController.h; sourceTree = "<group>"; };
 		8E7294541CBFCAC4004D5A71 /* MRTimePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTimePickerViewController.m; path = ViewControllers/TimePicker/MRTimePickerViewController.m; sourceTree = "<group>"; };
-		8E7294571CBFE855004D5A71 /* MRDatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRDatePickerViewController.h; path = ViewControllers/DatePicker/MRDatePickerViewController.h; sourceTree = "<group>"; };
-		8E7294581CBFE855004D5A71 /* MRDatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRDatePickerViewController.m; path = ViewControllers/DatePicker/MRDatePickerViewController.m; sourceTree = "<group>"; };
 		8EBB9E9D1CB640100033C839 /* MRNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRNetworkManager.h; path = Managers/GoogleAccountManager/MRNetworkManager.h; sourceTree = "<group>"; };
 		8EBB9E9E1CB640100033C839 /* MRNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRNetworkManager.m; path = Managers/GoogleAccountManager/MRNetworkManager.m; sourceTree = "<group>"; };
 		8EBB9EA01CB6401E0033C839 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -335,7 +332,6 @@
 			children = (
 				8E6B01B61CBE892200CC2C4B /* MRBookingViewController.h */,
 				8E6B01B71CBE892200CC2C4B /* MRBookingViewController.m */,
-				8E72945B1CBFE862004D5A71 /* DatePickerVC */,
 				8E7294561CBFCACE004D5A71 /* TimePickerVC */,
 			);
 			name = BookingViewController;
@@ -349,15 +345,6 @@
 				8E7294541CBFCAC4004D5A71 /* MRTimePickerViewController.m */,
 			);
 			name = TimePickerVC;
-			sourceTree = "<group>";
-		};
-		8E72945B1CBFE862004D5A71 /* DatePickerVC */ = {
-			isa = PBXGroup;
-			children = (
-				8E7294571CBFE855004D5A71 /* MRDatePickerViewController.h */,
-				8E7294581CBFE855004D5A71 /* MRDatePickerViewController.m */,
-			);
-			name = DatePickerVC;
 			sourceTree = "<group>";
 		};
 		8EBB9EA21CB640240033C839 /* NetworkManager */ = {
@@ -667,7 +654,6 @@
 				8E1987761CBD103500D33ECC /* NSDate+MRNextMinute.m in Sources */,
 				828843B21CB79DEF00AD961E /* MRRoomWithVerticalScrollViewController.m in Sources */,
 				8EBB9E9F1CB640100033C839 /* MRNetworkManager.m in Sources */,
-				8E7294591CBFE855004D5A71 /* MRDatePickerViewController.m in Sources */,
 				8E7294551CBFCAC4004D5A71 /* MRTimePickerViewController.m in Sources */,
 				820673671CB63F5400D1D205 /* MRRoomWithHorizontalScrollViewController.m in Sources */,
 				82E79F3F1CB570CC00D687DC /* main.m in Sources */,
