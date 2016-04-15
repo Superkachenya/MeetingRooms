@@ -15,21 +15,37 @@
 #import "MRTimePickerViewController.h"
 #import "MRDatePickerViewController.h"
 
+typedef NS_ENUM(NSUInteger, MRRedCircles) {
+    MRFifteenMinutesRedCircle,
+    MRThirtyMinutesRedCircle,
+    MRFourtyFiveMinutesRedCircle,
+    MRSixtyMinutesRedCircle
+};
+
+static NSTimeInterval const kFifteenMinutes    = 900.0f;
+static NSTimeInterval const kThirtyMinutes     = 1800.0f;
+static NSTimeInterval const kFourtyFiveMinutes = 2700.0f;
+static NSTimeInterval const kSixtyMinutes      = 3600.0f;
+
 @interface MRBookingViewController () <WYPopoverControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *timePickerButton;
 @property (weak, nonatomic) IBOutlet UIButton *datePickerButton;
+@property (weak, nonatomic) IBOutlet UILabel *timeButtonLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dateButtonLabel;
 @property (strong, nonatomic) IBOutletCollection(UIView) NSArray *timeCircles;
+@property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *redCircles;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *checkInTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *checkOutTimeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *timeButtonLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dateButtonLabel;
+
 
 @property (strong, nonatomic) MRNetworkManager *manager;
+@property (strong, nonatomic) WYPopoverController *popover;
 @property (strong, nonatomic) NSDateFormatter *timeFormatter;
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
-@property (strong, nonatomic) WYPopoverController *popover;
+@property (strong, nonatomic) NSDate *startDate;
+@property (strong, nonatomic) NSDate *finishDate;
 
 
 @end
@@ -46,10 +62,10 @@
     self.datePickerButton.layer.borderColor = [UIColor whiteColor].CGColor;
     
     for (UIView *circle in self.timeCircles) {
-    circle.layer.borderWidth = 1.0;
-    circle.layer.borderColor = [UIColor grayColor].CGColor;
-    circle.backgroundColor = [UIColor getUIColorFromHexString:@"#302D44" alpha:1.0];
-    circle.layer.cornerRadius = circle.frame.size.width / 2;
+        circle.layer.borderWidth = 1.0;
+        circle.layer.borderColor = [UIColor grayColor].CGColor;
+        circle.backgroundColor = [UIColor getUIColorFromHexString:@"#302D44" alpha:1.0];
+        circle.layer.cornerRadius = circle.frame.size.width / 2;
     }
     self.manager = [MRNetworkManager sharedManager];
     self.nameLabel.text = self.manager.owner.firstName;
@@ -60,7 +76,6 @@
     self.dateFormatter.dateFormat = @"dd/MM/yy";
     self.timeButtonLabel.text = [self.timeFormatter stringFromDate:[NSDate date]];
     self.dateButtonLabel.text = [self.dateFormatter stringFromDate:[NSDate date]];
-
 }
 
 #pragma mark - WYPopoverControllerDelegate
@@ -74,13 +89,18 @@
     self.popover = nil;
 }
 
+#pragma mark - Handle Events
+
 - (IBAction)timeButtonDidTap:(UIButton *)sender {
     MRTimePickerViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"IDTimePickerVC"];
     controller.modalInPopover = NO;
     controller.preferredContentSize = CGSizeMake(sender.bounds.size.width, self.view.bounds.size.height /3);
     controller.changedTime = ^(NSDate *date){
+        self.startDate = date;
+        self.finishDate = [NSDate dateWithTimeInterval:kFifteenMinutes sinceDate:self.startDate];
         self.timeButtonLabel.text = [self.timeFormatter stringFromDate:date];
-        self.checkInTimeLabel.text = [self.timeFormatter stringFromDate:date];
+        self.checkInTimeLabel.text = [self.timeFormatter stringFromDate:self.startDate];
+        self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
     };
     self.popover = [[WYPopoverController alloc] initWithContentViewController:controller];
     self.popover.delegate = self;
@@ -91,7 +111,7 @@
 - (IBAction)dateButtonDidTap:(UIButton *)sender {
     MRDatePickerViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"IDDatePickerVC"];
     controller.modalInPopover = NO;
-    controller.preferredContentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height /3);
+    controller.preferredContentSize = CGSizeMake(280.0, self.view.bounds.size.height /3);
     controller.changedDate = ^(NSDate *date){
         self.dateButtonLabel.text = [self.dateFormatter stringFromDate:date];
     };
@@ -99,6 +119,54 @@
     self.popover.delegate = self;
     self.popover.wantsDefaultContentAppearance = NO;
     [self.popover presentPopoverFromRect:sender.bounds inView:sender permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
+}
+
+- (IBAction)addFifteenMinutes:(id)sender {
+    for (UIImageView *redCircle in self.redCircles) {
+        if ([redCircle isEqual:self.redCircles[MRFifteenMinutesRedCircle]]) {
+            redCircle.hidden = NO;
+        } else {
+            redCircle.hidden = YES;
+        }
+    }
+    self.finishDate = [NSDate dateWithTimeInterval:kFifteenMinutes sinceDate:self.startDate];
+    self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
+}
+
+- (IBAction)addThirtyMinutes:(id)sender {
+    for (UIImageView *redCircle in self.redCircles) {
+        if ([redCircle isEqual:self.redCircles[MRThirtyMinutesRedCircle]]) {
+            redCircle.hidden = NO;
+        } else {
+            redCircle.hidden = YES;
+        }
+    }
+    self.finishDate = [NSDate dateWithTimeInterval:kThirtyMinutes sinceDate:self.startDate];
+    self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
+}
+
+- (IBAction)addFourtyFiveMinutes:(id)sender {
+    for (UIImageView *redCircle in self.redCircles) {
+        if ([redCircle isEqual:self.redCircles[MRFourtyFiveMinutesRedCircle]]) {
+            redCircle.hidden = NO;
+        } else {
+            redCircle.hidden = YES;
+        }
+    }
+    self.finishDate = [NSDate dateWithTimeInterval:kFourtyFiveMinutes sinceDate:self.startDate];
+    self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
+}
+
+- (IBAction)addSixtyMinutes:(id)sender {
+    for (UIImageView *redCircle in self.redCircles) {
+        if ([redCircle isEqual:self.redCircles[MRSixtyMinutesRedCircle]]) {
+            redCircle.hidden = NO;
+        } else {
+            redCircle.hidden = YES;
+        }
+    }
+    self.finishDate = [NSDate dateWithTimeInterval:kSixtyMinutes sinceDate:self.startDate];
+    self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
 }
 
 @end

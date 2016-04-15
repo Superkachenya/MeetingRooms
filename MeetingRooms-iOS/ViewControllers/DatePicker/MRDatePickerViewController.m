@@ -7,6 +7,7 @@
 //
 
 #import "MRDatePickerViewController.h"
+#import "UIColor+MRColorFromHEX.h"
 
 @interface MRDatePickerViewController ()
 
