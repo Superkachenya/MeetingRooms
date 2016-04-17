@@ -11,4 +11,7 @@
 
 - (NSDate *)nextMinute;
 
++ (NSNumber*) timeToAbstractTime:(NSDate *)time endTime:(long) endTime;
++ (NSString*) abstractTimeToTimeAfterNow:(long)abstractTime inTimeLineSegment:(double)CountOfTimeSigmente;
+
 @end

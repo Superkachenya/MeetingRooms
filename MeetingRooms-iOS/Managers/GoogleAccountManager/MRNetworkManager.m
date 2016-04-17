@@ -12,7 +12,7 @@
 #import "MRRoom.h"
 #import "MRMeeting.h"
 
-NSString *const baseURL = @"http://redmine.cleveroad.com:3503";
+NSString *const baseURL = @"http://redmine.cleveroad.com:3502";
 
 @interface MRNetworkManager ()
 

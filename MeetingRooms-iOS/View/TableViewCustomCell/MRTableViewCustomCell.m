@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleMeetingLabel;
 @property (weak, nonatomic) IBOutlet UIView *indicatorView;
 @property (weak, nonatomic) IBOutlet UILabel *timeIntervalLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *intervalViewSpace;
 
 @end
 
@@ -47,12 +48,31 @@
 }
 
 - (void)configureCellWithMeeting:(MRMeeting *)meeting {
-    self.titleMeetingLabel.text = [NSString stringWithFormat:@"%@ %@", meeting.meetingOwner.firstName,
-                                                                       meeting.meetingOwner.lastName];
+    NSArray *components = [meeting.meetingOwner.email componentsSeparatedByString: @"@"];
+    self.titleMeetingLabel.text = components[0];
     NSString *startDate = [self getDateAsString:meeting.meetingStart];
     NSString *finishDate = [self getDateAsString:meeting.meetingFinish];
     self.timeIntervalLabel.text = [NSString stringWithFormat:@"%@ - %@", startDate, finishDate];
     [self.creatorAvatarImage setImageWithURL:meeting.meetingOwner.avatar];
+    CALayer * layer = [self.creatorAvatarImage layer];
+    [layer setMasksToBounds:YES];
+    [layer setCornerRadius:self.creatorAvatarImage.frame.size.width / 2];
+    NSTimeInterval distanceBetweenDates = [meeting.meetingFinish timeIntervalSinceDate:meeting.meetingStart];
+    double secondsInAnHour = 60;
+    NSInteger minutesBetweenDates = distanceBetweenDates / secondsInAnHour;
+    switch (minutesBetweenDates) {
+        case 15:
+            self.intervalViewSpace.constant = 8;
+            break;
+        case 30:
+            self.intervalViewSpace.constant = 18;
+            break;
+        case 45:
+            self.intervalViewSpace.constant = 28;
+            break;
+        default:
+            break;
+    }
 }
 
 - (NSString *)getDateAsString:(NSDate *)date {

@@ -81,8 +81,6 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0f;
     self.dateFormatter.dateFormat = @"dd/MM/yy";
     self.timeButtonLabel.text = [self.timeFormatter stringFromDate:[NSDate date]];
     self.dateButtonLabel.text = [self.dateFormatter stringFromDate:[NSDate date]];
-    //    self.myCalendar = [NSCalendar currentCalendar];
-    //    self.dateComponents = [NSDateComponents new];
 }
 
 #pragma mark - WYPopoverControllerDelegate
@@ -171,6 +169,11 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0f;
     [self showInRedCircle:MRSixtyMinutesRedCircle];
     self.finishDate = [NSDate dateWithTimeInterval:kSixtyMinutes sinceDate:self.startDate];
     self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
+}
+- (IBAction)bookButtonDidPress:(id)sender {
+    NSLog(@"%@\n%@", self.startDate, self.finishDate);
+}
+- (IBAction)cancelButtonDidPress:(id)sender {
 }
 
 #pragma mark - Helpers
