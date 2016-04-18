@@ -17,6 +17,7 @@
 #import "MRNetworkManager.h"
 #import "UIViewController+MRErrorAlert.h"
 #import "MRRoomWithVerticalScrollViewController.h"
+#import "MRBookingViewController.h"
 #import "UIColor+MRColorFromHEX.h"
 
 static const double kCountOfTimeSigmente = 48;
@@ -226,6 +227,9 @@ static const double kWidthOfCell = 20;
     if ([segue.identifier isEqualToString:@"horizontalView"]) {
         MRRoomWithVerticalScrollViewController *details = segue.destinationViewController;
         details.room = self.room;
+    } else if ([segue.identifier isEqualToString:@"toBookingScreen"]) {
+        MRBookingViewController *booking = segue.destinationViewController;
+        booking.room = self.room;
     }
 }
 

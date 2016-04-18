@@ -12,7 +12,7 @@
 #import "MRRoom.h"
 #import "MRMeeting.h"
 
-NSString *const baseURL = @"http://redmine.cleveroad.com:3502";
+NSString *const baseURL = @"http://redmine.cleveroad.com:3503";
 
 @interface MRNetworkManager ()
 
@@ -97,6 +97,15 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3502";
 }
 
 - (void)bookMeetingInRoom:(NSNumber *)roomId from:(NSNumber *)start to:(NSNumber *)finish withMessage:(NSString *)message {
-    
+    NSString *composeStr = [NSString stringWithFormat:@"/api/v1/rooms/%ld/bookings", (long)roomId.integerValue];
+    NSString *tempString = [baseURL stringByAppendingString:composeStr];
+    [self.manager POST:tempString parameters:@{@"timeStart" : start,
+                                                 @"timeEnd" : finish,
+                                                 @"message" : message}
+              progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                  NSLog(@"%@\n%@", start, finish);
+              } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                  NSLog(@"%@\n%@ ERROR%@", start, finish, error.localizedDescription);
+              }];
 }
 @end

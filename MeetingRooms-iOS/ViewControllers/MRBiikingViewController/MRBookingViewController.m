@@ -26,6 +26,7 @@ static NSTimeInterval const kFifteenMinutes    = 900.0;
 static NSTimeInterval const kThirtyMinutes     = 1800.0;
 static NSTimeInterval const kFourtyFiveMinutes = 2700.0;
 static NSTimeInterval const kSixtyMinutes      = 3600.0;
+static double const kmilisecInSecond = 1000.0;
 
 @interface MRBookingViewController () <WYPopoverControllerDelegate, FSCalendarDelegate, FSCalendarDataSource, UITextViewDelegate>
 
@@ -233,15 +234,18 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0;
 }
 
 - (IBAction)bookButtonDidPress:(id)sender {
-    if (![self.textView hasText]) {
+    if (![self.textView hasText] || !self.startDate || !self.finishDate) {
         self.errorLabel.hidden = NO;
     } else {
         self.errorLabel.hidden = YES;
+        NSNumber *start = [self convertDateToMiliseconds:self.startDate];
+        NSNumber *finish = [self convertDateToMiliseconds:self.finishDate];
+        [self.manager bookMeetingInRoom:self.room.roomId from:start to:finish withMessage:self.quotationText];
     }
-    NSLog(@"%@\n%@", self.startDate, self.finishDate);
     [self dismissKeyboard:self];
 }
 - (IBAction)cancelButtonDidPress:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - HandleKeyboardAppearance
@@ -249,15 +253,19 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0;
 - (void)keyboardWasShown:(NSNotification *)notification {
     NSDictionary *userInfo = notification.userInfo;
     CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    self.bottomConstraint.constant = kbSize.height + self.constraintsConstant;
+    CGPoint bottomOffset = CGPointMake(0, self.bottomConstraint.constant / 2);
+    [self.scrollView setContentOffset:bottomOffset animated:YES];
     [UIView animateWithDuration:0.3 animations:^{
-        self.bottomConstraint.constant = kbSize.height + self.constraintsConstant;
-        CGPoint bottomOffset = CGPointMake(0, self.bottomConstraint.constant / 2);
-        [self.scrollView setContentOffset:bottomOffset animated:YES];
+        [self.view layoutIfNeeded];
     }];
 }
 
 - (void)keyboardWillBeHidden:(NSNotification *)notification {
     self.bottomConstraint.constant = self.constraintsConstant;
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.view layoutIfNeeded];
+    }];
 }
 
 -(IBAction)dismissKeyboard:(id)sender {
@@ -274,6 +282,12 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0;
             redCircle.hidden = YES;
         }
     }
+}
+
+- (NSNumber *)convertDateToMiliseconds:(NSDate *)date {
+    NSTimeInterval miliseconds = [date timeIntervalSince1970] * kmilisecInSecond;
+    NSNumber *result = @(miliseconds);
+    return result;
 }
 
 - (NSDate *)createDateFromTime:(NSDate *)time andDate:(NSDate *)date {
