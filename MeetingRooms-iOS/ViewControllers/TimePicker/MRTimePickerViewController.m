@@ -18,6 +18,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSDateComponents *components = [NSDateComponents new];
+    NSDate *donorDate = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    components = [calendar components:NSCalendarUnitMinute|
+                                        NSCalendarUnitHour|
+                                         NSCalendarUnitDay|
+                                       NSCalendarUnitMonth|
+                                        NSCalendarUnitYear fromDate:donorDate];
+    components.hour = 8;
+    components.minute = 0;
+    NSDate *min = [calendar dateFromComponents:components];
+    components.hour = 19;
+    components.minute = 30;
+    NSDate *max = [calendar dateFromComponents:components];
+    self.timePicker.minimumDate = min;
+    self.timePicker.maximumDate = max;
 }
 
 - (IBAction)userDidChangeTime:(UIDatePicker *)sender {

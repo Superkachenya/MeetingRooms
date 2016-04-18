@@ -172,27 +172,24 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0f;
 
 - (IBAction)addFifteenMinutes:(id)sender {
     [self showInRedCircle:MRFifteenMinutesRedCircle];
-    self.finishDate = [NSDate dateWithTimeInterval:kFifteenMinutes sinceDate:self.startDate];
-    self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
+    [self addTimeInterval:kFifteenMinutes];
 }
 
 - (IBAction)addThirtyMinutes:(id)sender {
     [self showInRedCircle:MRThirtyMinutesRedCircle];
-    self.finishDate = [NSDate dateWithTimeInterval:kThirtyMinutes sinceDate:self.startDate];
-    self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
+    [self addTimeInterval:kThirtyMinutes];
 }
 
 - (IBAction)addFourtyFiveMinutes:(id)sender {
     [self showInRedCircle:MRFourtyFiveMinutesRedCircle];
-    self.finishDate = [NSDate dateWithTimeInterval:kFourtyFiveMinutes sinceDate:self.startDate];
-    self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
+    [self addTimeInterval:kFourtyFiveMinutes];
 }
 
 - (IBAction)addSixtyMinutes:(id)sender {
     [self showInRedCircle:MRSixtyMinutesRedCircle];
-    self.finishDate = [NSDate dateWithTimeInterval:kSixtyMinutes sinceDate:self.startDate];
-    self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
+    [self addTimeInterval:kSixtyMinutes];
 }
+
 - (IBAction)bookButtonDidPress:(id)sender {
     NSLog(@"%@\n%@", self.startDate, self.finishDate);
     [self dismissKeyboard:self];
@@ -232,6 +229,19 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0f;
     resultComponents.year = dateComponents.year;
     NSDate *result = [calendar dateFromComponents:resultComponents];
     return result;
+}
+
+- (void)addTimeInterval:(NSTimeInterval)interval {
+    if (self.startDate) {
+        self.finishDate = [NSDate dateWithTimeInterval:interval sinceDate:self.startDate];
+        self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
+    } else {
+        self.startDate = [NSDate date];
+        self.finishDate = [NSDate dateWithTimeInterval:interval sinceDate:self.startDate];
+        self.checkInTimeLabel.text = [self.timeFormatter stringFromDate:self.startDate];
+        self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
+    }
+
 }
 
 #pragma mark - HandleKeyboardAppearance

@@ -20,5 +20,6 @@ typedef void(^MRCompletion)(id success, NSError *error);
 - (void)getAccessWithGoogleToken:(NSString *)token completionBlock:(MRCompletion)block;
 - (void)getRoomsStatusWithCompletionBlock:(MRCompletion)block;
 - (void)getRoomInfoById:(NSNumber *)roomId toDate:(NSDate *)date completion:(MRCompletion)block;
+- (void)bookMeetingInRoom:(NSNumber *)roomId from:(NSNumber *)start to:(NSNumber *)finish withMessage:(NSString *)message;
 
 @end

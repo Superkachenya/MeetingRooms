@@ -77,7 +77,6 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3502";
         NSDateFormatter *formatter = [NSDateFormatter new];
         formatter.dateFormat = @"YYYY-MM-dd";
         tempString = [NSString stringWithFormat:@"%@%@?date=%@",tempString,roomId.stringValue, [formatter stringFromDate:date]];
-        NSLog(@"%@",tempString);
     }
     MRCompletion copyBlock = [block copy];
     [self.manager GET:tempString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -95,5 +94,9 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3502";
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         copyBlock(nil, error);
     }];
+}
+
+- (void)bookMeetingInRoom:(NSNumber *)roomId from:(NSNumber *)start to:(NSNumber *)finish withMessage:(NSString *)message {
+    
 }
 @end
