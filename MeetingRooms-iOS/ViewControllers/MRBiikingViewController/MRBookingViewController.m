@@ -44,6 +44,7 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0;
 @property (weak, nonatomic) IBOutlet UILabel *messagePlaceholder;
 @property (weak, nonatomic) IBOutlet UILabel *errorLabel;
 
+@property (strong, nonatomic) NSString *quotationText;
 @property (assign, nonatomic) CGFloat constraintsConstant;
 @property (strong, nonatomic) MRNetworkManager *manager;
 @property (strong, nonatomic) WYPopoverController *popover;
@@ -144,10 +145,22 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0;
     return self.textView.text.length - range.length + text.length < 300;
 }
 
-- (void)textViewDidEndEditing:(UITextView *)theTextView
-{
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    if (self.quotationText.length) {
+        NSString *cutString = [self.quotationText substringWithRange:NSMakeRange(1, self.quotationText.length - 2)];
+        self.textView.text = cutString;
+    } else {
+        self.textView.text = self.quotationText;
+    }
+}
+
+- (void)textViewDidEndEditing:(UITextView *)theTextView {
     if (![self.textView hasText]) {
         self.messagePlaceholder.hidden = NO;
+        self.quotationText = @"";
+    } else {
+        self.quotationText = [NSString stringWithFormat:@"\"%@\"",self.textView.text];
+        self.textView.text = self.quotationText;
     }
 }
 
@@ -295,7 +308,7 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0;
         self.checkInTimeLabel.text = [self.timeFormatter stringFromDate:self.startDate];
         self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
     }
-
+    
 }
 
 @end
