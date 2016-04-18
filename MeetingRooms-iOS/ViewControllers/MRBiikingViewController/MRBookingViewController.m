@@ -22,10 +22,10 @@ typedef NS_ENUM(NSUInteger, MRRedCircle) {
     MRSixtyMinutesRedCircle
 };
 
-static NSTimeInterval const kFifteenMinutes    = 900.0f;
-static NSTimeInterval const kThirtyMinutes     = 1800.0f;
-static NSTimeInterval const kFourtyFiveMinutes = 2700.0f;
-static NSTimeInterval const kSixtyMinutes      = 3600.0f;
+static NSTimeInterval const kFifteenMinutes    = 900.0;
+static NSTimeInterval const kThirtyMinutes     = 1800.0;
+static NSTimeInterval const kFourtyFiveMinutes = 2700.0;
+static NSTimeInterval const kSixtyMinutes      = 3600.0;
 
 @interface MRBookingViewController () <WYPopoverControllerDelegate, FSCalendarDelegate, FSCalendarDataSource>
 
@@ -140,6 +140,7 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0f;
     MRTimePickerViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"IDTimePickerVC"];
     controller.modalInPopover = NO;
     controller.preferredContentSize = CGSizeMake(sender.bounds.size.width, self.view.bounds.size.height /3);
+    controller.minDate = self.startDate ? self.startDate : [NSDate date];
     controller.changedTime = ^(NSDate *date){
         [self showInRedCircle:MRFifteenMinutesRedCircle];
         self.timePickerTime = date;
