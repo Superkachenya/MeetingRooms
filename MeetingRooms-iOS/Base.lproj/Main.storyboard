@@ -46,6 +46,7 @@
             <string>GlacialIndifference-Regular</string>
             <string>GlacialIndifference-Regular</string>
             <string>GlacialIndifference-Regular</string>
+            <string>GlacialIndifference-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -1823,7 +1824,7 @@
                                                     </mask>
                                                 </variation>
                                             </view>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text=" &quot;Provide Meeting's topic here&quot;" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nsH-3i-3nb">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nsH-3i-3nb">
                                                 <rect key="frame" x="28" y="398" width="544" height="34"/>
                                                 <color key="backgroundColor" red="0.18823529411764706" green="0.1764705882352941" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
@@ -2212,6 +2213,12 @@
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" &quot;Provide Meeting's topic here&quot;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="37R-Ox-bsG" userLabel="Placeholder">
+                                                <rect key="frame" x="33" y="403" width="224" height="21"/>
+                                                <fontDescription key="fontDescription" name="GlacialIndifference-Regular" family="Glacial Indifference" pointSize="17"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <gestureRecognizers/>
                                         <constraints>
@@ -2229,6 +2236,7 @@
                                             <constraint firstItem="PIN-zK-jj9" firstAttribute="leading" secondItem="vVr-9w-l7D" secondAttribute="leading" constant="28" id="DIG-d1-nw4"/>
                                             <constraint firstItem="JJV-3G-tAL" firstAttribute="top" secondItem="0jR-3O-nkp" secondAttribute="top" constant="-10" id="E1t-bN-9eg"/>
                                             <constraint firstItem="b2h-Wf-HNh" firstAttribute="top" secondItem="nGg-D9-IBw" secondAttribute="bottom" constant="20" id="EO7-lU-E9M"/>
+                                            <constraint firstItem="37R-Ox-bsG" firstAttribute="leading" secondItem="nsH-3i-3nb" secondAttribute="leading" constant="5" id="EUh-vj-jWx"/>
                                             <constraint firstItem="qVN-2O-TpZ" firstAttribute="trailing" secondItem="yfa-yJ-DqA" secondAttribute="trailing" constant="-10" id="Ean-tG-Ncw"/>
                                             <constraint firstAttribute="trailing" secondItem="qbg-Ix-9kU" secondAttribute="trailing" id="Enb-Uk-mKo"/>
                                             <constraint firstItem="nGg-D9-IBw" firstAttribute="width" secondItem="cad-3b-3rs" secondAttribute="width" id="GOV-Jo-ZOJ"/>
@@ -2242,6 +2250,7 @@
                                             <constraint firstItem="b2h-Wf-HNh" firstAttribute="top" secondItem="vQL-Bi-0Uz" secondAttribute="bottom" constant="20" id="JtW-yf-Rji"/>
                                             <constraint firstItem="QFz-v9-mJT" firstAttribute="top" secondItem="bDE-7W-cB7" secondAttribute="top" constant="-5" id="K0r-VY-mhg"/>
                                             <constraint firstItem="qbg-Ix-9kU" firstAttribute="leading" secondItem="vVr-9w-l7D" secondAttribute="leading" id="LeV-Fg-2Ub"/>
+                                            <constraint firstItem="37R-Ox-bsG" firstAttribute="top" secondItem="nsH-3i-3nb" secondAttribute="top" constant="5" id="MIC-wt-ONG"/>
                                             <constraint firstItem="vQL-Bi-0Uz" firstAttribute="width" secondItem="cad-3b-3rs" secondAttribute="width" id="Mlh-jZ-DH8"/>
                                             <constraint firstItem="cad-3b-3rs" firstAttribute="leading" secondItem="QFz-v9-mJT" secondAttribute="trailing" id="Oxh-XP-KIR"/>
                                             <constraint firstItem="bDE-7W-cB7" firstAttribute="leading" secondItem="QFz-v9-mJT" secondAttribute="leading" id="PE8-2X-okO"/>
@@ -2310,6 +2319,7 @@
                         <outlet property="checkOutTimeLabel" destination="Vge-aj-3pN" id="0NJ-0L-IgJ"/>
                         <outlet property="dateButtonLabel" destination="dXz-va-bMw" id="JxC-zW-w0W"/>
                         <outlet property="datePickerButton" destination="yfa-yJ-DqA" id="k5H-Bi-Yb1"/>
+                        <outlet property="messagePlaceholder" destination="37R-Ox-bsG" id="n92-Am-1ZR"/>
                         <outlet property="nameLabel" destination="Ng4-Al-eOy" id="vOb-BV-Vlm"/>
                         <outlet property="scrollView" destination="h87-iu-bG1" id="cpA-Ll-iKj"/>
                         <outlet property="textView" destination="nsH-3i-3nb" id="7O0-Pi-b2D"/>

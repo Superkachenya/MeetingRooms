@@ -27,7 +27,7 @@ static NSTimeInterval const kThirtyMinutes     = 1800.0;
 static NSTimeInterval const kFourtyFiveMinutes = 2700.0;
 static NSTimeInterval const kSixtyMinutes      = 3600.0;
 
-@interface MRBookingViewController () <WYPopoverControllerDelegate, FSCalendarDelegate, FSCalendarDataSource>
+@interface MRBookingViewController () <WYPopoverControllerDelegate, FSCalendarDelegate, FSCalendarDataSource, UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *timePickerButton;
 @property (weak, nonatomic) IBOutlet UIButton *datePickerButton;
@@ -41,6 +41,7 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UILabel *messagePlaceholder;
 
 @property (assign, nonatomic) CGFloat constraintsConstant;
 @property (strong, nonatomic) MRNetworkManager *manager;
@@ -77,6 +78,7 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0;
     self.manager = [MRNetworkManager sharedManager];
     self.nameLabel.text = self.manager.owner.firstName;
     self.constraintsConstant = self.bottomConstraint.constant;
+    self.textView.delegate = self;
     
     self.timeFormatter = [NSDateFormatter new];
     self.dateFormatter = [NSDateFormatter new];
@@ -132,6 +134,25 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0;
 
 - (NSDate *)minimumDateForCalendar:(FSCalendar *)calendar {
     return [NSDate date];
+}
+
+#pragma mark - UITextViewDelegate
+
+- (void)textViewDidEndEditing:(UITextView *)theTextView
+{
+    if (![self.textView hasText]) {
+        self.messagePlaceholder.hidden = NO;
+    }
+}
+
+- (void) textViewDidChange:(UITextView *)textView
+{
+    if(![self.textView hasText]) {
+        self.messagePlaceholder.hidden = NO;
+    }
+    else{
+        self.messagePlaceholder.hidden = YES;
+    }  
 }
 
 #pragma mark - Handle Events
