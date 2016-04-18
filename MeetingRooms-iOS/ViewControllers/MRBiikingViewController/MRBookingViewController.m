@@ -38,15 +38,15 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0f;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *checkInTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *checkOutTimeLabel;
+@property (weak, nonatomic) IBOutlet UITextView *textView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
-
+@property (assign, nonatomic) CGFloat constraintsConstant;
 @property (strong, nonatomic) MRNetworkManager *manager;
 @property (strong, nonatomic) WYPopoverController *popover;
 @property (strong, nonatomic) NSDateFormatter *timeFormatter;
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
-//@property (strong, nonatomic) NSDateComponents *timeComponents;
-//@property (strong, nonatomic) NSDateComponents *dateComponents;
-//@property (strong, nonatomic) NSCalendar *myCalendar;
 @property (strong, nonatomic) NSDate *calendarDate;
 @property (strong, nonatomic) NSDate *timePickerTime;
 @property (strong, nonatomic) NSDate *startDate;
@@ -56,6 +56,8 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0f;
 @end
 
 @implementation MRBookingViewController
+
+#pragma mark - UIViewLifeCycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -74,6 +76,7 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0f;
     }
     self.manager = [MRNetworkManager sharedManager];
     self.nameLabel.text = self.manager.owner.firstName;
+    self.constraintsConstant = self.bottomConstraint.constant;
     
     self.timeFormatter = [NSDateFormatter new];
     self.dateFormatter = [NSDateFormatter new];
@@ -81,6 +84,26 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0f;
     self.dateFormatter.dateFormat = @"dd/MM/yy";
     self.timeButtonLabel.text = [self.timeFormatter stringFromDate:[NSDate date]];
     self.dateButtonLabel.text = [self.dateFormatter stringFromDate:[NSDate date]];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillShowNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillHideNotification
+                                                  object:nil];
 }
 
 #pragma mark - WYPopoverControllerDelegate
@@ -172,6 +195,7 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0f;
 }
 - (IBAction)bookButtonDidPress:(id)sender {
     NSLog(@"%@\n%@", self.startDate, self.finishDate);
+    [self dismissKeyboard:self];
 }
 - (IBAction)cancelButtonDidPress:(id)sender {
 }
@@ -208,6 +232,30 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0f;
     resultComponents.year = dateComponents.year;
     NSDate *result = [calendar dateFromComponents:resultComponents];
     return result;
+}
+
+#pragma mark - HandleKeyboardAppearance
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
+- (void)keyboardWasShown:(NSNotification *)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.bottomConstraint.constant = kbSize.height + self.constraintsConstant;
+        CGPoint bottomOffset = CGPointMake(0, kbSize.height / 2);
+        [self.scrollView setContentOffset:bottomOffset animated:YES];
+    }];
+}
+
+- (void)keyboardWillBeHidden:(NSNotification *)notification {
+    self.bottomConstraint.constant = self.constraintsConstant;
+}
+
+-(IBAction)dismissKeyboard:(id)sender {
+    [self.textView resignFirstResponder];
 }
 
 @end

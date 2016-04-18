@@ -2213,6 +2213,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstItem="yfa-yJ-DqA" firstAttribute="leading" secondItem="JJV-3G-tAL" secondAttribute="trailing" constant="28" id="0aL-ZE-brc"/>
                                             <constraint firstAttribute="trailing" secondItem="sl9-62-dRK" secondAttribute="trailing" constant="28" id="1IX-y1-2bm"/>
@@ -2280,6 +2281,9 @@
                                             <constraint firstItem="PRF-mM-YZE" firstAttribute="leading" secondItem="JJV-3G-tAL" secondAttribute="leading" id="zHq-7a-3Xz"/>
                                             <constraint firstItem="i0m-AY-Xby" firstAttribute="top" secondItem="4VC-HY-25B" secondAttribute="top" constant="-5" id="zmy-UB-rh1"/>
                                         </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="pSg-bT-TWj" appends="YES" id="UOp-rz-OpR"/>
+                                        </connections>
                                     </view>
                                 </subviews>
                                 <constraints>
@@ -2301,11 +2305,14 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bottomConstraint" destination="mJ4-Jh-xvG" id="xYa-cv-ymQ"/>
                         <outlet property="checkInTimeLabel" destination="Ux0-2M-URP" id="4G4-2v-TUh"/>
                         <outlet property="checkOutTimeLabel" destination="Vge-aj-3pN" id="0NJ-0L-IgJ"/>
                         <outlet property="dateButtonLabel" destination="dXz-va-bMw" id="JxC-zW-w0W"/>
                         <outlet property="datePickerButton" destination="yfa-yJ-DqA" id="k5H-Bi-Yb1"/>
                         <outlet property="nameLabel" destination="Ng4-Al-eOy" id="vOb-BV-Vlm"/>
+                        <outlet property="scrollView" destination="h87-iu-bG1" id="cpA-Ll-iKj"/>
+                        <outlet property="textView" destination="nsH-3i-3nb" id="7O0-Pi-b2D"/>
                         <outlet property="timeButtonLabel" destination="Aer-w0-VZ7" id="ito-N1-g9e"/>
                         <outlet property="timePickerButton" destination="JJV-3G-tAL" id="rYH-eZ-zN4"/>
                         <outletCollection property="redCircles" destination="vCS-8D-hFc" id="g4d-Mo-TnV"/>
@@ -2319,6 +2326,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M4e-XP-Wy7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="pSg-bT-TWj">
+                    <connections>
+                        <action selector="dismissKeyboard:" destination="WRU-M0-dhZ" id="RNq-Yz-IjR"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3553" y="173"/>
         </scene>
