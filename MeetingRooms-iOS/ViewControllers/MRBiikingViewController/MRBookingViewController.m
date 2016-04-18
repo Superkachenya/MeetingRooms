@@ -42,6 +42,7 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UILabel *messagePlaceholder;
+@property (weak, nonatomic) IBOutlet UILabel *errorLabel;
 
 @property (assign, nonatomic) CGFloat constraintsConstant;
 @property (strong, nonatomic) MRNetworkManager *manager;
@@ -138,6 +139,11 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0;
 
 #pragma mark - UITextViewDelegate
 
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    return self.textView.text.length - range.length + text.length < 300;
+}
+
 - (void)textViewDidEndEditing:(UITextView *)theTextView
 {
     if (![self.textView hasText]) {
@@ -147,12 +153,13 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0;
 
 - (void) textViewDidChange:(UITextView *)textView
 {
-    if(![self.textView hasText]) {
+    if (![self.textView hasText]) {
         self.messagePlaceholder.hidden = NO;
-    }
-    else{
+    } else {
         self.messagePlaceholder.hidden = YES;
-    }  
+    }
+    CGPoint bottomOffset = CGPointMake(0, self.bottomConstraint.constant / 2);
+    [self.scrollView setContentOffset:bottomOffset animated:NO];
 }
 
 #pragma mark - Handle Events
@@ -213,10 +220,35 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0;
 }
 
 - (IBAction)bookButtonDidPress:(id)sender {
+    if (![self.textView hasText]) {
+        self.errorLabel.hidden = NO;
+    } else {
+        self.errorLabel.hidden = YES;
+    }
     NSLog(@"%@\n%@", self.startDate, self.finishDate);
     [self dismissKeyboard:self];
 }
 - (IBAction)cancelButtonDidPress:(id)sender {
+}
+
+#pragma mark - HandleKeyboardAppearance
+
+- (void)keyboardWasShown:(NSNotification *)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.bottomConstraint.constant = kbSize.height + self.constraintsConstant;
+        CGPoint bottomOffset = CGPointMake(0, self.bottomConstraint.constant / 2);
+        [self.scrollView setContentOffset:bottomOffset animated:YES];
+    }];
+}
+
+- (void)keyboardWillBeHidden:(NSNotification *)notification {
+    self.bottomConstraint.constant = self.constraintsConstant;
+}
+
+-(IBAction)dismissKeyboard:(id)sender {
+    [self.textView resignFirstResponder];
 }
 
 #pragma mark - Helpers
@@ -264,30 +296,6 @@ static NSTimeInterval const kSixtyMinutes      = 3600.0;
         self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
     }
 
-}
-
-#pragma mark - HandleKeyboardAppearance
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
-- (void)keyboardWasShown:(NSNotification *)notification {
-    NSDictionary *userInfo = notification.userInfo;
-    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    [UIView animateWithDuration:0.3 animations:^{
-        self.bottomConstraint.constant = kbSize.height + self.constraintsConstant;
-        CGPoint bottomOffset = CGPointMake(0, kbSize.height / 2);
-        [self.scrollView setContentOffset:bottomOffset animated:YES];
-    }];
-}
-
-- (void)keyboardWillBeHidden:(NSNotification *)notification {
-    self.bottomConstraint.constant = self.constraintsConstant;
-}
-
--(IBAction)dismissKeyboard:(id)sender {
-    [self.textView resignFirstResponder];
 }
 
 @end
