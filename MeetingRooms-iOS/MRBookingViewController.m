@@ -251,8 +251,8 @@ static const double kWidthOfCell = 20;
         self.messagePlaceholder.hidden = NO;
         self.quotationText = @"";
     } else {
-        self.quotationText = [NSString stringWithFormat:@"\"%@\"",self.textView.text];
-        self.textView.text = self.quotationText;
+        self.textView.text = [self setTextInQuotes:self.textView.text];
+        self.quotationText = self.textView.text;
     }
 }
 
@@ -328,6 +328,9 @@ static const double kWidthOfCell = 20;
     if (![self.textView hasText] || !self.startDate || !self.finishDate) {
         self.errorLabel.hidden = NO;
     } else {
+        if (!self.quotationText) {
+            self.quotationText = [self setTextInQuotes:self.textView.text];
+        }
         self.errorLabel.hidden = YES;
         NSNumber *start = [self convertDateToMiliseconds:self.startDate];
         NSNumber *finish = [self convertDateToMiliseconds:self.finishDate];
@@ -370,6 +373,11 @@ static const double kWidthOfCell = 20;
 }
 
 #pragma mark - Helpers
+
+- (NSString *)setTextInQuotes:(NSString *)text {
+    NSString *quotes = [NSString stringWithFormat:@"\"%@\"",text];
+    return quotes;
+}
 
 - (void)showInRedCircle:(MRRedCircle)circle {
     for (UIImageView *redCircle in self.redCircles) {

@@ -21,7 +21,7 @@
 }
 
 + (NSString*) abstractTimeToTimeAfterNow:(long)abstractTime inTimeLineSegment:(double)countOfTimeSigmente {
-    NSString* leftTimeIfStr = [NSString new];
+    NSString* leftTimeIfStr = nil;
     NSNumber* hours = [NSNumber numberWithFloat:((abstractTime + (countOfTimeSigmente)) / 4)-1];
     NSNumber* minute = [NSNumber numberWithLong:(((abstractTime % 4)-2) * 15)];
     NSDate* curentDate = [NSDate new];
