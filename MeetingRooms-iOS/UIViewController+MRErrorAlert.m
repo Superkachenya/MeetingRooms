@@ -15,14 +15,8 @@
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error!"
                                                                    message:error.localizedDescription
                                                             preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"Ok"
-                                                 style:UIAlertActionStyleDefault
-                                               handler:^(UIAlertAction * _Nonnull action) {
-                                                   [self dismissViewControllerAnimated:YES completion:nil];
-                                               }];
-    [alert addAction:ok];
     [self presentViewController:alert animated:YES completion:nil];
+    [self performSelector:@selector(closeAlert) withObject:nil afterDelay:1.0];
 }
 
 - (void)createAlertWithMessage:(NSString *)message {

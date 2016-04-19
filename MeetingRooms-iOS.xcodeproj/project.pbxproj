@@ -157,8 +157,7 @@
 		8206735F1CB63F5400D1D205 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				8EA6BD291CC61C5100E9EE03 /* MRScheduleViewController.h */,
-				8EA6BD2A1CC61C5100E9EE03 /* MRScheduleViewController.m */,
+				8EA6BD491CC6389D00E9EE03 /* SheduleViewController */,
 				820673601CB63F5400D1D205 /* LoginViewConroller */,
 				820673631CB63F5400D1D205 /* RoomWithHorizontalScrollViewController */,
 				828843AF1CB79B5900AD961E /* RoomWithVerticalScrollViewController */,
@@ -367,13 +366,22 @@
 			name = CustomSheduleCell;
 			sourceTree = "<group>";
 		};
-		8EA6BD481CC629EC00E9EE03 /* Custom */ = {
+		8EA6BD481CC629EC00E9EE03 /* CustomSheduleLabel */ = {
 			isa = PBXGroup;
 			children = (
 				8EA6BD3E1CC61F8A00E9EE03 /* MRCustomLabel.h */,
 				8EA6BD3F1CC61F8A00E9EE03 /* MRCustomLabel.m */,
 			);
-			name = Custom;
+			name = CustomSheduleLabel;
+			sourceTree = "<group>";
+		};
+		8EA6BD491CC6389D00E9EE03 /* SheduleViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8EA6BD291CC61C5100E9EE03 /* MRScheduleViewController.h */,
+				8EA6BD2A1CC61C5100E9EE03 /* MRScheduleViewController.m */,
+			);
+			name = SheduleViewController;
 			sourceTree = "<group>";
 		};
 		8EBB9EA21CB640240033C839 /* NetworkManager */ = {
@@ -443,7 +451,7 @@
 		CFF471791CB54A83006A6D39 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				8EA6BD481CC629EC00E9EE03 /* Custom */,
+				8EA6BD481CC629EC00E9EE03 /* CustomSheduleLabel */,
 				8EA6BD441CC626A900E9EE03 /* CustomSheduleCell */,
 				828843B31CB7BE5000AD961E /* CustomCell */,
 				CFF4717A1CB54A8C006A6D39 /* TableViewHorizontalCell */,
