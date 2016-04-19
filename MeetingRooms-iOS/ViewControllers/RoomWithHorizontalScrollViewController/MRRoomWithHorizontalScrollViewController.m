@@ -11,19 +11,20 @@
 #import "MRTableViewHorizontalCell.h"
 #import "MRMeeting.h"
 #import "MRUser.h"
-#import "MROWner.h"
+#import "MROwner.h"
 #import "AFNetworking/AFNetworking.h"
 #import "NSDate+MRNextMinute.h"
 #import "MRNetworkManager.h"
 #import "UIViewController+MRErrorAlert.h"
 #import "MRRoomWithVerticalScrollViewController.h"
-#import "MRBookingViewController.h"
 #import "UIColor+MRColorFromHEX.h"
+#import "MRBookingViewController.h"
 
 static const double kCountOfTimeSigmente = 48;
 static const double kWidthOfCell = 20;
 
 @interface MRRoomWithHorizontalScrollViewController () <PTETableViewDelegate>
+
 @property (weak, nonatomic) IBOutlet UILabel *clockTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *clockDateLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -45,9 +46,12 @@ static const double kWidthOfCell = 20;
 @property (strong, nonatomic) NSIndexPath* indexPathOfCentralCell;
 @property (strong, nonatomic) MRMeeting* meetting;
 @property (assign, nonatomic) long countOfCellOnView;
+
 @end
 
 @implementation MRRoomWithHorizontalScrollViewController
+
+#pragma mark - UIViewController
 
 #pragma mark - UIViewController
 
@@ -66,7 +70,7 @@ static const double kWidthOfCell = 20;
     [self downloadAndUpdateDate];
 }
 
-#pragma mark - UITableViewDataSource - 
+#pragma mark - UITableViewDataSource -
 
 - (NSInteger)tableView:(PTEHorizontalTableView *)horizontalTableView numberOfRowsInSection:(NSInteger)section {
     return kCountOfTimeSigmente + self.countOfCellOnView ;
@@ -81,28 +85,27 @@ static const double kWidthOfCell = 20;
     MRTableViewHorizontalCell * cell = [horizontalTableView.tableView dequeueReusableCellWithIdentifier:@"cell"];
     [cell showTimeLineWithCountOfLine:kCountOfTimeSigmente sizeOfViewIs:(self.countOfCellOnView/2)
                       onIndexPathCell:indexPath.row];
-    NSString* key = [NSString new];
     long keyOfCell = (long)indexPath.row + self.countOfCellOnView/2;
     if (indexPath > self.indexPathOfLastShowCell) {
         keyOfCell = (long)indexPath.row - self.countOfCellOnView/2;
     }
-    key = [NSString stringWithFormat:@"%ld",keyOfCell];
+    NSString *key = [NSString stringWithFormat:@"%ld",keyOfCell];
     self.imageLine.image = [UIImage imageNamed:@"ic_curve_blue_red"];
     self.meetting = [self.dictonaryOfMeeting objectForKey:key];
     self.timeLabel.text = [NSDate abstractTimeToTimeAfterNow:keyOfCell inTimeLineSegment:kCountOfTimeSigmente/2];
     if (![self.timeLabel.text isEqualToString:@"Past"]) {
         if (self.meetting) {
-        if ([self.meetting.meetingOwner.email isEqualToString:[MRNetworkManager sharedManager].owner.email]) {
-            [cell showYelloy];
-            self.imageLine.image = [UIImage imageNamed:@"ic_curve_yellow"];
-            self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"F8E71C" alpha:1.0];
-            self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"F8E71C" alpha:1.0];
-        } else {
-            self.imageLine.image = [UIImage imageNamed:@"ic_curve_blue"];
-            self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"008FFB" alpha:1.0];
-            self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"008FFB" alpha:1.0];
+            if ([self.meetting.meetingOwner.email isEqualToString:[MRNetworkManager sharedManager].owner.email]) {
+                [cell showYelloy];
+                self.imageLine.image = [UIImage imageNamed:@"ic_curve_yellow"];
+                self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"F8E71C" alpha:1.0];
+                self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"F8E71C" alpha:1.0];
+            } else {
+                self.imageLine.image = [UIImage imageNamed:@"ic_curve_blue"];
+                self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"008FFB" alpha:1.0];
+                self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"008FFB" alpha:1.0];
+            }
         }
-    }
     } else {
         self.imageLine.image = [UIImage imageNamed:@"ic_curve_grey"];
         self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"4E4B62" alpha:1.0];
@@ -128,8 +131,7 @@ static const double kWidthOfCell = 20;
                 } else {
                     [cell addMeeting:NO];
                 }
-                NSString* key = [NSString new];
-                key = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
+                NSString *key = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
                 [self.dictonaryOfMeeting setObject:self.meetting forKey:key];
             }
         }
@@ -152,7 +154,7 @@ static const double kWidthOfCell = 20;
     if (meet) {
         NSArray *components = [meet.meetingOwner.email componentsSeparatedByString: @"@"];
         self.name.text = components[0];
-        self.detail.text = [NSString stringWithFormat:@"<< %@ >>", meet.meetingInfo];
+        self.detail.text = meet.meetingInfo;
         [self.detail setTextAlignment:NSTextAlignmentCenter];
         [self.detail setTextColor:[UIColor lightGrayColor]];
         NSDateFormatter *formatter = [NSDateFormatter new];
@@ -221,16 +223,17 @@ static const double kWidthOfCell = 20;
     }];
 }
 
-#pragma mark - Navigation -
+#pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"horizontalView"]) {
+    if ([segue.identifier isEqualToString:@"toVerticalScreen"]) {
         MRRoomWithVerticalScrollViewController *details = segue.destinationViewController;
         details.room = self.room;
-    } else if ([segue.identifier isEqualToString:@"toBookingScreen"]) {
+    } else if ([segue.identifier isEqualToString:@"toBookingScreenFromHorizontal"]) {
         MRBookingViewController *booking = segue.destinationViewController;
         booking.room = self.room;
     }
+
 }
 
 - (IBAction)unwindToRoomWithHorizontalScroll:(UIStoryboardSegue *)unwindSegue {

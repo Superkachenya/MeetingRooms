@@ -8,15 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		820673661CB63F5400D1D205 /* MRLoginViewConroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 820673621CB63F5400D1D205 /* MRLoginViewConroller.m */; };
-		820673671CB63F5400D1D205 /* MRRoomWithHorizontalScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 820673651CB63F5400D1D205 /* MRRoomWithHorizontalScrollViewController.m */; };
 		8206736C1CB6423800D1D205 /* GlacialIndifference-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 820673691CB6423800D1D205 /* GlacialIndifference-Bold.otf */; };
 		8206736D1CB6423800D1D205 /* GlacialIndifference-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8206736A1CB6423800D1D205 /* GlacialIndifference-Italic.otf */; };
 		8206736E1CB6423800D1D205 /* GlacialIndifference-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8206736B1CB6423800D1D205 /* GlacialIndifference-Regular.otf */; };
-		828843B21CB79DEF00AD961E /* MRRoomWithVerticalScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828843B11CB79DEF00AD961E /* MRRoomWithVerticalScrollViewController.m */; };
-		828843B61CB7BEB000AD961E /* MRTableViewCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 828843B51CB7BEB000AD961E /* MRTableViewCustomCell.m */; };
 		82C5ACCD1CBCE1E90074D2FB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82C5ACCB1CBCE1E90074D2FB /* Main.storyboard */; };
 		82E79F3F1CB570CC00D687DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 82E79F3E1CB570CC00D687DC /* main.m */; };
-		8E1987761CBD103500D33ECC /* NSDate+MRNextMinute.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1987751CBD103500D33ECC /* NSDate+MRNextMinute.m */; };
 		8E19877E1CBD2C3000D33ECC /* MROwner.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E19877D1CBD2C3000D33ECC /* MROwner.m */; };
 		8E36488C1CB50D7C00746EF9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E36488B1CB50D7C00746EF9 /* AppDelegate.m */; };
 		8E3648941CB50D7C00746EF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E3648931CB50D7C00746EF9 /* Assets.xcassets */; };
@@ -25,8 +21,15 @@
 		8E3648BF1CB5281900746EF9 /* MRUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3648BE1CB5281900746EF9 /* MRUser.m */; };
 		8E3648C31CB528AF00746EF9 /* MRRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3648C21CB528AF00746EF9 /* MRRoom.m */; };
 		8E3648C71CB5295500746EF9 /* MRMeeting.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3648C61CB5295500746EF9 /* MRMeeting.m */; };
-		8E6B01B81CBE892200CC2C4B /* MRBookingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B01B71CBE892200CC2C4B /* MRBookingViewController.m */; };
 		8E7294551CBFCAC4004D5A71 /* MRTimePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7294541CBFCAC4004D5A71 /* MRTimePickerViewController.m */; };
+		8EA6BD2B1CC61C5100E9EE03 /* MRScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA6BD2A1CC61C5100E9EE03 /* MRScheduleViewController.m */; };
+		8EA6BD311CC61CEE00E9EE03 /* MRCustomScheduleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA6BD301CC61CEE00E9EE03 /* MRCustomScheduleCell.m */; };
+		8EA6BD371CC61D8D00E9EE03 /* MRRoomWithVerticalScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA6BD361CC61D8D00E9EE03 /* MRRoomWithVerticalScrollViewController.m */; };
+		8EA6BD3A1CC61DA600E9EE03 /* MRRoomWithHorizontalScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA6BD391CC61DA600E9EE03 /* MRRoomWithHorizontalScrollViewController.m */; };
+		8EA6BD3D1CC61DE100E9EE03 /* NSDate+MRNextMinute.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA6BD3C1CC61DE100E9EE03 /* NSDate+MRNextMinute.m */; };
+		8EA6BD401CC61F8A00E9EE03 /* MRCustomLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA6BD3F1CC61F8A00E9EE03 /* MRCustomLabel.m */; };
+		8EA6BD431CC61FB000E9EE03 /* MRTableViewCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA6BD421CC61FB000E9EE03 /* MRTableViewCustomCell.m */; };
+		8EA6BD471CC6278400E9EE03 /* MRBookingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA6BD461CC6278400E9EE03 /* MRBookingViewController.m */; };
 		8EBB9E9F1CB640100033C839 /* MRNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB9E9E1CB640100033C839 /* MRNetworkManager.m */; };
 		8EBB9EA11CB6401E0033C839 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8EBB9EA01CB6401E0033C839 /* GoogleService-Info.plist */; };
 		8EBB9EA61CB69E350033C839 /* UIViewController+MRErrorAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB9EA51CB69E350033C839 /* UIViewController+MRErrorAlert.m */; };
@@ -58,19 +61,11 @@
 		3E6EE169CB2170F36EC6F5EC /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		820673611CB63F5400D1D205 /* MRLoginViewConroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRLoginViewConroller.h; sourceTree = "<group>"; };
 		820673621CB63F5400D1D205 /* MRLoginViewConroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRLoginViewConroller.m; sourceTree = "<group>"; };
-		820673641CB63F5400D1D205 /* MRRoomWithHorizontalScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRRoomWithHorizontalScrollViewController.h; sourceTree = "<group>"; };
-		820673651CB63F5400D1D205 /* MRRoomWithHorizontalScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRRoomWithHorizontalScrollViewController.m; sourceTree = "<group>"; };
 		820673691CB6423800D1D205 /* GlacialIndifference-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GlacialIndifference-Bold.otf"; sourceTree = "<group>"; };
 		8206736A1CB6423800D1D205 /* GlacialIndifference-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GlacialIndifference-Italic.otf"; sourceTree = "<group>"; };
 		8206736B1CB6423800D1D205 /* GlacialIndifference-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GlacialIndifference-Regular.otf"; sourceTree = "<group>"; };
-		828843B01CB79DEE00AD961E /* MRRoomWithVerticalScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRRoomWithVerticalScrollViewController.h; path = RoomWithVerticalScrollViewController/MRRoomWithVerticalScrollViewController.h; sourceTree = "<group>"; };
-		828843B11CB79DEF00AD961E /* MRRoomWithVerticalScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRRoomWithVerticalScrollViewController.m; path = RoomWithVerticalScrollViewController/MRRoomWithVerticalScrollViewController.m; sourceTree = "<group>"; };
-		828843B41CB7BEB000AD961E /* MRTableViewCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTableViewCustomCell.h; path = View/TableViewCustomCell/MRTableViewCustomCell.h; sourceTree = "<group>"; };
-		828843B51CB7BEB000AD961E /* MRTableViewCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTableViewCustomCell.m; path = View/TableViewCustomCell/MRTableViewCustomCell.m; sourceTree = "<group>"; };
 		82C5ACCC1CBCE1E90074D2FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		82E79F3E1CB570CC00D687DC /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "Supporting Files/main.m"; sourceTree = "<group>"; };
-		8E1987741CBD103500D33ECC /* NSDate+MRNextMinute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+MRNextMinute.h"; path = "Managers/NSDate+NextMinute/NSDate+MRNextMinute.h"; sourceTree = "<group>"; };
-		8E1987751CBD103500D33ECC /* NSDate+MRNextMinute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+MRNextMinute.m"; path = "Managers/NSDate+NextMinute/NSDate+MRNextMinute.m"; sourceTree = "<group>"; };
 		8E19877C1CBD2C3000D33ECC /* MROwner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MROwner.h; path = Model/Owner/MROwner.h; sourceTree = "<group>"; };
 		8E19877D1CBD2C3000D33ECC /* MROwner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MROwner.m; path = Model/Owner/MROwner.m; sourceTree = "<group>"; };
 		8E3648841CB50D7C00746EF9 /* MeetingRooms-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MeetingRooms-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,10 +85,24 @@
 		8E3648C21CB528AF00746EF9 /* MRRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRRoom.m; path = Model/Room/MRRoom.m; sourceTree = "<group>"; };
 		8E3648C51CB5295500746EF9 /* MRMeeting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRMeeting.h; path = Model/Meeting/MRMeeting.h; sourceTree = "<group>"; };
 		8E3648C61CB5295500746EF9 /* MRMeeting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRMeeting.m; path = Model/Meeting/MRMeeting.m; sourceTree = "<group>"; };
-		8E6B01B61CBE892200CC2C4B /* MRBookingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRBookingViewController.h; path = ViewControllers/MRBiikingViewController/MRBookingViewController.h; sourceTree = "<group>"; };
-		8E6B01B71CBE892200CC2C4B /* MRBookingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRBookingViewController.m; path = ViewControllers/MRBiikingViewController/MRBookingViewController.m; sourceTree = "<group>"; };
 		8E7294531CBFCAC4004D5A71 /* MRTimePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTimePickerViewController.h; path = ViewControllers/TimePicker/MRTimePickerViewController.h; sourceTree = "<group>"; };
 		8E7294541CBFCAC4004D5A71 /* MRTimePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTimePickerViewController.m; path = ViewControllers/TimePicker/MRTimePickerViewController.m; sourceTree = "<group>"; };
+		8EA6BD291CC61C5100E9EE03 /* MRScheduleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRScheduleViewController.h; path = ScheduleViewController/MRScheduleViewController.h; sourceTree = "<group>"; };
+		8EA6BD2A1CC61C5100E9EE03 /* MRScheduleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRScheduleViewController.m; path = ScheduleViewController/MRScheduleViewController.m; sourceTree = "<group>"; };
+		8EA6BD2F1CC61CEE00E9EE03 /* MRCustomScheduleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRCustomScheduleCell.h; path = View/CustomScheduleCell/MRCustomScheduleCell.h; sourceTree = "<group>"; };
+		8EA6BD301CC61CEE00E9EE03 /* MRCustomScheduleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRCustomScheduleCell.m; path = View/CustomScheduleCell/MRCustomScheduleCell.m; sourceTree = "<group>"; };
+		8EA6BD351CC61D8D00E9EE03 /* MRRoomWithVerticalScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRRoomWithVerticalScrollViewController.h; path = RoomWithHorizontalScrollViewController/MRRoomWithVerticalScrollViewController.h; sourceTree = "<group>"; };
+		8EA6BD361CC61D8D00E9EE03 /* MRRoomWithVerticalScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRRoomWithVerticalScrollViewController.m; path = RoomWithHorizontalScrollViewController/MRRoomWithVerticalScrollViewController.m; sourceTree = "<group>"; };
+		8EA6BD381CC61DA600E9EE03 /* MRRoomWithHorizontalScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRRoomWithHorizontalScrollViewController.h; sourceTree = "<group>"; };
+		8EA6BD391CC61DA600E9EE03 /* MRRoomWithHorizontalScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRRoomWithHorizontalScrollViewController.m; sourceTree = "<group>"; };
+		8EA6BD3B1CC61DE100E9EE03 /* NSDate+MRNextMinute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+MRNextMinute.h"; sourceTree = "<group>"; };
+		8EA6BD3C1CC61DE100E9EE03 /* NSDate+MRNextMinute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+MRNextMinute.m"; sourceTree = "<group>"; };
+		8EA6BD3E1CC61F8A00E9EE03 /* MRCustomLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRCustomLabel.h; sourceTree = "<group>"; };
+		8EA6BD3F1CC61F8A00E9EE03 /* MRCustomLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRCustomLabel.m; sourceTree = "<group>"; };
+		8EA6BD411CC61FB000E9EE03 /* MRTableViewCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTableViewCustomCell.h; sourceTree = "<group>"; };
+		8EA6BD421CC61FB000E9EE03 /* MRTableViewCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRTableViewCustomCell.m; sourceTree = "<group>"; };
+		8EA6BD451CC6278400E9EE03 /* MRBookingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRBookingViewController.h; sourceTree = "<group>"; };
+		8EA6BD461CC6278400E9EE03 /* MRBookingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRBookingViewController.m; sourceTree = "<group>"; };
 		8EBB9E9D1CB640100033C839 /* MRNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRNetworkManager.h; path = Managers/GoogleAccountManager/MRNetworkManager.h; sourceTree = "<group>"; };
 		8EBB9E9E1CB640100033C839 /* MRNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRNetworkManager.m; path = Managers/GoogleAccountManager/MRNetworkManager.m; sourceTree = "<group>"; };
 		8EBB9EA01CB6401E0033C839 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -148,9 +157,11 @@
 		8206735F1CB63F5400D1D205 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				828843AF1CB79B5900AD961E /* RoomWithVerticalScrollViewController */,
+				8EA6BD291CC61C5100E9EE03 /* MRScheduleViewController.h */,
+				8EA6BD2A1CC61C5100E9EE03 /* MRScheduleViewController.m */,
 				820673601CB63F5400D1D205 /* LoginViewConroller */,
 				820673631CB63F5400D1D205 /* RoomWithHorizontalScrollViewController */,
+				828843AF1CB79B5900AD961E /* RoomWithVerticalScrollViewController */,
 				8EE5615E1CB7A30C005DB87C /* RoomsViewContoller */,
 				8E6B01B91CBE892D00CC2C4B /* BookingViewController */,
 			);
@@ -169,8 +180,8 @@
 		820673631CB63F5400D1D205 /* RoomWithHorizontalScrollViewController */ = {
 			isa = PBXGroup;
 			children = (
-				820673641CB63F5400D1D205 /* MRRoomWithHorizontalScrollViewController.h */,
-				820673651CB63F5400D1D205 /* MRRoomWithHorizontalScrollViewController.m */,
+				8EA6BD381CC61DA600E9EE03 /* MRRoomWithHorizontalScrollViewController.h */,
+				8EA6BD391CC61DA600E9EE03 /* MRRoomWithHorizontalScrollViewController.m */,
 			);
 			path = RoomWithHorizontalScrollViewController;
 			sourceTree = "<group>";
@@ -189,8 +200,8 @@
 		828843AF1CB79B5900AD961E /* RoomWithVerticalScrollViewController */ = {
 			isa = PBXGroup;
 			children = (
-				828843B01CB79DEE00AD961E /* MRRoomWithVerticalScrollViewController.h */,
-				828843B11CB79DEF00AD961E /* MRRoomWithVerticalScrollViewController.m */,
+				8EA6BD351CC61D8D00E9EE03 /* MRRoomWithVerticalScrollViewController.h */,
+				8EA6BD361CC61D8D00E9EE03 /* MRRoomWithVerticalScrollViewController.m */,
 			);
 			name = RoomWithVerticalScrollViewController;
 			sourceTree = "<group>";
@@ -198,8 +209,8 @@
 		828843B31CB7BE5000AD961E /* CustomCell */ = {
 			isa = PBXGroup;
 			children = (
-				828843B41CB7BEB000AD961E /* MRTableViewCustomCell.h */,
-				828843B51CB7BEB000AD961E /* MRTableViewCustomCell.m */,
+				8EA6BD411CC61FB000E9EE03 /* MRTableViewCustomCell.h */,
+				8EA6BD421CC61FB000E9EE03 /* MRTableViewCustomCell.m */,
 			);
 			name = CustomCell;
 			sourceTree = "<group>";
@@ -207,8 +218,8 @@
 		8E1987771CBD103E00D33ECC /* NSDate+MRNextMinute */ = {
 			isa = PBXGroup;
 			children = (
-				8E1987741CBD103500D33ECC /* NSDate+MRNextMinute.h */,
-				8E1987751CBD103500D33ECC /* NSDate+MRNextMinute.m */,
+				8EA6BD3B1CC61DE100E9EE03 /* NSDate+MRNextMinute.h */,
+				8EA6BD3C1CC61DE100E9EE03 /* NSDate+MRNextMinute.m */,
 			);
 			name = "NSDate+MRNextMinute";
 			sourceTree = "<group>";
@@ -330,8 +341,8 @@
 		8E6B01B91CBE892D00CC2C4B /* BookingViewController */ = {
 			isa = PBXGroup;
 			children = (
-				8E6B01B61CBE892200CC2C4B /* MRBookingViewController.h */,
-				8E6B01B71CBE892200CC2C4B /* MRBookingViewController.m */,
+				8EA6BD451CC6278400E9EE03 /* MRBookingViewController.h */,
+				8EA6BD461CC6278400E9EE03 /* MRBookingViewController.m */,
 				8E7294561CBFCACE004D5A71 /* TimePickerVC */,
 			);
 			name = BookingViewController;
@@ -345,6 +356,24 @@
 				8E7294541CBFCAC4004D5A71 /* MRTimePickerViewController.m */,
 			);
 			name = TimePickerVC;
+			sourceTree = "<group>";
+		};
+		8EA6BD441CC626A900E9EE03 /* CustomSheduleCell */ = {
+			isa = PBXGroup;
+			children = (
+				8EA6BD2F1CC61CEE00E9EE03 /* MRCustomScheduleCell.h */,
+				8EA6BD301CC61CEE00E9EE03 /* MRCustomScheduleCell.m */,
+			);
+			name = CustomSheduleCell;
+			sourceTree = "<group>";
+		};
+		8EA6BD481CC629EC00E9EE03 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				8EA6BD3E1CC61F8A00E9EE03 /* MRCustomLabel.h */,
+				8EA6BD3F1CC61F8A00E9EE03 /* MRCustomLabel.m */,
+			);
+			name = Custom;
 			sourceTree = "<group>";
 		};
 		8EBB9EA21CB640240033C839 /* NetworkManager */ = {
@@ -414,6 +443,8 @@
 		CFF471791CB54A83006A6D39 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8EA6BD481CC629EC00E9EE03 /* Custom */,
+				8EA6BD441CC626A900E9EE03 /* CustomSheduleCell */,
 				828843B31CB7BE5000AD961E /* CustomCell */,
 				CFF4717A1CB54A8C006A6D39 /* TableViewHorizontalCell */,
 				8EE561621CB7C9B9005DB87C /* CustomRoomsCell */,
@@ -643,20 +674,23 @@
 				8E3648C71CB5295500746EF9 /* MRMeeting.m in Sources */,
 				8EE561611CB7C9B5005DB87C /* MRCustomRoomsCell.m in Sources */,
 				820673661CB63F5400D1D205 /* MRLoginViewConroller.m in Sources */,
+				8EA6BD3A1CC61DA600E9EE03 /* MRRoomWithHorizontalScrollViewController.m in Sources */,
 				8EE561651CB7DD92005DB87C /* UIColor+MRColorFromHEX.m in Sources */,
 				CFF471781CB54A70006A6D39 /* MRTableViewHorizontalCell.m in Sources */,
-				828843B61CB7BEB000AD961E /* MRTableViewCustomCell.m in Sources */,
+				8EA6BD311CC61CEE00E9EE03 /* MRCustomScheduleCell.m in Sources */,
 				8EBB9EA61CB69E350033C839 /* UIViewController+MRErrorAlert.m in Sources */,
 				8E19877E1CBD2C3000D33ECC /* MROwner.m in Sources */,
-				8E6B01B81CBE892200CC2C4B /* MRBookingViewController.m in Sources */,
+				8EA6BD3D1CC61DE100E9EE03 /* NSDate+MRNextMinute.m in Sources */,
 				8E3648BF1CB5281900746EF9 /* MRUser.m in Sources */,
 				8E36488C1CB50D7C00746EF9 /* AppDelegate.m in Sources */,
-				8E1987761CBD103500D33ECC /* NSDate+MRNextMinute.m in Sources */,
-				828843B21CB79DEF00AD961E /* MRRoomWithVerticalScrollViewController.m in Sources */,
+				8EA6BD471CC6278400E9EE03 /* MRBookingViewController.m in Sources */,
+				8EA6BD371CC61D8D00E9EE03 /* MRRoomWithVerticalScrollViewController.m in Sources */,
 				8EBB9E9F1CB640100033C839 /* MRNetworkManager.m in Sources */,
 				8E7294551CBFCAC4004D5A71 /* MRTimePickerViewController.m in Sources */,
-				820673671CB63F5400D1D205 /* MRRoomWithHorizontalScrollViewController.m in Sources */,
+				8EA6BD431CC61FB000E9EE03 /* MRTableViewCustomCell.m in Sources */,
+				8EA6BD2B1CC61C5100E9EE03 /* MRScheduleViewController.m in Sources */,
 				82E79F3F1CB570CC00D687DC /* main.m in Sources */,
+				8EA6BD401CC61F8A00E9EE03 /* MRCustomLabel.m in Sources */,
 				8E3648C31CB528AF00746EF9 /* MRRoom.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

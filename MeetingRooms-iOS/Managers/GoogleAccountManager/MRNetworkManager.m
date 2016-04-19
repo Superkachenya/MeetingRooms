@@ -70,6 +70,7 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3503";
 }
 
 - (void)getRoomInfoById:(NSNumber *)roomId toDate:(NSDate *)date completion:(MRCompletion)block {
+    MRCompletion copyBlock = [block copy];
     NSString *tempString = [baseURL stringByAppendingString:@"/api/v1/rooms/"];
     if (!date) {
         tempString = [tempString stringByAppendingString:roomId.stringValue];
@@ -78,7 +79,6 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3503";
         formatter.dateFormat = @"YYYY-MM-dd";
         tempString = [NSString stringWithFormat:@"%@%@?date=%@",tempString,roomId.stringValue, [formatter stringFromDate:date]];
     }
-    MRCompletion copyBlock = [block copy];
     [self.manager GET:tempString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if ([responseObject isKindOfClass:[NSArray class]]) {
             NSMutableArray *meetings = [NSMutableArray new];
@@ -96,16 +96,19 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3503";
     }];
 }
 
-- (void)bookMeetingInRoom:(NSNumber *)roomId from:(NSNumber *)start to:(NSNumber *)finish withMessage:(NSString *)message {
+- (void)bookMeetingInRoom:(NSNumber *)roomId from:(NSNumber *)start to:(NSNumber *)finish withMessage:(NSString *)message completion:(MRCompletion)block {
+    MRCompletion copyBlock = [block copy];
     NSString *composeStr = [NSString stringWithFormat:@"/api/v1/rooms/%ld/bookings", (long)roomId.integerValue];
     NSString *tempString = [baseURL stringByAppendingString:composeStr];
     [self.manager POST:tempString parameters:@{@"timeStart" : start,
                                                  @"timeEnd" : finish,
                                                  @"message" : message}
               progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                  NSLog(@"%@\n%@", start, finish);
+                  NSString *success = [responseObject valueForKey:@"details"];
+                  copyBlock(success, nil);
+                  NSLog(@"%@", responseObject);
               } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                  NSLog(@"%@\n%@ ERROR%@", start, finish, error.localizedDescription);
+                  copyBlock(nil, error);
               }];
 }
 @end

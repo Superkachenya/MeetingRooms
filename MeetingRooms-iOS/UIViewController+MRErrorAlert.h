@@ -11,5 +11,6 @@
 @interface UIViewController (MRErrorAlert)
 
 - (void)createAlertForError:(NSError *)error;
+- (void)createAlertWithMessage:(NSString *)message;
 
 @end

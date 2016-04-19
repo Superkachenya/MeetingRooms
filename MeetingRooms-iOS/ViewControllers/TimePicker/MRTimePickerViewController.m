@@ -20,18 +20,16 @@
     [super viewDidLoad];
     
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [NSDateComponents new];
-    components = [calendar components:NSCalendarUnitMinute|
-                  NSCalendarUnitHour|
-                  NSCalendarUnitDay|
-                  NSCalendarUnitMonth|
-                  NSCalendarUnitYear fromDate:self.minDate];
+    NSDateComponents *components = [calendar components:NSCalendarUnitMinute|
+                                    NSCalendarUnitHour|
+                                    NSCalendarUnitDay|
+                                    NSCalendarUnitMonth|
+                                    NSCalendarUnitYear fromDate:self.minDate];
     
     NSDate *comparisonDate = [NSDate date];
-    NSDateComponents *compareComponents = [NSDateComponents new];
-    compareComponents = [calendar components:NSCalendarUnitDay|
-                         NSCalendarUnitMonth
-                                    fromDate:comparisonDate];
+    NSDateComponents *compareComponents = [calendar components:NSCalendarUnitDay|
+                                           NSCalendarUnitMonth
+                                                      fromDate:comparisonDate];
     if (components.day == compareComponents.day && components.month == compareComponents.month) {
         self.timePicker.minimumDate = [NSDate date];
     } else {

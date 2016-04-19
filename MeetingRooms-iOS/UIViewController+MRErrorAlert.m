@@ -25,4 +25,17 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
+- (void)createAlertWithMessage:(NSString *)message {
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Success!"
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    [self presentViewController:alert animated:YES completion:nil];
+    [self performSelector:@selector(closeAlert) withObject:nil afterDelay:1.0];
+}
+
+- (void) closeAlert {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 @end

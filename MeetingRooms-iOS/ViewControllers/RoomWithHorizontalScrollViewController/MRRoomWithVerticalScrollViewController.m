@@ -13,6 +13,7 @@
 #import "MRUser.h"
 #import "MRNetworkManager.h"
 #import "UIColor+MRColorFromHEX.h"
+#import "MRBookingViewController.h"
 
 @interface MRRoomWithVerticalScrollViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -20,6 +21,7 @@
 
 @property (strong, nonatomic) NSArray *arrayOfHours;
 @property (strong, nonatomic) NSMutableArray *arrayMeetings;
+@property (strong, nonatomic) NSMutableArray *sortedArrayMeetings;
 @property (strong, nonatomic) NSMutableDictionary *hours;
 @property (assign, nonatomic) NSUInteger count;
 
@@ -33,9 +35,11 @@
     [super viewDidLoad];
     
     self.count = 8;
+    self.navigationItem.title = self.room.roomTitle;
     [self setNeedsStatusBarAppearanceUpdate];
     self.hours = [[NSMutableDictionary alloc] init];
     self.arrayMeetings = [[NSMutableArray alloc] init];
+    self.sortedArrayMeetings = [[NSMutableArray alloc] init];
     self.arrayOfHours = [[NSArray alloc] initWithObjects:@"8:00",@"9:00",@"10:00",@"11:00",@"12:00",@"13:00",@"14:00",
                          @"15:00", @"16:00",@"17:00",@"18:00",@"19:00",@"20:00", @"21:00", nil];
     self.tableView.allowsSelection = NO;
@@ -84,6 +88,20 @@
     [label setFont:[UIFont fontWithName:@"GlacialIndifference-Regular" size:18]];
     [label setTextColor:[UIColor whiteColor]];
     NSString *string = [self.arrayOfHours objectAtIndex:section];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"HH:mm"];
+    [formatter setTimeZone:[NSTimeZone timeZoneWithName:@"Europe/Kiev"]];
+    NSString *curentTimeString = [formatter stringFromDate:[NSDate new]];
+    NSArray *componentsTime = [curentTimeString componentsSeparatedByString: @":"];
+    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+    f.numberStyle = NSNumberFormatterDecimalStyle;
+    NSNumber *curentHours = [f numberFromString:componentsTime[0]];
+    componentsTime = [string componentsSeparatedByString: @":"];
+    NSNumber *hours = [f numberFromString:componentsTime[0]];
+    if ([hours intValue] < [curentHours intValue]) {
+        [label setTextColor:[UIColor getUIColorFromHexString:@"#39364D" alpha:1]];
+    }
     [label setText:string];
     [view addSubview:label];
     NSInteger yPosition = [self findY:section + 8];
@@ -149,7 +167,7 @@
         } else {
             self.navigationItem.title = self.room.roomTitle;
             [self.arrayMeetings addObjectsFromArray:success];
-            [self sortArrayOfMeetingsCurrentHour:self.arrayMeetings];
+            [self.sortedArrayMeetings addObjectsFromArray:[self sortArrayOfMeetingsCurrentHour:self.arrayMeetings]];
             [self fillDictionaryHours];
             [self.tableView reloadData];
         }
@@ -170,7 +188,7 @@
         NSDate *dateInHour = [gregorian dateFromComponents: components];
         NSMutableArray *array = [[NSMutableArray alloc] init];
         [self.hours setObject:array forKey:self.arrayOfHours[i]];
-        for (MRMeeting *meeting in self.arrayMeetings) {
+        for (MRMeeting *meeting in self.sortedArrayMeetings) {
             if (([meeting.meetingStart compare:dateCurrent] ==  NSOrderedDescending ||
                  [meeting.meetingStart compare:dateCurrent] ==  NSOrderedSame) &&
                 [meeting.meetingStart compare:dateInHour] ==  NSOrderedAscending) {
@@ -180,9 +198,17 @@
     }
 }
 
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"toBookingScreenFromVertical"]) {
+        MRBookingViewController *booking = segue.destinationViewController;
+        booking.room = self.room;
+    }
+    
+}
 - (IBAction)unwindToRoomWithVerticalScroll:(UIStoryboardSegue *)unwindSegue {
     
 }
-
 
 @end
