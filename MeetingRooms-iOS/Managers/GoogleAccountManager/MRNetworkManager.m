@@ -83,7 +83,7 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3503";
         if ([responseObject isKindOfClass:[NSArray class]]) {
             NSMutableArray *meetings = [NSMutableArray new];
             for (id booking in responseObject) {
-                MRMeeting *newMeeting = [[MRMeeting alloc] initMeetingWithJSON:booking];
+                MRMeeting *newMeeting = [[MRMeeting alloc] initMeetingForRoomWithJSON:booking];
                 [meetings addObject:newMeeting];
             }
             copyBlock([meetings copy], nil);
@@ -111,4 +111,28 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3503";
                   copyBlock(nil, error);
               }];
 }
+
+
+- (void)getAllOwnersMeetingsForDate:(NSDate *)date WithCompletionBlock:(MRCompletion)block {
+    MRCompletion copyBlock = [block copy];
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    formatter.dateFormat = @"YYYY-MM-dd";
+    NSString *dateString = [formatter stringFromDate:date];
+    NSString *tempString = [NSString stringWithFormat:@"%@/api/v1/users/%ld/bookings?date=%@", baseURL, (long)self.owner.userId.integerValue, dateString];
+    [self. manager GET:tempString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if ([responseObject isKindOfClass:[NSDictionary class]]) {
+            NSArray *bookings =  [responseObject valueForKey:@"bookings"];
+            NSMutableArray *arrayOfMeetings = [NSMutableArray new];
+            for (id meeting in bookings) {
+                MRMeeting *newMeeting = [[MRMeeting alloc] initMeetingForUser:self.owner withJSON:meeting];
+                [arrayOfMeetings addObject:newMeeting];
+            }
+            copyBlock(arrayOfMeetings, nil);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        copyBlock(nil, error);
+    }];
+    
+}
+
 @end

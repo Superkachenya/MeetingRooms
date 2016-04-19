@@ -43,14 +43,13 @@
     self.roomIDLabel.text = [meeting.meetingId stringValue];
     NSString *startDate = [self getDateAsString:meeting.meetingStart];
     NSString *finishDate = [self getDateAsString:meeting.meetingFinish];
-    self.intervalLabel.text = [NSString stringWithFormat:@"%@ - %@", startDate, finishDate];
+    self.intervalLabel.text = [NSString stringWithFormat:@"%@-%@", startDate, finishDate];
     self.infoLabel.text = meeting.meetingInfo;
 }
 
 - (NSString *)getDateAsString:(NSDate *)date {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"HH:mm"];
-    [formatter setTimeZone:[NSTimeZone timeZoneWithName:@"Europe/Kiev"]];
     NSString *stringFromDate = [formatter stringFromDate:date];
     return stringFromDate;
 }

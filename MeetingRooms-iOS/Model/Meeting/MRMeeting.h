@@ -8,15 +8,17 @@
 
 @import Foundation;
 @class MRUser;
+@class MRRoom;
 
 @interface MRMeeting : NSObject
 
 @property (strong, nonatomic) NSNumber *meetingId;
 @property (strong, nonatomic) MRUser *meetingOwner;
+@property (strong, nonatomic) MRRoom *meetingRoom;
 @property (strong, nonatomic) NSString *meetingInfo;
 @property (strong, nonatomic) NSDate *meetingStart;
 @property (strong, nonatomic) NSDate *meetingFinish;
 
-- (instancetype) initMeetingWithJSON:(id)JSON;
-
+- (instancetype) initMeetingForRoomWithJSON:(id)JSON;
+- (instancetype)initMeetingForUser:(MRUser *)user withJSON:(id)JSON;
 @end

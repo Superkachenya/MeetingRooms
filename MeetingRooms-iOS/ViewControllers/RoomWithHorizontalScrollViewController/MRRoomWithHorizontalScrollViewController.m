@@ -19,6 +19,7 @@
 #import "MRRoomWithVerticalScrollViewController.h"
 #import "UIColor+MRColorFromHEX.h"
 #import "MRBookingViewController.h"
+#import "NSString+MRQuotesString.h"
 
 static const double kCountOfTimeSigmente = 48;
 static const double kWidthOfCell = 20;
@@ -35,7 +36,7 @@ static const double kWidthOfCell = 20;
 @property (weak, nonatomic) IBOutlet UIView *viewOfDetail;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *imageLine;
-@property (weak, nonatomic) IBOutlet UIImageView *userAvatare;
+@property (weak, nonatomic) IBOutlet UIImageView *userAvatar;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *hieghtOfTableView;
 @property (weak, nonatomic) IBOutlet UIView *bounseOfPicture;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabelOfMeeting;
@@ -147,13 +148,13 @@ static const double kWidthOfCell = 20;
     return cell;
 }
 
-# pragma mark - Helpers -
+# pragma mark - Helpers
 
-- (void) showInfo:(MRMeeting*) meet {
+- (void)showInfo:(MRMeeting*) meet {
     if (meet) {
         NSArray *components = [meet.meetingOwner.email componentsSeparatedByString: @"@"];
         self.name.text = components[0];
-        self.detail.text = meet.meetingInfo;
+        self.detail.text = [NSString embedStringinQuotes:meet.meetingInfo];
         [self.detail setTextAlignment:NSTextAlignmentCenter];
         [self.detail setTextColor:[UIColor lightGrayColor]];
         NSDateFormatter *formatter = [NSDateFormatter new];
@@ -161,11 +162,11 @@ static const double kWidthOfCell = 20;
         NSString* timeFirst = [formatter stringFromDate:meet.meetingStart];
         NSString* timeSecond = [formatter stringFromDate:meet.meetingFinish];
         self.time.text = [NSString stringWithFormat:@"%@ - %@",timeFirst , timeSecond];
-        self.userAvatare.image = [UIImage imageNamed:@"Google+"];
-        self.userAvatare.image = [UIImage imageWithData:[[NSData alloc] initWithContentsOfURL:meet.meetingOwner.avatar]];
-        CALayer * l = [self.userAvatare layer];
+        self.userAvatar.image = [UIImage imageNamed:@"Google+"];
+        self.userAvatar.image = [UIImage imageWithData:[[NSData alloc] initWithContentsOfURL:meet.meetingOwner.avatar]];
+        CALayer * l = [self.userAvatar layer];
         [l setMasksToBounds:YES];
-        [l setCornerRadius:self.userAvatare.frame.size.width / 2];
+        [l setCornerRadius:self.userAvatar.frame.size.width / 2];
         self.viewOfDetail.hidden = NO;
     } else {
         self.viewOfDetail.hidden = YES;
@@ -216,7 +217,7 @@ static const double kWidthOfCell = 20;
         if (error) {
             [self createAlertForError:error];
         } else {
-            self.room.meetings = [success copy];
+            self.room.meetings = success;
             [self.tableView reloadData];
         }
     }];

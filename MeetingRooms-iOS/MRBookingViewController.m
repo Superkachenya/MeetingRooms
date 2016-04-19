@@ -19,6 +19,7 @@
 #import "UIViewController+MRErrorAlert.h"
 #import "NSDate+MRNextMinute.h"
 #import "MRMeeting.h"
+#import "NSString+MRQuotesString.h"
 
 typedef NS_ENUM(NSUInteger, MRRedCircle) {
     MRFifteenMinutesRedCircle,
@@ -238,12 +239,7 @@ static const double kWidthOfCell = 20;
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-    if (self.quotationText.length) {
-        NSString *cutString = [self.quotationText substringWithRange:NSMakeRange(1, self.quotationText.length - 2)];
-        self.textView.text = cutString;
-    } else {
         self.textView.text = self.quotationText;
-    }
 }
 
 - (void)textViewDidEndEditing:(UITextView *)theTextView {
@@ -251,8 +247,8 @@ static const double kWidthOfCell = 20;
         self.messagePlaceholder.hidden = NO;
         self.quotationText = @"";
     } else {
-        self.textView.text = [self setTextInQuotes:self.textView.text];
         self.quotationText = self.textView.text;
+        self.textView.text = [NSString embedStringinQuotes:self.textView.text];
     }
 }
 
@@ -329,7 +325,7 @@ static const double kWidthOfCell = 20;
         self.errorLabel.hidden = NO;
     } else {
         if (!self.quotationText) {
-            self.quotationText = [self setTextInQuotes:self.textView.text];
+            self.quotationText = self.textView.text;
         }
         self.errorLabel.hidden = YES;
         NSNumber *start = [self convertDateToMiliseconds:self.startDate];
@@ -374,11 +370,6 @@ static const double kWidthOfCell = 20;
 
 #pragma mark - Helpers
 
-- (NSString *)setTextInQuotes:(NSString *)text {
-    NSString *quotes = [NSString stringWithFormat:@"\"%@\"",text];
-    return quotes;
-}
-
 - (void)showInRedCircle:(MRRedCircle)circle {
     for (UIImageView *redCircle in self.redCircles) {
         if ([redCircle isEqual:self.redCircles[circle]]) {
@@ -389,7 +380,7 @@ static const double kWidthOfCell = 20;
     }
 }
 
-- (void) viewUpdate {
+- (void)viewUpdate {
     NSDate *currentDate = [NSDate date];
     NSNumber* abstractTime = [NSDate timeToAbstractTime:currentDate endTime:kCountOfTimeSigmente  +
                               (self.countOfCellOnView/2)];
@@ -398,7 +389,7 @@ static const double kWidthOfCell = 20;
     [self downloadAndUpdateDate];
 }
 
-- (void) downloadAndUpdateDate {
+- (void)downloadAndUpdateDate {
     [[MRNetworkManager sharedManager] getRoomInfoById:self.room.roomId toDate:nil completion:^(id success, NSError *error) {
         if (error) {
             [self createAlertForError:error];
@@ -409,7 +400,7 @@ static const double kWidthOfCell = 20;
     }];
 }
 
-- (void) selectTimeOnTimeLine {
+- (void)selectTimeOnTimeLine {
     NSDate *currentDate = [NSDate date];
     NSNumber* abstractTime = [NSDate timeToAbstractTime:currentDate endTime:kCountOfTimeSigmente  +
                               (self.countOfCellOnView/2)];

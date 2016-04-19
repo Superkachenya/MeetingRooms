@@ -22,6 +22,7 @@
     
     [self setNeedsStatusBarAppearanceUpdate];
     [GIDSignIn sharedInstance].uiDelegate = self;
+    [[GIDSignIn sharedInstance] signInSilently];
 }
 
 - (void)didReceiveMemoryWarning {

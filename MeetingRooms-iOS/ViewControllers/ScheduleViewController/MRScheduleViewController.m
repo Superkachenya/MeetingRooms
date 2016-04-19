@@ -41,9 +41,8 @@
 @property (strong, nonatomic) IBOutletCollection(UIView) NSArray *viewsOut;
 @property (strong, nonatomic) IBOutletCollection(UIView) NSArray *viewsIn;
 @property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *labels;
+@property (strong, nonatomic) MRNetworkManager *manager;
 
-@property (strong, nonatomic) NSMutableDictionary *dictOfmeetings;
-@property (strong, nonatomic) NSMutableArray *arrayOfAllMeetings;
 @property (strong, nonatomic) NSMutableArray *sortedArrayMeetings;
 
 @end
@@ -57,22 +56,12 @@
     
     [self setNeedsStatusBarAppearanceUpdate];
     
-    self.arrayOfAllMeetings = [NSMutableArray new];
     self.sortedArrayMeetings = [NSMutableArray new];
+    self.manager = [MRNetworkManager sharedManager];
     [self loadMeetings];
     self.tableView.allowsSelection = NO;
-    [self.arrayOfAllMeetings addObjectsFromArray:self.dictOfmeetings[@"Monday"]];
-    [self.arrayOfAllMeetings addObjectsFromArray:self.dictOfmeetings[@"Tuesday"]];
-    [self.arrayOfAllMeetings addObjectsFromArray:self.dictOfmeetings[@"Wednesday"]];
-    [self.arrayOfAllMeetings addObjectsFromArray:self.dictOfmeetings[@"Thursday"]];
-    [self.arrayOfAllMeetings addObjectsFromArray:self.dictOfmeetings[@"Friday"]];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 116.0;
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -132,15 +121,11 @@
 }
 
 - (void)loadMeetings {
-    NSDate *date = [[NSDate alloc] init];
-    [[MRNetworkManager sharedManager] getRoomInfoById:@1 toDate:date completion:^(id success, NSError *error) {
+    [self.manager getAllOwnersMeetingsForDate:[NSDate date] WithCompletionBlock:^(id success, NSError *error) {
         if (error) {
             [self createAlertForError:error];
         } else {
-            self.navigationItem.title = @"Schedule";
-            [self.arrayOfAllMeetings addObjectsFromArray:success];
-            [self.sortedArrayMeetings addObjectsFromArray:[self sortArrayOfMeetingsCurrentHour:self.arrayOfAllMeetings]];
-            [self configureLabels];
+            self.sortedArrayMeetings = [self sortArrayOfMeetingsCurrentHour:success];
             [self.tableView reloadData];
         }
     }];

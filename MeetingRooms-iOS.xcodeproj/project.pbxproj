@@ -30,6 +30,7 @@
 		8EA6BD401CC61F8A00E9EE03 /* MRCustomLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA6BD3F1CC61F8A00E9EE03 /* MRCustomLabel.m */; };
 		8EA6BD431CC61FB000E9EE03 /* MRTableViewCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA6BD421CC61FB000E9EE03 /* MRTableViewCustomCell.m */; };
 		8EA6BD471CC6278400E9EE03 /* MRBookingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA6BD461CC6278400E9EE03 /* MRBookingViewController.m */; };
+		8EA6BD4C1CC681DB00E9EE03 /* NSString+MRQuotesString.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA6BD4B1CC681DB00E9EE03 /* NSString+MRQuotesString.m */; };
 		8EBB9E9F1CB640100033C839 /* MRNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB9E9E1CB640100033C839 /* MRNetworkManager.m */; };
 		8EBB9EA11CB6401E0033C839 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8EBB9EA01CB6401E0033C839 /* GoogleService-Info.plist */; };
 		8EBB9EA61CB69E350033C839 /* UIViewController+MRErrorAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB9EA51CB69E350033C839 /* UIViewController+MRErrorAlert.m */; };
@@ -103,6 +104,8 @@
 		8EA6BD421CC61FB000E9EE03 /* MRTableViewCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRTableViewCustomCell.m; sourceTree = "<group>"; };
 		8EA6BD451CC6278400E9EE03 /* MRBookingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRBookingViewController.h; sourceTree = "<group>"; };
 		8EA6BD461CC6278400E9EE03 /* MRBookingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRBookingViewController.m; sourceTree = "<group>"; };
+		8EA6BD4A1CC681DB00E9EE03 /* NSString+MRQuotesString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+MRQuotesString.h"; path = "Helpers/QuotesString/NSString+MRQuotesString.h"; sourceTree = "<group>"; };
+		8EA6BD4B1CC681DB00E9EE03 /* NSString+MRQuotesString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+MRQuotesString.m"; path = "Helpers/QuotesString/NSString+MRQuotesString.m"; sourceTree = "<group>"; };
 		8EBB9E9D1CB640100033C839 /* MRNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRNetworkManager.h; path = Managers/GoogleAccountManager/MRNetworkManager.h; sourceTree = "<group>"; };
 		8EBB9E9E1CB640100033C839 /* MRNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRNetworkManager.m; path = Managers/GoogleAccountManager/MRNetworkManager.m; sourceTree = "<group>"; };
 		8EBB9EA01CB6401E0033C839 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -259,6 +262,7 @@
 			children = (
 				8E36488A1CB50D7C00746EF9 /* AppDelegate.h */,
 				8E36488B1CB50D7C00746EF9 /* AppDelegate.m */,
+				8EE561671CB7DDA3005DB87C /* HelperCategories */,
 				8EBB9EA31CB640350033C839 /* Managers */,
 				8E3648C91CB5297C00746EF9 /* Model */,
 				CFF471791CB54A83006A6D39 /* View */,
@@ -396,9 +400,7 @@
 		8EBB9EA31CB640350033C839 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				8EBB9EA71CB6A1460033C839 /* ErrorAlert */,
 				8EBB9EA21CB640240033C839 /* NetworkManager */,
-				8E1987771CBD103E00D33ECC /* NSDate+MRNextMinute */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -440,12 +442,16 @@
 			name = ColorCategory;
 			sourceTree = "<group>";
 		};
-		8EE561671CB7DDA3005DB87C /* Helpers */ = {
+		8EE561671CB7DDA3005DB87C /* HelperCategories */ = {
 			isa = PBXGroup;
 			children = (
+				8E1987771CBD103E00D33ECC /* NSDate+MRNextMinute */,
 				8EE561661CB7DD97005DB87C /* ColorCategory */,
+				8EBB9EA71CB6A1460033C839 /* ErrorAlert */,
+				8EA6BD4A1CC681DB00E9EE03 /* NSString+MRQuotesString.h */,
+				8EA6BD4B1CC681DB00E9EE03 /* NSString+MRQuotesString.m */,
 			);
-			name = Helpers;
+			name = HelperCategories;
 			sourceTree = "<group>";
 		};
 		CFF471791CB54A83006A6D39 /* View */ = {
@@ -456,7 +462,6 @@
 				828843B31CB7BE5000AD961E /* CustomCell */,
 				CFF4717A1CB54A8C006A6D39 /* TableViewHorizontalCell */,
 				8EE561621CB7C9B9005DB87C /* CustomRoomsCell */,
-				8EE561671CB7DDA3005DB87C /* Helpers */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -686,6 +691,7 @@
 				8EE561651CB7DD92005DB87C /* UIColor+MRColorFromHEX.m in Sources */,
 				CFF471781CB54A70006A6D39 /* MRTableViewHorizontalCell.m in Sources */,
 				8EA6BD311CC61CEE00E9EE03 /* MRCustomScheduleCell.m in Sources */,
+				8EA6BD4C1CC681DB00E9EE03 /* NSString+MRQuotesString.m in Sources */,
 				8EBB9EA61CB69E350033C839 /* UIViewController+MRErrorAlert.m in Sources */,
 				8E19877E1CBD2C3000D33ECC /* MROwner.m in Sources */,
 				8EA6BD3D1CC61DE100E9EE03 /* NSDate+MRNextMinute.m in Sources */,

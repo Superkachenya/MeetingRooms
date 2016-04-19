@@ -11,12 +11,14 @@
 @implementation UIViewController (MRErrorAlert)
 
 - (void)createAlertForError:(NSError *)error {
-    
+    NSDictionary *dictError = [[NSDictionary alloc] initWithDictionary:error.userInfo];
+    NSData *dataInfo = [[NSData alloc] initWithData:dictError[@"com.alamofire.serialization.response.error.data"]];
+    NSDictionary *results = [NSJSONSerialization JSONObjectWithData:dataInfo options:NSJSONReadingMutableContainers error:nil];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error!"
-                                                                   message:error.localizedDescription
+                                                                   message:results ? results[@"details"] : error.localizedDescription
                                                             preferredStyle:UIAlertControllerStyleAlert];
     [self presentViewController:alert animated:YES completion:nil];
-    [self performSelector:@selector(closeAlert) withObject:nil afterDelay:1.0];
+    [self performSelector:@selector(closeAlert) withObject:nil afterDelay:2.0];
 }
 
 - (void)createAlertWithMessage:(NSString *)message {
@@ -25,7 +27,7 @@
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
     [self presentViewController:alert animated:YES completion:nil];
-    [self performSelector:@selector(closeAlert) withObject:nil afterDelay:1.0];
+    [self performSelector:@selector(closeAlert) withObject:nil afterDelay:2.0];
 }
 
 - (void) closeAlert {
