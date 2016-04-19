@@ -40,7 +40,6 @@ static const double kWidthOfCell = 20;
 @property (weak, nonatomic) IBOutlet UIView *bounseOfPicture;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabelOfMeeting;
 
-
 @property (strong, nonatomic) NSMutableDictionary* dictonaryOfMeeting;
 @property (strong, nonatomic) NSIndexPath* indexPathOfLastShowCell;
 @property (strong, nonatomic) NSIndexPath* indexPathOfCentralCell;
