@@ -13,6 +13,7 @@
 #import "MRNetworkManager.h"
 #import "MROwner.h"
 #import "MRRoom.h"
+#import "MRUser.h"
 #import "WYPopoverController.h"
 #import "MRTimePickerViewController.h"
 #import "FSCalendar.h"
@@ -32,9 +33,9 @@ static NSTimeInterval const kFifteenMinutes    = 900.0;
 static NSTimeInterval const kThirtyMinutes     = 1800.0;
 static NSTimeInterval const kFourtyFiveMinutes = 2700.0;
 static NSTimeInterval const kSixtyMinutes      = 3600.0;
-static double const kmilisecInSecond = 1000.0;
-static const double kCountOfTimeSigmente = 48;
-static const double kWidthOfCell = 20;
+static double const kmilisecInSecond           = 1000.0;
+static double const kCountOfTimeSegment        = 48.0;
+static double const kWidthOfCell               = 20.0;
 
 @interface MRBookingViewController () <PTETableViewDelegate, WYPopoverControllerDelegate, FSCalendarDelegate, FSCalendarDataSource, UITextViewDelegate>
 
@@ -57,7 +58,7 @@ static const double kWidthOfCell = 20;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightOfTableView;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
-@property (strong, nonatomic) NSString *quotationText;
+@property (strong, nonatomic) NSString *sendMessage;
 @property (assign, nonatomic) CGFloat constraintsConstant;
 @property (strong, nonatomic) MRNetworkManager *manager;
 @property (strong, nonatomic) WYPopoverController *popover;
@@ -67,11 +68,12 @@ static const double kWidthOfCell = 20;
 @property (strong, nonatomic) NSDate *timePickerTime;
 @property (strong, nonatomic) NSDate *startDate;
 @property (strong, nonatomic) NSDate *finishDate;
-@property (strong, nonatomic) NSMutableDictionary* dictonaryOfMeeting;
+@property (strong, nonatomic) NSMutableDictionary *dictonaryOfMeeting;
 @property (assign, nonatomic) long countOfCellOnView;
-@property (strong, nonatomic) NSIndexPath* indexPathOfCentralCell;
-@property (strong, nonatomic) NSIndexPath* indexPathOfLastShowCell;
-@property (strong, nonatomic) MRMeeting* meetting;
+@property (strong, nonatomic) NSIndexPath *indexPathOfCentralCell;
+@property (strong, nonatomic) NSIndexPath *indexPathOfLastShowCell;
+@property (strong, nonatomic) MRMeeting *meetting;
+@property (strong, nonatomic) MROwner *owner;
 
 @end
 
@@ -82,13 +84,14 @@ static const double kWidthOfCell = 20;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.owner = [MRNetworkManager sharedManager].owner;
     self.room.meetings = [NSMutableArray new];
     self.dictonaryOfMeeting = [NSMutableDictionary new];
     self.countOfCellOnView = ([self.horizontalTableView bounds].size.width / kWidthOfCell);
     self.heightOfTableView.constant = self.horizontalTableView.frame.size.width;
     self.tableView.frame = self.horizontalTableView.frame;
     self.tableView.contentSize = self.horizontalTableView.contentSize;
-
+    
     self.navigationItem.title = self.room.roomTitle;
     self.timePickerButton.layer.borderWidth = 1.0;
     self.timePickerButton.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -154,7 +157,7 @@ static const double kWidthOfCell = 20;
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(PTEHorizontalTableView *)horizontalTableView numberOfRowsInSection:(NSInteger)section {
-    return kCountOfTimeSigmente + self.countOfCellOnView ;
+    return kCountOfTimeSegment + self.countOfCellOnView ;
 }
 
 - (CGFloat)tableView:(PTEHorizontalTableView *)horizontalTableView widthForCellAtIndexPath:(NSIndexPath *)indexPath {
@@ -163,20 +166,20 @@ static const double kWidthOfCell = 20;
 
 - (UITableViewCell *)tableView:(PTEHorizontalTableView *)horizontalTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MRTableViewHorizontalCell * cell = [horizontalTableView.tableView dequeueReusableCellWithIdentifier:@"cell"];
-    [cell showTimeLineWithCountOfLine:kCountOfTimeSigmente sizeOfViewIs:(self.countOfCellOnView/2)
-                      onIndexPathCell:indexPath.row];
-    long keyOfCell = (long)indexPath.row + self.countOfCellOnView/2;
+    [cell showTimeLineWithCountOfLine:kCountOfTimeSegment sizeOfViewIs:(self.countOfCellOnView / 2)
+                          atIndexCell:indexPath.row];
+    long keyOfCell = (long)indexPath.row + self.countOfCellOnView / 2;
     if (indexPath > self.indexPathOfLastShowCell) {
-        keyOfCell = (long)indexPath.row - self.countOfCellOnView/2;
+        keyOfCell = (long)indexPath.row - self.countOfCellOnView / 2;
     }
-    self.timeLabel.text = [NSDate abstractTimeToTimeAfterNow:keyOfCell inTimeLineSegment:kCountOfTimeSigmente/2];
+    self.timeLabel.text = [NSDate abstractTimeToTimeAfterNow:keyOfCell inTimeLineSegment:kCountOfTimeSegment / 2];
     NSString* key = [NSString stringWithFormat:@"%ld",keyOfCell];
     self.meetting = [self.dictonaryOfMeeting objectForKey:key];
-    self.timeLabel.text = [NSDate abstractTimeToTimeAfterNow:keyOfCell inTimeLineSegment:kCountOfTimeSigmente/2];
+    self.timeLabel.text = [NSDate abstractTimeToTimeAfterNow:keyOfCell inTimeLineSegment:kCountOfTimeSegment / 2];
     if (![self.timeLabel.text isEqualToString:@"Past"]) {
         if (self.meetting) {
-            if ([self.meetting.meetingOwner.email isEqualToString:[MRNetworkManager sharedManager].owner.email]) {
-                [cell showYelloy];
+            if ([self.meetting.meetingOwner.userId isEqualToNumber:self.owner.userId]) {
+                [cell showYellow];
             }
         }
     }
@@ -185,15 +188,15 @@ static const double kWidthOfCell = 20;
             self.meetting = [MRMeeting new];
             self.meetting = self.room.meetings[i];
             NSNumber* startAbstractTime = [NSNumber numberWithLong:([[NSDate timeToAbstractTime:self.meetting.meetingStart
-                                                                                        endTime:kCountOfTimeSigmente  +
+                                                                                        endTime:kCountOfTimeSegment +
                                                                       (self.countOfCellOnView/2)] longValue] +
                                                                     self.countOfCellOnView/2)];
             NSNumber* endAbstractTime = [NSNumber numberWithFloat:([[NSDate timeToAbstractTime:self.meetting.meetingFinish
-                                                                                       endTime:kCountOfTimeSigmente  +
+                                                                                       endTime:kCountOfTimeSegment  +
                                                                      (self.countOfCellOnView/2)] longValue] +
                                                                    self.countOfCellOnView/2)];
             if ((indexPath.row >= startAbstractTime.integerValue) && (indexPath.row < endAbstractTime.integerValue)) {
-                if ([self.meetting.meetingOwner.email isEqualToString:[MRNetworkManager sharedManager].owner.email]) {
+                if ([self.meetting.meetingOwner.userId isEqualToNumber:self.owner.userId]) {
                     [cell addMeeting:YES];
                 } else {
                     [cell addMeeting:NO];
@@ -239,15 +242,15 @@ static const double kWidthOfCell = 20;
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-        self.textView.text = self.quotationText;
+    self.textView.text = self.sendMessage;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)theTextView {
     if (![self.textView hasText]) {
         self.messagePlaceholder.hidden = NO;
-        self.quotationText = @"";
+        self.sendMessage = @"";
     } else {
-        self.quotationText = self.textView.text;
+        self.sendMessage = self.textView.text;
         self.textView.text = [NSString embedStringinQuotes:self.textView.text];
     }
 }
@@ -272,10 +275,8 @@ static const double kWidthOfCell = 20;
         [self showInRedCircle:MRFifteenMinutesRedCircle];
         self.timePickerTime = date;
         self.startDate = [self createDateFromTime:self.timePickerTime andDate:self.calendarDate];
-        self.finishDate = [NSDate dateWithTimeInterval:kFifteenMinutes sinceDate:self.startDate];
         self.timeButtonLabel.text = [self.timeFormatter stringFromDate:date];
-        self.checkInTimeLabel.text = [self.timeFormatter stringFromDate:self.startDate];
-        self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
+        [self addFifteenMinutes:self];
     };
     self.popover = [[WYPopoverController alloc] initWithContentViewController:controller];
     self.popover.delegate = self;
@@ -322,17 +323,18 @@ static const double kWidthOfCell = 20;
     if (![self.textView hasText] || !self.startDate || !self.finishDate) {
         self.errorLabel.hidden = NO;
     } else {
-        if (!self.quotationText) {
-            self.quotationText = self.textView.text;
+        if (!self.sendMessage) {
+            self.sendMessage = self.textView.text;
         }
         self.errorLabel.hidden = YES;
         NSNumber *start = [self convertDateToMiliseconds:self.startDate];
         NSNumber *finish = [self convertDateToMiliseconds:self.finishDate];
-        [self.manager bookMeetingInRoom:self.room.roomId from:start to:finish withMessage:self.quotationText completion:^(id success, NSError *error) {
+        [self.manager bookMeetingInRoom:self.room.roomId from:start to:finish withMessage:self.sendMessage completion:^(id success, NSError *error) {
             if (error) {
                 [self createAlertForError:error];
             } else {
                 [self createAlertWithMessage:success];
+                [self performSegueWithIdentifier:@"unwindToShedule" sender:self];
             }
         }];
     }
@@ -380,9 +382,9 @@ static const double kWidthOfCell = 20;
 
 - (void)viewUpdate {
     NSDate *currentDate = [NSDate date];
-    NSNumber* abstractTime = [NSDate timeToAbstractTime:currentDate endTime:kCountOfTimeSigmente  +
-                              (self.countOfCellOnView/2)];
-    abstractTime = [NSNumber numberWithFloat:([abstractTime floatValue] + self.countOfCellOnView/2)];
+    NSNumber* abstractTime = [NSDate timeToAbstractTime:currentDate endTime:kCountOfTimeSegment  +
+                              (self.countOfCellOnView / 2)];
+    abstractTime = [NSNumber numberWithFloat:([abstractTime floatValue] + self.countOfCellOnView / 2)];
     self.indexPathOfCentralCell = [NSIndexPath indexPathForRow:abstractTime.integerValue inSection:0];
     [self downloadAndUpdateDate];
 }
@@ -400,12 +402,12 @@ static const double kWidthOfCell = 20;
 
 - (void)selectTimeOnTimeLine {
     NSDate *currentDate = [NSDate date];
-    NSNumber* abstractTime = [NSDate timeToAbstractTime:currentDate endTime:kCountOfTimeSigmente  +
+    NSNumber* abstractTime = [NSDate timeToAbstractTime:currentDate endTime:kCountOfTimeSegment  +
                               (self.countOfCellOnView/2)];
-    NSIndexPath* ip = [NSIndexPath indexPathForRow:abstractTime.integerValue inSection:0];
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:abstractTime.integerValue inSection:0];
     abstractTime = [NSNumber numberWithFloat:([abstractTime floatValue] + self.countOfCellOnView/2)];
     self.indexPathOfCentralCell = [NSIndexPath indexPathForRow:abstractTime.integerValue inSection:0];
-    [self.tableView scrollToRowAtIndexPath:ip atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 - (NSNumber *)convertDateToMiliseconds:(NSDate *)date {
@@ -435,16 +437,12 @@ static const double kWidthOfCell = 20;
 }
 
 - (void)addTimeInterval:(NSTimeInterval)interval {
-    if (self.startDate) {
-        self.finishDate = [NSDate dateWithTimeInterval:interval sinceDate:self.startDate];
-        self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
-    } else {
+    if (!self.startDate) {
         self.startDate = [NSDate date];
-        self.finishDate = [NSDate dateWithTimeInterval:interval sinceDate:self.startDate];
-        self.checkInTimeLabel.text = [self.timeFormatter stringFromDate:self.startDate];
-        self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
     }
-    
+    self.checkInTimeLabel.text = [self.timeFormatter stringFromDate:self.startDate];
+    self.finishDate = [NSDate dateWithTimeInterval:interval sinceDate:self.startDate];
+    self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
 }
 
 @end

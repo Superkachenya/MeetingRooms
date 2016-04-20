@@ -48,12 +48,10 @@ typedef NS_ENUM(NSInteger, MRWeekdays) {
 @property (weak, nonatomic) IBOutlet UIView *sundayViewIn;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (strong, nonatomic) IBOutletCollection(UIView) NSArray *viewsOut;
-@property (strong, nonatomic) IBOutletCollection(UIView) NSArray *viewsIn;
-@property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *labels;
 @property (strong, nonatomic) MRNetworkManager *manager;
 
 @property (strong, nonatomic) NSMutableArray *sortedArrayMeetings;
+@property (strong, nonatomic) NSMutableArray *arrayOfAllMeetings;
 
 @end
 
@@ -69,10 +67,11 @@ typedef NS_ENUM(NSInteger, MRWeekdays) {
     self.sortedArrayMeetings = [NSMutableArray new];
     self.manager = [MRNetworkManager sharedManager];
     [self loadMeetings];
-    [self configureLabels];
     self.tableView.allowsSelection = NO;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 116.0;
+    [self configureViewsForDays];
+    [self configureLabels];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -81,15 +80,9 @@ typedef NS_ENUM(NSInteger, MRWeekdays) {
 
 #pragma mark - UIViewController helpers
 
-- (void)configureLabels {
+- (void)configureViewsForDays {
     NSDate *date = [NSDate date];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"MMM d"];
-    self.monthDateLabel.text = [dateFormatter stringFromDate:date];
-    [dateFormatter setDateFormat:@"yyyy"];
-    self.yearLabel.text = [dateFormatter stringFromDate:date];
-    NSLog(@"%lu", (unsigned long)self.viewsIn.count);
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier: NSCalendarIdentifierGregorian];
+    NSCalendar *gregorian = [NSCalendar currentCalendar];
     NSDateComponents *components = [gregorian components: NSUIntegerMax fromDate:date];
     switch (components.weekday) {
         case MRSunday:
@@ -129,6 +122,38 @@ typedef NS_ENUM(NSInteger, MRWeekdays) {
     }
 }
 
+- (void)configureLabels {
+    NSDate *nearestMonday = [self findNearestMonday];
+    NSArray *arrayOfLabels = [NSArray arrayWithObjects:self.mondayLabel, self.tuesdayLabel, self.wednesdayLabel,
+                              self.thursdayLabel, self.fridayLabel, nil];
+    NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
+    dayComponent.day = 0;
+    for (UILabel *label in arrayOfLabels) {
+        NSCalendar *theCalendar = [NSCalendar currentCalendar];
+        NSDate *nextDate = [theCalendar dateByAddingComponents:dayComponent toDate:nearestMonday options:0];
+        [self.manager getAllOwnersMeetingsForDate:nextDate offset:0
+                              WithCompletionBlock:^(id success, NSError *error) {
+                                  if (error) {
+                                      [self createAlertForError:error];
+                                  } else {
+                                      self.arrayOfAllMeetings = success;
+                                      label.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.arrayOfAllMeetings.count];
+                                  }
+                              }];
+        dayComponent.day++;
+    }
+}
+
+- (NSDate *)findNearestMonday {
+    NSDate *today = [[NSDate alloc] init];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *weekdayComponents = [gregorian components:NSCalendarUnitWeekday fromDate:today];
+    NSDateComponents *componentsToSubtract = [[NSDateComponents alloc] init];
+    [componentsToSubtract setDay: 1 - (weekdayComponents.weekday - 1)];
+    NSDate *nearestMonday = [gregorian dateByAddingComponents:componentsToSubtract toDate:today options:0];
+    return nearestMonday;
+}
+
 - (void)loadMeetings {
     [self.manager getAllOwnersMeetingsForDate:[NSDate date] offset:self.sortedArrayMeetings.count WithCompletionBlock:^(id success, NSError *error) {
         if (error) {
@@ -161,14 +186,18 @@ typedef NS_ENUM(NSInteger, MRWeekdays) {
     return cell;
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == self.sortedArrayMeetings.count - 1) {
+        [self loadMeetings];
+    }
+}
+
+#pragma mark - Navigation
+
+- (IBAction)prepareForUnwindToShedule:(UIStoryboardSegue *)segue {
+    [self loadMeetings];
+}
 
 @end

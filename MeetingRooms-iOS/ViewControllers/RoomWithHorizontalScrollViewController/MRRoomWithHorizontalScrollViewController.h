@@ -7,8 +7,7 @@
 //
 
 @import UIKit;
-#import "MRRoom.h"
-
+@class MRRoom;
 @interface MRRoomWithHorizontalScrollViewController : UIViewController
 
 @property (strong, nonatomic) MRRoom *room;

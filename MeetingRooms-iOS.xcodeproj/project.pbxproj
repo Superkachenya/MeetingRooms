@@ -162,8 +162,8 @@
 		8206735F1CB63F5400D1D205 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				8EA6BD491CC6389D00E9EE03 /* SheduleViewController */,
 				820673601CB63F5400D1D205 /* LoginViewConroller */,
+				8EA6BD491CC6389D00E9EE03 /* SheduleViewController */,
 				820673631CB63F5400D1D205 /* RoomWithHorizontalScrollViewController */,
 				828843AF1CB79B5900AD961E /* RoomWithVerticalScrollViewController */,
 				8EE5615E1CB7A30C005DB87C /* RoomsViewContoller */,

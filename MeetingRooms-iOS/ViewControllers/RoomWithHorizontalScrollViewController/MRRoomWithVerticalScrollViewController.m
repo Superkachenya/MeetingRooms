@@ -11,6 +11,7 @@
 #import "MRTableViewCustomCell.h"
 #import "MRMeeting.h"
 #import "MRUser.h"
+#import "MRRoom.h"
 #import "MRNetworkManager.h"
 #import "UIColor+MRColorFromHEX.h"
 #import "MRBookingViewController.h"
@@ -40,8 +41,8 @@
     self.hours = [[NSMutableDictionary alloc] init];
     self.arrayMeetings = [[NSMutableArray alloc] init];
     self.sortedArrayMeetings = [[NSMutableArray alloc] init];
-    self.arrayOfHours = [[NSArray alloc] initWithObjects:@"8:00",@"9:00",@"10:00",@"11:00",@"12:00",@"13:00",@"14:00",
-                         @"15:00", @"16:00",@"17:00",@"18:00",@"19:00",@"20:00", @"21:00", nil];
+    self.arrayOfHours = @[@"8:00",@"9:00",@"10:00",@"11:00",@"12:00",@"13:00",@"14:00",
+                         @"15:00", @"16:00",@"17:00",@"18:00",@"19:00",@"20:00", @"21:00"];
     self.tableView.allowsSelection = NO;
     [self loadMeetings];
 }
@@ -91,14 +92,13 @@
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"HH:mm"];
-    [formatter setTimeZone:[NSTimeZone timeZoneWithName:@"Europe/Kiev"]];
-    NSString *curentTimeString = [formatter stringFromDate:[NSDate new]];
+    NSString *curentTimeString = [formatter stringFromDate:[NSDate date]];
     NSArray *componentsTime = [curentTimeString componentsSeparatedByString: @":"];
-    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-    f.numberStyle = NSNumberFormatterDecimalStyle;
-    NSNumber *curentHours = [f numberFromString:componentsTime[0]];
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+    NSNumber *curentHours = [numberFormatter numberFromString:componentsTime[0]];
     componentsTime = [string componentsSeparatedByString: @":"];
-    NSNumber *hours = [f numberFromString:componentsTime[0]];
+    NSNumber *hours = [numberFormatter numberFromString:componentsTime[0]];
     if ([hours intValue] < [curentHours intValue]) {
         [label setTextColor:[UIColor getUIColorFromHexString:@"#39364D"]];
     }
@@ -160,8 +160,7 @@
 #pragma mark - Loading meetings and configuration
 
 - (void)loadMeetings {
-    NSDate *date = [[NSDate alloc] init];
-    [[MRNetworkManager sharedManager] getRoomInfoById:self.room.roomId toDate:date completion:^(id success, NSError *error) {
+    [[MRNetworkManager sharedManager] getRoomInfoById:self.room.roomId toDate:[NSDate date] completion:^(id success, NSError *error) {
         if (error) {
             [self createAlertForError:error];
         } else {

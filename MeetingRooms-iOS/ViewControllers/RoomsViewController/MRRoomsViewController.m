@@ -22,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 
-@property (strong, nonatomic) NSArray *testieRooms;
+@property (strong, nonatomic) NSArray *rooms;
 
 @end
 
@@ -33,32 +33,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.testieRooms = [NSArray new];
-    
     [self updateClocks];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:YES];
-    
     [self updateRoomsStatus];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:YES];
-    
-    [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.testieRooms.count;
+    return self.rooms.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MRCustomRoomsCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    MRRoom *currentRoom = self.testieRooms[indexPath.row];
+    MRRoom *currentRoom = self.rooms[indexPath.row];
     [cell configureCellWithRoom:currentRoom];
     return cell;
 }
@@ -69,12 +56,13 @@
     if ([segue.identifier isEqualToString:@"toRoomDetails"]) {
         MRRoomWithHorizontalScrollViewController *details = segue.destinationViewController;
         NSIndexPath *indexPath = self.tableView.indexPathForSelectedRow;
-        details.room = self.testieRooms[indexPath.row];
+        details.room = self.rooms[indexPath.row];
+        [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
     }
 }
 
 - (IBAction)prepareForUnwindToRooms:(UIStoryboardSegue *)segue {
-    
+    [self updateRoomsStatus];
 }
 
 #pragma mark - Helpers
@@ -99,7 +87,10 @@
         if (error) {
             [self createAlertForError:error];
         } else {
-            self.testieRooms = success;
+            if (!self.rooms) {
+                self.rooms = [NSArray new];
+            }
+            self.rooms = success;
             [self.tableView reloadData];
         }
     }];

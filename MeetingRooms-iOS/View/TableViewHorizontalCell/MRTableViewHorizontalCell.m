@@ -38,14 +38,14 @@
     self.nowRedLine.hidden = YES;
 }
 
-- (void) showTimeLineWithCountOfLine:(long)countOfTimeLine sizeOfViewIs:(long)sizeOfHalfScreen onIndexPathCell:(long)indexPath{
-    if ((indexPath+1 > sizeOfHalfScreen) && (indexPath < (countOfTimeLine + sizeOfHalfScreen))) {
+- (void)showTimeLineWithCountOfLine:(NSInteger)countOfTimeLine sizeOfViewIs:(NSInteger)sizeOfHalfScreen atIndexCell:(NSInteger)index {
+    if ((index + 1 > sizeOfHalfScreen) && (index < (countOfTimeLine + sizeOfHalfScreen))) {
         self.rightLine.hidden = NO;
         self.leftLine.hidden = NO;
         self.littleLeftLine.hidden = NO;
         self.littleRightLine.hidden = NO;
         self.timeLabel.hidden = NO;
-        [self showTimeLine:indexPath+1];
+        [self showTimeLine:index + 1];
     } else {
         self.statusLine.hidden = YES;
         self.rightLine.hidden = YES;
@@ -54,12 +54,12 @@
         self.littleRightLine.hidden = YES;
         self.nowLine.hidden = YES;
         self.timeLabel.hidden = YES;
-        if (indexPath+1 == sizeOfHalfScreen) {
+        if (index + 1 == sizeOfHalfScreen) {
             self.timeLabel.hidden = NO;
             self.timeLabel.text = @"8:";
             self.timeLabel.textAlignment = NSTextAlignmentRight;
             self.littleLeftLine.backgroundColor = [UIColor whiteColor];
-        } else if (indexPath  == countOfTimeLine + sizeOfHalfScreen) {
+        } else if (index  == countOfTimeLine + sizeOfHalfScreen) {
             self.timeLabel.hidden = NO;
             self.timeLabel.text = @"00";
             self.timeLabel.textAlignment = NSTextAlignmentLeft;
@@ -68,7 +68,7 @@
     }
 }
 
-- (void) showTimeLine:(long) number {
+- (void)showTimeLine:(NSInteger) number {
     switch ((number % 4)) {
         case 0:
             self.timeLabel.text = @"00";
@@ -92,10 +92,12 @@
             self.littleLeftLine.backgroundColor = [UIColor getUIColorFromHexString:@"#6A6776"];
             self.littleRightLine.backgroundColor = [UIColor whiteColor];
             break;
+        default:
+            break;
     }
 }
 
-- (void) addMeeting:(BOOL) myMeeting {
+- (void)addMeeting:(BOOL) myMeeting {
     if (!myMeeting) {
         self.statusLine.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB"];
     } else {
@@ -105,26 +107,26 @@
     self.leftLine.backgroundColor = [UIColor getUIColorFromHexString:@"#6A6776"];
 }
 
-- (void) showYelloy {
+- (void)showYellow {
     if ([UIColor color:self.statusLine.backgroundColor isEqualToColor:[UIColor getUIColorFromHexString:@"#F8E71C"] withTolerance:0]) {
         self.nowLine.hidden = NO;
     }
 }
 
-- (void) nowLineShow {
+- (void)nowLineShow {
     self.nowRedLine.hidden = NO;
 }
 
-- (void) updateClocks {
-    if (self.nowRedLine.hidden == NO) {
+- (void)updateClocks {
+    if (!self.nowRedLine.hidden) {
         NSDate *actualTime = [NSDate date];
         NSTimeInterval delay = [[actualTime nextMinute] timeIntervalSinceDate:actualTime];
         NSDateFormatter *clocksFormat = [NSDateFormatter new];
         clocksFormat.dateFormat = @"mm";
         int timeInInt = [[clocksFormat stringFromDate:actualTime] intValue];
         for (int i = 0; i < 15; i++) {
-            if ((timeInInt == i) || (timeInInt == i+15) || (timeInInt == i+30) || (timeInInt == i+45)) {
-                self.leftOutletForNowRedLine.constant = i*0.75;
+            if ((timeInInt == i) || (timeInInt == i + 15) || (timeInInt == i + 30) || (timeInInt == i + 45)) {
+                self.leftOutletForNowRedLine.constant = i * 0.75;
             }
             __weak id weakSelf = self;
             dispatch_async(dispatch_get_main_queue(), ^{

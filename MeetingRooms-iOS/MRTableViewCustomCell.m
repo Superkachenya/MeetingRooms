@@ -18,14 +18,9 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *creatorAvatarImage;
 @property (weak, nonatomic) IBOutlet UILabel *titleMeetingLabel;
-@property (weak, nonatomic) IBOutlet UIView *indicatorView;
 @property (weak, nonatomic) IBOutlet UILabel *timeIntervalLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *intervalViewSpace;
-@property (weak, nonatomic) IBOutlet UIView *frameOfPicture;
-@property (weak, nonatomic) IBOutlet UIView *p1;
-@property (weak, nonatomic) IBOutlet UIView *p2;
-@property (weak, nonatomic) IBOutlet UIView *p3;
-@property (weak, nonatomic) IBOutlet UIView *p4;
+@property (strong, nonatomic) IBOutletCollection(UIView) NSArray *timePoints;
 
 @end
 
@@ -36,25 +31,18 @@
     
     self.timeIntervalLabel.textColor = [UIColor whiteColor];
     self.titleMeetingLabel.textColor = [UIColor whiteColor];
-    self.indicatorView.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB"];
-    self.frameOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB"];
-    self.p1.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB"];
-    self.p2.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB"];
-    self.p3.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB"];
-    self.p4.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB"];
-    
+    for (UIView *point in self.timePoints) {
+        point.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB"];
+    }
 }
 
 - (void)configureCellWithMeeting:(MRMeeting *)meeting {
     if ([meeting.meetingOwner.email isEqualToString:[MRNetworkManager sharedManager].owner.email]) {
         self.timeIntervalLabel.textColor = [UIColor getUIColorFromHexString:@"#F8E71C"];
-        self.indicatorView.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C"];
         self.titleMeetingLabel.textColor = [UIColor getUIColorFromHexString:@"#F8E71C"];
-        self.frameOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C"];
-        self.p1.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C"];
-        self.p2.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C"];
-        self.p3.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C"];
-        self.p4.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C"];
+        for (UIView *point in self.timePoints) {
+            point.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C"];
+        }
     }
     NSArray *components = [meeting.meetingOwner.email componentsSeparatedByString:@"@"];
     self.titleMeetingLabel.text = [components firstObject];
@@ -94,13 +82,10 @@
     int time = ([hours intValue] * 60) + [minute intValue];
     if (time < currentTime) {
         self.timeIntervalLabel.textColor = [UIColor getUIColorFromHexString:@"#39364D"];
-        self.indicatorView.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D"];
         self.titleMeetingLabel.textColor = [UIColor getUIColorFromHexString:@"#39364D"];
-        self.frameOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D"];
-        self.p1.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D"];
-        self.p2.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D"];
-        self.p3.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D"];
-        self.p4.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D"];
+        for (UIView *point in self.timePoints) {
+            point.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D"];
+        }
     }
 }
 

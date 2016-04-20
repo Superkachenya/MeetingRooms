@@ -12,6 +12,7 @@
 #import "MRMeeting.h"
 #import "MRUser.h"
 #import "MROwner.h"
+#import "MRRoom.h"
 #import "AFNetworking/AFNetworking.h"
 #import "NSDate+MRNextMinute.h"
 #import "MRNetworkManager.h"
@@ -21,7 +22,7 @@
 #import "MRBookingViewController.h"
 #import "NSString+MRQuotesString.h"
 
-static const double kCountOfTimeSigmente = 48;
+static const double kCountOfTimeSegment = 48;
 static const double kWidthOfCell = 20;
 
 @interface MRRoomWithHorizontalScrollViewController () <PTETableViewDelegate>
@@ -70,10 +71,10 @@ static const double kWidthOfCell = 20;
     [self downloadAndUpdateDate];
 }
 
-#pragma mark - UITableViewDataSource -
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(PTEHorizontalTableView *)horizontalTableView numberOfRowsInSection:(NSInteger)section {
-    return kCountOfTimeSigmente + self.countOfCellOnView ;
+    return kCountOfTimeSegment + self.countOfCellOnView ;
 }
 
 - (CGFloat)tableView:(PTEHorizontalTableView *)horizontalTableView widthForCellAtIndexPath:(NSIndexPath *)indexPath {
@@ -83,8 +84,8 @@ static const double kWidthOfCell = 20;
 
 - (UITableViewCell *)tableView:(PTEHorizontalTableView *)horizontalTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MRTableViewHorizontalCell * cell = [horizontalTableView.tableView dequeueReusableCellWithIdentifier:@"cell"];
-    [cell showTimeLineWithCountOfLine:kCountOfTimeSigmente sizeOfViewIs:(self.countOfCellOnView/2)
-                      onIndexPathCell:indexPath.row];
+    [cell showTimeLineWithCountOfLine:kCountOfTimeSegment sizeOfViewIs:(self.countOfCellOnView/2)
+                          atIndexCell:indexPath.row];
     long keyOfCell = (long)indexPath.row + self.countOfCellOnView/2;
     if (indexPath > self.indexPathOfLastShowCell) {
         keyOfCell = (long)indexPath.row - self.countOfCellOnView/2;
@@ -92,11 +93,11 @@ static const double kWidthOfCell = 20;
     NSString *key = [NSString stringWithFormat:@"%ld",keyOfCell];
     self.imageLine.image = [UIImage imageNamed:@"ic_curve_blue_red"];
     self.meetting = [self.dictonaryOfMeeting objectForKey:key];
-    self.timeLabel.text = [NSDate abstractTimeToTimeAfterNow:keyOfCell inTimeLineSegment:kCountOfTimeSigmente/2];
+    self.timeLabel.text = [NSDate abstractTimeToTimeAfterNow:keyOfCell inTimeLineSegment:kCountOfTimeSegment/2];
     if (![self.timeLabel.text isEqualToString:@"Past"]) {
         if (self.meetting) {
-            if ([self.meetting.meetingOwner.email isEqualToString:[MRNetworkManager sharedManager].owner.email]) {
-                [cell showYelloy];
+            if ([self.meetting.meetingOwner.userId isEqualToNumber:[MRNetworkManager sharedManager].owner.userId]) {
+                [cell showYellow];
                 self.imageLine.image = [UIImage imageNamed:@"ic_curve_yellow"];
                 self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"F8E71C"];
                 self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"F8E71C"];
@@ -113,16 +114,16 @@ static const double kWidthOfCell = 20;
     }
     [self showInfo:self.meetting];
     
-    if ([self.room.meetings count]) {
-        for (long i = 0; i < [self.room.meetings count]; i++) {
+    if (self.room.meetings.count) {
+        for (MRMeeting *meeting in self.room.meetings) {
             self.meetting = [MRMeeting new];
-            self.meetting = self.room.meetings[i];
+            self.meetting = meeting;
             NSNumber* startAbstractTime = [NSNumber numberWithLong:([[NSDate timeToAbstractTime:self.meetting.meetingStart
-                                                                                        endTime:kCountOfTimeSigmente  +
+                                                                                        endTime:kCountOfTimeSegment  +
                                                                       (self.countOfCellOnView/2)] longValue] +
                                                                     self.countOfCellOnView/2)];
             NSNumber* endAbstractTime = [NSNumber numberWithFloat:([[NSDate timeToAbstractTime:self.meetting.meetingFinish
-                                                                                       endTime:kCountOfTimeSigmente  +
+                                                                                       endTime:kCountOfTimeSegment  +
                                                                      (self.countOfCellOnView/2)] longValue] +
                                                                    self.countOfCellOnView/2)];
             if ((indexPath.row >= startAbstractTime.integerValue) && (indexPath.row < endAbstractTime.integerValue)) {
@@ -195,7 +196,7 @@ static const double kWidthOfCell = 20;
 
 - (void) viewUpdate {
     NSDate *currentDate = [NSDate date];
-    NSNumber* abstractTime = [NSDate timeToAbstractTime:currentDate endTime:kCountOfTimeSigmente  +
+    NSNumber* abstractTime = [NSDate timeToAbstractTime:currentDate endTime:kCountOfTimeSegment  +
                               (self.countOfCellOnView/2)];
     abstractTime = [NSNumber numberWithFloat:([abstractTime floatValue] + self.countOfCellOnView/2)];
     self.indexPathOfCentralCell = [NSIndexPath indexPathForRow:abstractTime.integerValue inSection:0];
@@ -204,12 +205,12 @@ static const double kWidthOfCell = 20;
 
 - (void) selectTimeOnTimeLine {
     NSDate *currentDate = [NSDate date];
-    NSNumber* abstractTime = [NSDate timeToAbstractTime:currentDate endTime:kCountOfTimeSigmente  +
+    NSNumber* abstractTime = [NSDate timeToAbstractTime:currentDate endTime:kCountOfTimeSegment  +
                               (self.countOfCellOnView/2)];
-    NSIndexPath* ip = [NSIndexPath indexPathForRow:abstractTime.integerValue inSection:0];
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:abstractTime.integerValue inSection:0];
     abstractTime = [NSNumber numberWithFloat:([abstractTime floatValue] + self.countOfCellOnView/2)];
     self.indexPathOfCentralCell = [NSIndexPath indexPathForRow:abstractTime.integerValue inSection:0];
-    [self.tableView scrollToRowAtIndexPath:ip atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 - (void) downloadAndUpdateDate {
@@ -233,7 +234,6 @@ static const double kWidthOfCell = 20;
         MRBookingViewController *booking = segue.destinationViewController;
         booking.room = self.room;
     }
-
 }
 
 - (IBAction)unwindToRoomWithHorizontalScroll:(UIStoryboardSegue *)unwindSegue {
