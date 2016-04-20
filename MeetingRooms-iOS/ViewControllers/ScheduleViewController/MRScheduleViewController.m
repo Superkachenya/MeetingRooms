@@ -94,37 +94,37 @@ typedef NS_ENUM(NSInteger, MRWeekdays) {
     switch (components.weekday) {
         case MRSunday:
             self.sundayViewOut.backgroundColor = [UIColor whiteColor];
-            self.sundayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F" alpha:1];
+            self.sundayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F"];
             break;
         case MRMonday:
             self.mondayViewOut.backgroundColor = [UIColor whiteColor];
-            self.mondayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F" alpha:1];
+            self.mondayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F"];
             self.mondayLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.sortedArrayMeetings.count];
             self.mondayLabel.adjustsFontSizeToFitWidth = YES;
             break;
         case MRTuesday:
             self.tuesdayViewOut.backgroundColor = [UIColor whiteColor];
-            self.tuesdayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F" alpha:1];
+            self.tuesdayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F"];
             self.tuesdayLabel.adjustsFontSizeToFitWidth = YES;
             break;
         case MRWednesday:
             self.wednesdayViewOut.backgroundColor = [UIColor whiteColor];
-            self.wednesdayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F" alpha:1];
+            self.wednesdayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F"];
             self.wednesdayLabel.adjustsFontSizeToFitWidth = YES;
             break;
         case MRThursday:
             self.thursdayViewOut.backgroundColor = [UIColor whiteColor];
-            self.thursdayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F" alpha:1];
+            self.thursdayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F"];
             self.thursdayLabel.adjustsFontSizeToFitWidth = YES;
             break;
         case MRFriday:
             self.fridayViewOut.backgroundColor = [UIColor whiteColor];
-            self.fridayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F" alpha:1];
+            self.fridayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F"];
             self.fridayLabel.adjustsFontSizeToFitWidth = YES;
             break;
         case MRSaturday:
             self.saturdayViewOut.backgroundColor = [UIColor whiteColor];
-            self.saturdayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F" alpha:1];
+            self.saturdayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F"];
             break;
     }
 }
@@ -157,7 +157,7 @@ typedef NS_ENUM(NSInteger, MRWeekdays) {
 - (MRCustomScheduleCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MRCustomScheduleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     MRMeeting *currentMeeting = [self.sortedArrayMeetings objectAtIndex:indexPath.row];
-    [cell configureCellWithMeeting:currentMeeting indexpath:indexPath];
+    [cell configureCellWithMeeting:currentMeeting atIndexpath:indexPath];
     return cell;
 }
 

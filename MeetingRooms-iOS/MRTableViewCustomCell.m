@@ -16,7 +16,6 @@
 
 @interface MRTableViewCustomCell ()
 
-@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *creatorAvatarImage;
 @property (weak, nonatomic) IBOutlet UILabel *titleMeetingLabel;
 @property (weak, nonatomic) IBOutlet UIView *indicatorView;
@@ -32,51 +31,33 @@
 
 @implementation MRTableViewCustomCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    
-    // Configure the view for the selected state
-}
-
 - (void)prepareForReuse {
     [super prepareForReuse];
     
-    self.timeIntervalLabel.textColor = [UIColor getUIColorFromHexString:@"#FFFFFF" alpha:1];
-    self.titleMeetingLabel.textColor = [UIColor getUIColorFromHexString:@"#FFFFFF" alpha:1];
-    self.indicatorView.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB" alpha:1];
-    self.frameOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB" alpha:1];
-    self.p1.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB" alpha:1];
-    self.p2.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB" alpha:1];
-    self.p3.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB" alpha:1];
-    self.p4.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB" alpha:1];
-    
-}
-
-- (void)configureCellAtIndexPath:(NSIndexPath *)indexpath withHour:(NSString *)hour {
-    self.dateLabel.text = hour;
-    NSLog(@"dateLabel - %@", self.dateLabel.text);
+    self.timeIntervalLabel.textColor = [UIColor whiteColor];
+    self.titleMeetingLabel.textColor = [UIColor whiteColor];
+    self.indicatorView.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB"];
+    self.frameOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB"];
+    self.p1.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB"];
+    self.p2.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB"];
+    self.p3.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB"];
+    self.p4.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB"];
     
 }
 
 - (void)configureCellWithMeeting:(MRMeeting *)meeting {
     if ([meeting.meetingOwner.email isEqualToString:[MRNetworkManager sharedManager].owner.email]) {
-        self.timeIntervalLabel.textColor = [UIColor getUIColorFromHexString:@"#F8E71C" alpha:1];
-        self.indicatorView.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C" alpha:1];
-        self.titleMeetingLabel.textColor = [UIColor getUIColorFromHexString:@"#F8E71C" alpha:1];
-        self.frameOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C" alpha:1];
-        self.p1.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C" alpha:1];
-        self.p2.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C" alpha:1];
-        self.p3.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C" alpha:1];
-        self.p4.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C" alpha:1];
+        self.timeIntervalLabel.textColor = [UIColor getUIColorFromHexString:@"#F8E71C"];
+        self.indicatorView.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C"];
+        self.titleMeetingLabel.textColor = [UIColor getUIColorFromHexString:@"#F8E71C"];
+        self.frameOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C"];
+        self.p1.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C"];
+        self.p2.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C"];
+        self.p3.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C"];
+        self.p4.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C"];
     }
-    
-    NSArray *components = [meeting.meetingOwner.email componentsSeparatedByString: @"@"];
-    self.titleMeetingLabel.text = components[0];
+    NSArray *components = [meeting.meetingOwner.email componentsSeparatedByString:@"@"];
+    self.titleMeetingLabel.text = [components firstObject];
     NSString *startDate = [self getDateAsString:meeting.meetingStart];
     NSString *finishDate = [self getDateAsString:meeting.meetingFinish];
     self.timeIntervalLabel.text = [NSString stringWithFormat:@"%@ - %@", startDate, finishDate];
@@ -102,32 +83,32 @@
     }
     NSString *curentTimeString = [self getDateAsString:[NSDate new]];
     NSArray *componentsTime = [curentTimeString componentsSeparatedByString: @":"];
-    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-    f.numberStyle = NSNumberFormatterDecimalStyle;
-    NSNumber *curentHours = [f numberFromString:componentsTime[0]];
-    NSNumber *curentMinute = [f numberFromString:componentsTime[1]];
-    int curentTime = ([curentHours intValue] * 60) + [curentMinute intValue];
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    formatter.numberStyle = NSNumberFormatterDecimalStyle;
+    NSNumber *curentHours = [formatter numberFromString:componentsTime[0]];
+    NSNumber *curentMinute = [formatter numberFromString:componentsTime[1]];
+    int currentTime = ([curentHours intValue] * 60) + [curentMinute intValue];
     componentsTime = [startDate componentsSeparatedByString: @":"];
-    NSNumber *hours = [f numberFromString:componentsTime[0]];
-    NSNumber *minute = [f numberFromString:componentsTime[1]];
+    NSNumber *hours = [formatter numberFromString:componentsTime[0]];
+    NSNumber *minute = [formatter numberFromString:componentsTime[1]];
     int time = ([hours intValue] * 60) + [minute intValue];
-    if (time < curentTime) {
-        self.timeIntervalLabel.textColor = [UIColor getUIColorFromHexString:@"#39364D" alpha:1];
-        self.indicatorView.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D" alpha:1];
-        self.titleMeetingLabel.textColor = [UIColor getUIColorFromHexString:@"#39364D" alpha:1];
-        self.frameOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D" alpha:1];
-        self.p1.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D" alpha:1];
-        self.p2.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D" alpha:1];
-        self.p3.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D" alpha:1];
-        self.p4.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D" alpha:1];
+    if (time < currentTime) {
+        self.timeIntervalLabel.textColor = [UIColor getUIColorFromHexString:@"#39364D"];
+        self.indicatorView.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D"];
+        self.titleMeetingLabel.textColor = [UIColor getUIColorFromHexString:@"#39364D"];
+        self.frameOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D"];
+        self.p1.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D"];
+        self.p2.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D"];
+        self.p3.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D"];
+        self.p4.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D"];
     }
 }
 
 - (NSString *)getDateAsString:(NSDate *)date {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"HH:mm"];
-    [formatter setTimeZone:[NSTimeZone timeZoneWithName:@"Europe/Kiev"]];
     NSString *stringFromDate = [formatter stringFromDate:date];
     return stringFromDate;
 }
+
 @end

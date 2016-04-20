@@ -98,7 +98,7 @@ static const double kWidthOfCell = 20;
     for (UIView *circle in self.timeCircles) {
         circle.layer.borderWidth = 1.0;
         circle.layer.borderColor = [UIColor grayColor].CGColor;
-        circle.backgroundColor = [UIColor getUIColorFromHexString:@"#302D44" alpha:1.0];
+        circle.backgroundColor = [UIColor getUIColorFromHexString:@"#302D44"];
         circle.layer.cornerRadius = circle.frame.size.width / 2;
     }
     self.manager = [MRNetworkManager sharedManager];
@@ -259,8 +259,6 @@ static const double kWidthOfCell = 20;
     } else {
         self.messagePlaceholder.hidden = YES;
     }
-    CGPoint bottomOffset = CGPointMake(0, self.bottomConstraint.constant);
-    [self.scrollView setContentOffset:bottomOffset animated:NO];
 }
 
 #pragma mark - Handle Events
@@ -350,7 +348,7 @@ static const double kWidthOfCell = 20;
     NSDictionary *userInfo = notification.userInfo;
     CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     self.bottomConstraint.constant = kbSize.height;
-    CGPoint bottomOffset = self.textView.frame.origin;
+    CGPoint bottomOffset = CGPointMake(0.0, 189.0);
     [self.scrollView setContentOffset:bottomOffset animated:YES];
     [UIView animateWithDuration:0.25 animations:^{
         [self.view layoutIfNeeded];

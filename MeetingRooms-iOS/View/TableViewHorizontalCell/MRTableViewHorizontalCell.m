@@ -31,9 +31,9 @@
 
 - (void)prepareForReuse {
     [super prepareForReuse];
-    self.statusLine.backgroundColor = [UIColor getUIColorFromHexString:@"#FFFFFF" alpha:1];
-    self.rightLine.backgroundColor = [UIColor getUIColorFromHexString:@"#FFFFFF" alpha:1];
-    self.leftLine.backgroundColor = [UIColor getUIColorFromHexString:@"#FFFFFF" alpha:1];
+    self.statusLine.backgroundColor = [UIColor whiteColor];
+    self.rightLine.backgroundColor = [UIColor whiteColor];
+    self.leftLine.backgroundColor = [UIColor whiteColor];
     self.statusLine.hidden = NO;
     self.nowRedLine.hidden = YES;
 }
@@ -58,12 +58,12 @@
             self.timeLabel.hidden = NO;
             self.timeLabel.text = @"8:";
             self.timeLabel.textAlignment = NSTextAlignmentRight;
-            self.littleLeftLine.backgroundColor = [UIColor getUIColorFromHexString:@"#FFFFFF" alpha:1];
+            self.littleLeftLine.backgroundColor = [UIColor whiteColor];
         } else if (indexPath  == countOfTimeLine + sizeOfHalfScreen) {
             self.timeLabel.hidden = NO;
             self.timeLabel.text = @"00";
             self.timeLabel.textAlignment = NSTextAlignmentLeft;
-            self.littleRightLine.backgroundColor = [UIColor getUIColorFromHexString:@"#FFFFFF" alpha:1];
+            self.littleRightLine.backgroundColor = [UIColor whiteColor];
         }
     }
 }
@@ -73,40 +73,40 @@
         case 0:
             self.timeLabel.text = @"00";
             self.timeLabel.textAlignment = NSTextAlignmentLeft;
-            self.littleLeftLine.backgroundColor = [UIColor getUIColorFromHexString:@"#FFFFFF" alpha:1];
-            self.littleRightLine.backgroundColor = [UIColor getUIColorFromHexString:@"#6A6776" alpha:1];
+            self.littleLeftLine.backgroundColor = [UIColor whiteColor];
+            self.littleRightLine.backgroundColor = [UIColor getUIColorFromHexString:@"#6A6776"];
             break;
         case 1:
             self.timeLabel.hidden = YES;
-            self.littleLeftLine.backgroundColor = [UIColor getUIColorFromHexString:@"#6A6776" alpha:1];
-            self.littleRightLine.backgroundColor = [UIColor getUIColorFromHexString:@"#6A6776" alpha:1];
+            self.littleLeftLine.backgroundColor = [UIColor getUIColorFromHexString:@"#6A6776"];
+            self.littleRightLine.backgroundColor = [UIColor getUIColorFromHexString:@"#6A6776"];
             break;
         case 2:
             self.timeLabel.hidden = YES;
-            self.littleLeftLine.backgroundColor = [UIColor getUIColorFromHexString:@"#6A6776" alpha:1];
-            self.littleRightLine.backgroundColor = [UIColor getUIColorFromHexString:@"#6A6776" alpha:1];
+            self.littleLeftLine.backgroundColor = [UIColor getUIColorFromHexString:@"#6A6776"];
+            self.littleRightLine.backgroundColor = [UIColor getUIColorFromHexString:@"#6A6776"];
             break;
         case 3:
             self.timeLabel.text = [NSString stringWithFormat:@"%ld:",((number / 4) + 5)];
             self.timeLabel.textAlignment = NSTextAlignmentRight;
-            self.littleLeftLine.backgroundColor = [UIColor getUIColorFromHexString:@"#6A6776" alpha:1];
-            self.littleRightLine.backgroundColor = [UIColor getUIColorFromHexString:@"#FFFFFF" alpha:1];
+            self.littleLeftLine.backgroundColor = [UIColor getUIColorFromHexString:@"#6A6776"];
+            self.littleRightLine.backgroundColor = [UIColor whiteColor];
             break;
     }
 }
 
 - (void) addMeeting:(BOOL) myMeeting {
     if (!myMeeting) {
-        self.statusLine.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB" alpha:1];
+        self.statusLine.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB"];
     } else {
-        self.statusLine.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C" alpha:1];
+        self.statusLine.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C"];
     }
-    self.rightLine.backgroundColor = [UIColor getUIColorFromHexString:@"#6A6776" alpha:1];
-    self.leftLine.backgroundColor = [UIColor getUIColorFromHexString:@"#6A6776" alpha:1];
+    self.rightLine.backgroundColor = [UIColor getUIColorFromHexString:@"#6A6776"];
+    self.leftLine.backgroundColor = [UIColor getUIColorFromHexString:@"#6A6776"];
 }
 
 - (void) showYelloy {
-    if ([UIColor color:self.statusLine.backgroundColor isEqualToColor:[UIColor getUIColorFromHexString:@"#F8E71C" alpha:1] withTolerance:0]) {
+    if ([UIColor color:self.statusLine.backgroundColor isEqualToColor:[UIColor getUIColorFromHexString:@"#F8E71C"] withTolerance:0]) {
         self.nowLine.hidden = NO;
     }
 }
@@ -135,12 +135,12 @@
 }
 
 - (void) pastTime {
-    self.rightLine.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D" alpha:1];
-    self.leftLine.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D" alpha:1];
-    if ([UIColor color:self.statusLine.backgroundColor isEqualToColor:[UIColor getUIColorFromHexString:@"#FFFFFF" alpha:1] withTolerance:0]) {
+    self.rightLine.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D"];
+    self.leftLine.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D"];
+    if ([UIColor color:self.statusLine.backgroundColor isEqualToColor:[UIColor whiteColor] withTolerance:0]) {
         self.statusLine.hidden = YES;
     } else {
-        self.statusLine.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D" alpha:1];
+        self.statusLine.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D"];
     }
 }
 

@@ -10,14 +10,6 @@
 
 @implementation MRCustomLabel
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
-
 - (void)layoutSubviews {
     [super layoutSubviews];
     
@@ -28,14 +20,11 @@
 }
 
 - (CGSize)intrinsicContentSize {
-    CGSize s = [super intrinsicContentSize];
-    
+    CGSize sizeContent = [super intrinsicContentSize];
     if (self.numberOfLines == 0) {
-        // found out that sometimes intrinsicContentSize is 1pt too short!
-        s.height += 1;
+        sizeContent.height += 1;
     }
-    
-    return s;
+    return sizeContent;
 }
 
 @end

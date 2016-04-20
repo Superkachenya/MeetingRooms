@@ -31,10 +31,10 @@ NSString *const kFree = @"FreeNow";
     formatter.dateFormat = @"HH:mm";
     self.nearestTimeLabel.text = [@"till " stringByAppendingString:[formatter stringFromDate:room.nearestTime]];
     if (room.isEmpty.boolValue) {
-        self.roomStatusLabel.textColor = [UIColor getUIColorFromHexString:@"#008ffb" alpha:1.0f];
+        self.roomStatusLabel.textColor = [UIColor getUIColorFromHexString:@"#008ffb"];
         self.roomStatusLabel.text = kFree;
     } else {
-        self.roomStatusLabel.textColor = [UIColor getUIColorFromHexString:@"#302d44" alpha:1.0f];
+        self.roomStatusLabel.textColor = [UIColor getUIColorFromHexString:@"#302d44"];
         self.roomStatusLabel.text = kBooked;
     }
 }

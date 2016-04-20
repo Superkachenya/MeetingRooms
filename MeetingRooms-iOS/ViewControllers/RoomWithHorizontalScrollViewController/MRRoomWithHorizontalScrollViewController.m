@@ -98,18 +98,18 @@ static const double kWidthOfCell = 20;
             if ([self.meetting.meetingOwner.email isEqualToString:[MRNetworkManager sharedManager].owner.email]) {
                 [cell showYelloy];
                 self.imageLine.image = [UIImage imageNamed:@"ic_curve_yellow"];
-                self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"F8E71C" alpha:1.0];
-                self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"F8E71C" alpha:1.0];
+                self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"F8E71C"];
+                self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"F8E71C"];
             } else {
                 self.imageLine.image = [UIImage imageNamed:@"ic_curve_blue"];
-                self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"008FFB" alpha:1.0];
-                self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"008FFB" alpha:1.0];
+                self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"008FFB"];
+                self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"008FFB"];
             }
         }
     } else {
         self.imageLine.image = [UIImage imageNamed:@"ic_curve_grey"];
-        self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"4E4B62" alpha:1.0];
-        self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"4E4B62" alpha:1.0];
+        self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"4E4B62"];
+        self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"4E4B62"];
     }
     [self showInfo:self.meetting];
     

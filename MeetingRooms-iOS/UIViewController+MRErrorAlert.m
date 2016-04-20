@@ -18,7 +18,7 @@
                                                                    message:results ? results[@"details"] : error.localizedDescription
                                                             preferredStyle:UIAlertControllerStyleAlert];
     [self presentViewController:alert animated:YES completion:nil];
-    [self performSelector:@selector(closeAlert) withObject:nil afterDelay:2.0];
+    [self performSelector:@selector(closeAlert) withObject:nil afterDelay:1.5];
 }
 
 - (void)createAlertWithMessage:(NSString *)message {
@@ -27,7 +27,7 @@
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
     [self presentViewController:alert animated:YES completion:nil];
-    [self performSelector:@selector(closeAlert) withObject:nil afterDelay:2.0];
+    [self performSelector:@selector(closeAlert) withObject:nil afterDelay:1.5];
 }
 
 - (void) closeAlert {

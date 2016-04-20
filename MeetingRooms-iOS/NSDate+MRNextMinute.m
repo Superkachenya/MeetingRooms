@@ -20,62 +20,61 @@
     return [calendar dateFromComponents:comps];
 }
 
-+ (NSString*) abstractTimeToTimeAfterNow:(long)abstractTime inTimeLineSegment:(double)countOfTimeSigmente {
-    NSString* leftTimeIfStr = nil;
-    NSNumber* hours = [NSNumber numberWithFloat:((abstractTime + (countOfTimeSigmente)) / 4)-1];
-    NSNumber* minute = [NSNumber numberWithLong:(((abstractTime % 4)-2) * 15)];
-    NSDate* curentDate = [NSDate new];
++ (NSString *)abstractTimeToTimeAfterNow:(NSInteger)abstractTime inTimeLineSegment:(double)countOfTimeSegment {
+    NSString *leftTimeIfStr = nil;
+    NSNumber *hours = [NSNumber numberWithFloat:((abstractTime + (countOfTimeSegment)) / 4) - 1];
+    NSNumber *minute = [NSNumber numberWithLong:(((abstractTime % 4) - 2) * 15)];
+    NSDate* curentDate = [NSDate date];
     NSDateFormatter *formatter = [NSDateFormatter new];
     [formatter setDateFormat:@"HH:mm"];
-    NSString* curentTimeString = [formatter stringFromDate:curentDate];
+    NSString *curentTimeString = [formatter stringFromDate:curentDate];
     NSArray *components = [curentTimeString componentsSeparatedByString: @":"];
-    
-    if ( [components[0] intValue] > [hours intValue]) {
+    if ([components[0] intValue] > hours.intValue) {
         leftTimeIfStr = @"Past";
     } else {
-        if (([components[0] intValue] == [hours intValue]) && ([components[1] intValue] > [minute intValue])) {
+        if (([components[0] intValue] == hours.intValue) && ([components[1] intValue] > minute.intValue)) {
             leftTimeIfStr = @"Past";
         } else {
-            if (([components[0] intValue] == [hours intValue]) && ([components[1] intValue] > ([minute intValue]+15))) {
+            if (([components[0] intValue] == hours.intValue) && ([components[1] intValue] > (minute.intValue+15))) {
                 leftTimeIfStr = @"Now";
             } else {
-                if (([components[0] intValue] == [hours intValue]) && ([components[1] intValue] <= ([minute intValue]+15))) {
-                int minuts = [minute intValue] - [components[1] intValue];
-                leftTimeIfStr = [NSString stringWithFormat:@"In %d minute",minuts];
+                if (([components[0] intValue] == hours.intValue) && ([components[1] intValue] <= (minute.intValue+15))) {
+                    NSInteger minutes = minute.intValue - [components[1] intValue];
+                    leftTimeIfStr = [NSString stringWithFormat:@"In %ld minutes",(long)minutes];
                 }
             }
         }
     }
-    if ( [components[0] intValue] < [hours intValue]) {
+    if ([components[0] intValue] < hours.intValue) {
         if ([components[1] intValue] > [minute intValue]) {
-            int hour = [hours intValue] - 1 - [components[0] intValue];
+            NSInteger hour = hours.intValue - 1 - [components[0] intValue];
             if (hour == 0) {
-                int minuts = [minute intValue] + 60 - [components[1] intValue];
-                leftTimeIfStr = [NSString stringWithFormat:@"In %d minute",minuts];
+                NSInteger minutes = minute.intValue + 60 - [components[1] intValue];
+                leftTimeIfStr = [NSString stringWithFormat:@"In %ld minutes",(long)minutes];
             } else {
-                leftTimeIfStr = [NSString stringWithFormat:@"In %d hours and %d minute",hour, ([minute intValue] + 60 - [components[1] intValue])];
+                leftTimeIfStr = [NSString stringWithFormat:@"In %ld hours and %d minutes",(long)hour, (minute.intValue + 60 - [components[1] intValue])];
             }
-        } else if ([components[1] intValue] == [minute intValue]) {
-            leftTimeIfStr = [NSString stringWithFormat:@"In %d hours",([hours intValue] - [components[0] intValue])];
+        } else if ([components[1] intValue] == minute.intValue) {
+            leftTimeIfStr = [NSString stringWithFormat:@"In %d hours",(hours.intValue - [components[0] intValue])];
         } else {
-            leftTimeIfStr = [NSString stringWithFormat:@"In %d hours and %d minute",([hours intValue] - [components[0] intValue]),([minute intValue] - [components[1] intValue])];
+            leftTimeIfStr = [NSString stringWithFormat:@"In %d hours and %d minutes",(hours.intValue - [components[0] intValue]),(minute.intValue - [components[1] intValue])];
         }
     }
     return leftTimeIfStr;
 }
 
-+ (NSNumber*) timeToAbstractTime:(NSDate *)time endTime:(long) endTime { 
++ (NSNumber *)timeToAbstractTime:(NSDate *)time endTime:(NSInteger)endTime {
     NSDateFormatter *formatter = [NSDateFormatter new];
     [formatter setDateFormat:@"HH:mm"];
-    NSString* timeString = [formatter stringFromDate:time];
+    NSString *timeString = [formatter stringFromDate:time];
     NSArray *components = [timeString componentsSeparatedByString: @":"];
     NSNumberFormatter *formater = [[NSNumberFormatter alloc] init];
     formater.numberStyle = NSNumberFormatterDecimalStyle;
-    NSNumber* hours = [formater numberFromString:components[0]];
-    NSNumber* minute = [formater numberFromString:components[1]];
-    NSNumber* abstractTime = [NSNumber new];
+    NSNumber *hours = [formater numberFromString:components[0]];
+    NSNumber *minute = [formater numberFromString:components[1]];
+    NSNumber *abstractTime = [NSNumber new];
     if ((hours >= [NSNumber numberWithInt:8]) && (hours <= [NSNumber numberWithInt:20])) {
-        abstractTime = [NSNumber numberWithFloat:(([hours floatValue] - 8)*4)];
+        abstractTime = [NSNumber numberWithFloat:(([hours floatValue] - 8) * 4)];
         if (minute >= [NSNumber numberWithInt:45]) {
             abstractTime = [NSNumber numberWithFloat:([abstractTime floatValue] + 3)];
         } else {

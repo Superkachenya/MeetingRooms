@@ -10,7 +10,7 @@
 
 @interface UIColor (MRColorFromHEX)
 
-+ (UIColor *)getUIColorFromHexString:(NSString *)hexStr alpha:(CGFloat)alpha;
++ (UIColor *)getUIColorFromHexString:(NSString *)hexStr;
 + (BOOL)color:(UIColor *)color1 isEqualToColor:(UIColor *)color2 withTolerance:(CGFloat)tolerance;
 
 @end

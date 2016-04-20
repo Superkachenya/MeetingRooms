@@ -6,12 +6,11 @@
 //  Copyright © 2016 Cleveroad. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 @class MRMeeting;
 
 @interface MRTableViewCustomCell : UITableViewCell
 
-- (void)configureCellAtIndexPath:(NSIndexPath *)indexpath withHour:(NSString *)hour;
 - (void)configureCellWithMeeting:(MRMeeting *)meeting;
 
 @end
