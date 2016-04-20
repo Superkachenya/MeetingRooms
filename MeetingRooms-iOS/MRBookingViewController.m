@@ -259,7 +259,7 @@ static const double kWidthOfCell = 20;
     } else {
         self.messagePlaceholder.hidden = YES;
     }
-    CGPoint bottomOffset = CGPointMake(0, self.bottomConstraint.constant / 2);
+    CGPoint bottomOffset = CGPointMake(0, self.bottomConstraint.constant);
     [self.scrollView setContentOffset:bottomOffset animated:NO];
 }
 
@@ -349,17 +349,17 @@ static const double kWidthOfCell = 20;
 - (void)keyboardWasShown:(NSNotification *)notification {
     NSDictionary *userInfo = notification.userInfo;
     CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    self.bottomConstraint.constant = kbSize.height + self.constraintsConstant;
-    CGPoint bottomOffset = CGPointMake(0, self.bottomConstraint.constant / 2);
+    self.bottomConstraint.constant = kbSize.height;
+    CGPoint bottomOffset = self.textView.frame.origin;
     [self.scrollView setContentOffset:bottomOffset animated:YES];
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.25 animations:^{
         [self.view layoutIfNeeded];
     }];
 }
 
 - (void)keyboardWillBeHidden:(NSNotification *)notification {
     self.bottomConstraint.constant = self.constraintsConstant;
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.25 animations:^{
         [self.view layoutIfNeeded];
     }];
 }

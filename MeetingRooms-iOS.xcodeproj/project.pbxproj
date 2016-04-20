@@ -22,6 +22,7 @@
 		8E3648C31CB528AF00746EF9 /* MRRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3648C21CB528AF00746EF9 /* MRRoom.m */; };
 		8E3648C71CB5295500746EF9 /* MRMeeting.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3648C61CB5295500746EF9 /* MRMeeting.m */; };
 		8E7294551CBFCAC4004D5A71 /* MRTimePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7294541CBFCAC4004D5A71 /* MRTimePickerViewController.m */; };
+		8EA2B3061CC77FEC0071BADA /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EA2B3051CC77FEC0071BADA /* Launch Screen.storyboard */; };
 		8EA6BD2B1CC61C5100E9EE03 /* MRScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA6BD2A1CC61C5100E9EE03 /* MRScheduleViewController.m */; };
 		8EA6BD311CC61CEE00E9EE03 /* MRCustomScheduleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA6BD301CC61CEE00E9EE03 /* MRCustomScheduleCell.m */; };
 		8EA6BD371CC61D8D00E9EE03 /* MRRoomWithVerticalScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA6BD361CC61D8D00E9EE03 /* MRRoomWithVerticalScrollViewController.m */; };
@@ -88,6 +89,7 @@
 		8E3648C61CB5295500746EF9 /* MRMeeting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRMeeting.m; path = Model/Meeting/MRMeeting.m; sourceTree = "<group>"; };
 		8E7294531CBFCAC4004D5A71 /* MRTimePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTimePickerViewController.h; path = ViewControllers/TimePicker/MRTimePickerViewController.h; sourceTree = "<group>"; };
 		8E7294541CBFCAC4004D5A71 /* MRTimePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTimePickerViewController.m; path = ViewControllers/TimePicker/MRTimePickerViewController.m; sourceTree = "<group>"; };
+		8EA2B3051CC77FEC0071BADA /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		8EA6BD291CC61C5100E9EE03 /* MRScheduleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRScheduleViewController.h; path = ScheduleViewController/MRScheduleViewController.h; sourceTree = "<group>"; };
 		8EA6BD2A1CC61C5100E9EE03 /* MRScheduleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRScheduleViewController.m; path = ScheduleViewController/MRScheduleViewController.m; sourceTree = "<group>"; };
 		8EA6BD2F1CC61CEE00E9EE03 /* MRCustomScheduleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRCustomScheduleCell.h; path = View/CustomScheduleCell/MRCustomScheduleCell.h; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 				8206735F1CB63F5400D1D205 /* ViewControllers */,
 				8E3648931CB50D7C00746EF9 /* Assets.xcassets */,
 				82C5ACCB1CBCE1E90074D2FB /* Main.storyboard */,
+				8EA2B3051CC77FEC0071BADA /* Launch Screen.storyboard */,
 				8E3648981CB50D7C00746EF9 /* Info.plist */,
 				8EBB9EA01CB6401E0033C839 /* GoogleService-Info.plist */,
 				8E3648871CB50D7C00746EF9 /* Supporting Files */,
@@ -361,6 +364,15 @@
 			name = TimePickerVC;
 			sourceTree = "<group>";
 		};
+		8EA2B3041CC766250071BADA /* QuotesString */ = {
+			isa = PBXGroup;
+			children = (
+				8EA6BD4A1CC681DB00E9EE03 /* NSString+MRQuotesString.h */,
+				8EA6BD4B1CC681DB00E9EE03 /* NSString+MRQuotesString.m */,
+			);
+			name = QuotesString;
+			sourceTree = "<group>";
+		};
 		8EA6BD441CC626A900E9EE03 /* CustomSheduleCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -448,8 +460,7 @@
 				8E1987771CBD103E00D33ECC /* NSDate+MRNextMinute */,
 				8EE561661CB7DD97005DB87C /* ColorCategory */,
 				8EBB9EA71CB6A1460033C839 /* ErrorAlert */,
-				8EA6BD4A1CC681DB00E9EE03 /* NSString+MRQuotesString.h */,
-				8EA6BD4B1CC681DB00E9EE03 /* NSString+MRQuotesString.m */,
+				8EA2B3041CC766250071BADA /* QuotesString */,
 			);
 			name = HelperCategories;
 			sourceTree = "<group>";
@@ -598,6 +609,7 @@
 				82C5ACCD1CBCE1E90074D2FB /* Main.storyboard in Resources */,
 				8206736E1CB6423800D1D205 /* GlacialIndifference-Regular.otf in Resources */,
 				8206736D1CB6423800D1D205 /* GlacialIndifference-Italic.otf in Resources */,
+				8EA2B3061CC77FEC0071BADA /* Launch Screen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -839,7 +851,6 @@
 			baseConfigurationReference = CD31C6FD15C593F4C7A1924D /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Eugene Altynpara (TS4L5392F8)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Eugene Altynpara (TS4L5392F8)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -861,7 +872,6 @@
 			baseConfigurationReference = 3E6EE169CB2170F36EC6F5EC /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Eugene Altynpara (TS4L5392F8)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Eugene Altynpara (TS4L5392F8)";
 				FRAMEWORK_SEARCH_PATHS = (

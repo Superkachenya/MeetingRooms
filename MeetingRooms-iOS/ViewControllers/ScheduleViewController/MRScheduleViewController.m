@@ -13,6 +13,16 @@
 #import "MRNetworkManager.h"
 #import "UIViewController+MRErrorAlert.h"
 
+typedef NS_ENUM(NSInteger, MRWeekdays) {
+    MRSunday = 1,
+    MRMonday,
+    MRTuesday,
+    MRWednesday,
+    MRThursday,
+    MRFriday,
+    MRSaturday
+};
+
 @interface MRScheduleViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *monthDateLabel;
@@ -59,6 +69,7 @@
     self.sortedArrayMeetings = [NSMutableArray new];
     self.manager = [MRNetworkManager sharedManager];
     [self loadMeetings];
+    [self configureLabels];
     self.tableView.allowsSelection = NO;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 116.0;
@@ -81,51 +92,49 @@
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier: NSCalendarIdentifierGregorian];
     NSDateComponents *components = [gregorian components: NSUIntegerMax fromDate:date];
     switch (components.weekday) {
-        case 1:
+        case MRSunday:
             self.sundayViewOut.backgroundColor = [UIColor whiteColor];
             self.sundayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F" alpha:1];
             break;
-        case 2:
+        case MRMonday:
             self.mondayViewOut.backgroundColor = [UIColor whiteColor];
             self.mondayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F" alpha:1];
             self.mondayLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.sortedArrayMeetings.count];
             self.mondayLabel.adjustsFontSizeToFitWidth = YES;
             break;
-        case 3:
+        case MRTuesday:
             self.tuesdayViewOut.backgroundColor = [UIColor whiteColor];
             self.tuesdayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F" alpha:1];
             self.tuesdayLabel.adjustsFontSizeToFitWidth = YES;
             break;
-        case 4:
+        case MRWednesday:
             self.wednesdayViewOut.backgroundColor = [UIColor whiteColor];
             self.wednesdayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F" alpha:1];
             self.wednesdayLabel.adjustsFontSizeToFitWidth = YES;
             break;
-        case 5:
+        case MRThursday:
             self.thursdayViewOut.backgroundColor = [UIColor whiteColor];
             self.thursdayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F" alpha:1];
             self.thursdayLabel.adjustsFontSizeToFitWidth = YES;
             break;
-        case 6:
+        case MRFriday:
             self.fridayViewOut.backgroundColor = [UIColor whiteColor];
             self.fridayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F" alpha:1];
             self.fridayLabel.adjustsFontSizeToFitWidth = YES;
             break;
-        case 7:
+        case MRSaturday:
             self.saturdayViewOut.backgroundColor = [UIColor whiteColor];
             self.saturdayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F" alpha:1];
-            break;
-        default:
             break;
     }
 }
 
 - (void)loadMeetings {
-    [self.manager getAllOwnersMeetingsForDate:[NSDate date] WithCompletionBlock:^(id success, NSError *error) {
+    [self.manager getAllOwnersMeetingsForDate:[NSDate date] offset:self.sortedArrayMeetings.count WithCompletionBlock:^(id success, NSError *error) {
         if (error) {
             [self createAlertForError:error];
         } else {
-            self.sortedArrayMeetings = [self sortArrayOfMeetingsCurrentHour:success];
+            [self.sortedArrayMeetings addObjectsFromArray:[self sortArrayOfMeetingsCurrentHour:success]];
             [self.tableView reloadData];
         }
     }];

@@ -101,8 +101,8 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3503";
     NSString *composeStr = [NSString stringWithFormat:@"/api/v1/rooms/%ld/bookings", (long)roomId.integerValue];
     NSString *tempString = [baseURL stringByAppendingString:composeStr];
     [self.manager POST:tempString parameters:@{@"timeStart" : start,
-                                                 @"timeEnd" : finish,
-                                                 @"message" : message}
+                                               @"timeEnd" : finish,
+                                               @"message" : message}
               progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                   NSString *success = [responseObject valueForKey:@"details"];
                   copyBlock(success, nil);
@@ -113,13 +113,12 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3503";
 }
 
 
-- (void)getAllOwnersMeetingsForDate:(NSDate *)date WithCompletionBlock:(MRCompletion)block {
+- (void)getAllOwnersMeetingsForDate:(NSDate *)date offset:(NSInteger)offset WithCompletionBlock:(MRCompletion)block {
     MRCompletion copyBlock = [block copy];
     NSDateFormatter *formatter = [NSDateFormatter new];
     formatter.dateFormat = @"YYYY-MM-dd";
     NSString *dateString = [formatter stringFromDate:date];
-    NSString *tempString = [NSString stringWithFormat:@"%@/api/v1/users/%ld/bookings?date=%@", baseURL, (long)self.owner.userId.integerValue, dateString];
-    [self. manager GET:tempString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    NSString *tempString = [NSString stringWithFormat:@"%@/api/v1/users/%ld/bookings?date=%@&offset=%lu", baseURL, (long)self.owner.userId.integerValue, dateString, offset];    [self. manager GET:tempString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if ([responseObject isKindOfClass:[NSDictionary class]]) {
             NSArray *bookings =  [responseObject valueForKey:@"bookings"];
             NSMutableArray *arrayOfMeetings = [NSMutableArray new];
