@@ -206,14 +206,16 @@ static double const kWidthOfCell               = 20.0;
             }
         }
     }
-    if (indexPath < self.indexPathOfCentralCell) {
-        [cell pastTime];
-    } else {
-        if (indexPath == self.indexPathOfCentralCell) {
-            [cell nowLineShow];
+    if ([self.calendarDate isEqualToAnotherDay:[NSDate date]]) {
+        if (indexPath < self.indexPathOfCentralCell) {
+            [cell pastTime];
+        } else {
+            if (indexPath == self.indexPathOfCentralCell) {
+                [cell nowLineShow];
+            }
         }
+        self.indexPathOfLastShowCell = indexPath;
     }
-    self.indexPathOfLastShowCell = indexPath;
     return cell;
 }
 
@@ -226,6 +228,7 @@ static double const kWidthOfCell               = 20.0;
     self.finishDate = [NSDate dateWithTimeInterval:kFifteenMinutes sinceDate:self.startDate];
     self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
     [self.popover dismissPopoverAnimated:YES];
+    [self downloadAndUpdateDate];
 }
 
 #pragma mark - FSCalendarDataSource
@@ -242,7 +245,6 @@ static double const kWidthOfCell               = 20.0;
         [self dismissKeyboard:self];
         return NO;
     }
-
     return self.textView.text.length - range.length + text.length < 300;
 }
 
@@ -399,11 +401,15 @@ static double const kWidthOfCell               = 20.0;
 }
 
 - (void)downloadAndUpdateDate {
-    [[MRNetworkManager sharedManager] getRoomInfoById:self.room.roomId toDate:nil completion:^(id success, NSError *error) {
+    if (!self.calendarDate) {
+        self.calendarDate = [NSDate date];
+    }
+    self.room.meetings = nil;
+    [[MRNetworkManager sharedManager] getRoomInfoById:self.room.roomId toDate:self.calendarDate completion:^(id success, NSError *error) {
         if (error) {
             [self createAlertForError:error];
         } else {
-            self.room.meetings = [success copy];
+            self.room.meetings = success;
             [self.tableView reloadData];
         }
     }];
@@ -412,7 +418,7 @@ static double const kWidthOfCell               = 20.0;
 - (void)selectTimeOnTimeLine {
     NSDate *currentDate = [NSDate date];
     NSNumber* abstractTime = [NSDate timeToAbstractTime:currentDate endTime:kCountOfTimeSegment  +
-                              (self.countOfCellOnView/2)];
+                              (self.countOfCellOnView / 2)];
     NSIndexPath* indexPath = [NSIndexPath indexPathForRow:abstractTime.integerValue inSection:0];
     abstractTime = [NSNumber numberWithFloat:([abstractTime floatValue] + self.countOfCellOnView/2)];
     self.indexPathOfCentralCell = [NSIndexPath indexPathForRow:abstractTime.integerValue inSection:0];

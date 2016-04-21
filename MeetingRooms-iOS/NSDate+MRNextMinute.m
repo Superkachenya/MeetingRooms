@@ -10,24 +10,14 @@
 
 @implementation NSDate (MRNextMinute)
 
-- (NSDate *)nextMinute {
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    
-    NSDateComponents *comps = [calendar components:(NSCalendarUnit) NSUIntegerMax fromDate:self];
-    comps.minute += 1;
-    comps.second = 0;
-    
-    return [calendar dateFromComponents:comps];
-}
-
 + (NSString *)abstractTimeToTimeAfterNow:(NSInteger)abstractTime inTimeLineSegment:(double)countOfTimeSegment {
     NSString *leftTimeIfStr = nil;
     NSNumber *hours = [NSNumber numberWithFloat:((abstractTime + (countOfTimeSegment)) / 4) - 1];
     NSNumber *minute = [NSNumber numberWithLong:(((abstractTime % 4) - 2) * 15)];
-    NSDate* curentDate = [NSDate date];
+    NSDate *currentDate = [NSDate date];
     NSDateFormatter *formatter = [NSDateFormatter new];
     [formatter setDateFormat:@"HH:mm"];
-    NSString *curentTimeString = [formatter stringFromDate:curentDate];
+    NSString *curentTimeString = [formatter stringFromDate:currentDate];
     NSArray *components = [curentTimeString componentsSeparatedByString: @":"];
     if ([components[0] intValue] > hours.intValue) {
         leftTimeIfStr = @"Past";
@@ -95,6 +85,26 @@
         }
     }
     return abstractTime;
+}
+
+- (NSDate *)nextMinute {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    NSDateComponents *comps = [calendar components:(NSCalendarUnit) NSUIntegerMax fromDate:self];
+    comps.minute += 1;
+    comps.second = 0;
+    
+    return [calendar dateFromComponents:comps];
+}
+
+- (BOOL)isEqualToAnotherDay:(NSDate *)anotherDay {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *firstDay = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth fromDate:self];
+    NSDateComponents *secondDay = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth fromDate:anotherDay];
+    if (firstDay.day == secondDay.day && firstDay.month == secondDay.month) {
+        return YES;
+    }
+    return NO;
 }
 
 @end
