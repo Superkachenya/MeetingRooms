@@ -238,6 +238,11 @@ static double const kWidthOfCell               = 20.0;
 
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if([text isEqualToString:@"\n"]) {
+        [self dismissKeyboard:self];
+        return NO;
+    }
+
     return self.textView.text.length - range.length + text.length < 300;
 }
 
@@ -255,8 +260,7 @@ static double const kWidthOfCell               = 20.0;
     }
 }
 
-- (void) textViewDidChange:(UITextView *)textView
-{
+- (void) textViewDidChange:(UITextView *)textView {
     if (![self.textView hasText]) {
         self.messagePlaceholder.hidden = NO;
     } else {
@@ -334,11 +338,11 @@ static double const kWidthOfCell               = 20.0;
                 [self createAlertForError:error];
             } else {
                 [self createAlertWithMessage:success];
-                [self performSegueWithIdentifier:@"unwindToShedule" sender:self];
             }
         }];
     }
     [self dismissKeyboard:self];
+    [self performSegueWithIdentifier:@"toSheduleFromBooking" sender:self];
 }
 - (IBAction)cancelButtonDidPress:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
@@ -350,7 +354,12 @@ static double const kWidthOfCell               = 20.0;
     NSDictionary *userInfo = notification.userInfo;
     CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     self.bottomConstraint.constant = kbSize.height;
-    CGPoint bottomOffset = CGPointMake(0.0, 189.0);
+    CGPoint bottomOffset;
+    if (self.preferredInterfaceOrientationForPresentation == UIInterfaceOrientationPortrait) {
+        bottomOffset = CGPointMake(0.0, self.view.frame.origin.y * 2);
+    } else {
+        bottomOffset = CGPointMake(0.0, self.view.frame.origin.y * 10);
+    }
     [self.scrollView setContentOffset:bottomOffset animated:YES];
     [UIView animateWithDuration:0.25 animations:^{
         [self.view layoutIfNeeded];

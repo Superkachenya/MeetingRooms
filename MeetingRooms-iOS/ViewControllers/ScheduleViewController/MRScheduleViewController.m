@@ -194,10 +194,4 @@ typedef NS_ENUM(NSInteger, MRWeekdays) {
     }
 }
 
-#pragma mark - Navigation
-
-- (IBAction)prepareForUnwindToShedule:(UIStoryboardSegue *)segue {
-    [self loadMeetings];
-}
-
 @end

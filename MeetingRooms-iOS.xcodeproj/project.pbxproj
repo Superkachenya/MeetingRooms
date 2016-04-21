@@ -417,13 +417,13 @@
 			name = Managers;
 			sourceTree = "<group>";
 		};
-		8EBB9EA71CB6A1460033C839 /* ErrorAlert */ = {
+		8EBB9EA71CB6A1460033C839 /* Alert */ = {
 			isa = PBXGroup;
 			children = (
 				8EBB9EA41CB69E350033C839 /* UIViewController+MRErrorAlert.h */,
 				8EBB9EA51CB69E350033C839 /* UIViewController+MRErrorAlert.m */,
 			);
-			name = ErrorAlert;
+			name = Alert;
 			sourceTree = "<group>";
 		};
 		8EE5615E1CB7A30C005DB87C /* RoomsViewContoller */ = {
@@ -459,7 +459,7 @@
 			children = (
 				8E1987771CBD103E00D33ECC /* NSDate+MRNextMinute */,
 				8EE561661CB7DD97005DB87C /* ColorCategory */,
-				8EBB9EA71CB6A1460033C839 /* ErrorAlert */,
+				8EBB9EA71CB6A1460033C839 /* Alert */,
 				8EA2B3041CC766250071BADA /* QuotesString */,
 			);
 			name = HelperCategories;
