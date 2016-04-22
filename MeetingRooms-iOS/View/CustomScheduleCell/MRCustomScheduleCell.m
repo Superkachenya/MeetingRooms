@@ -35,6 +35,10 @@
         self.roomIDLabel.textColor = [UIColor getUIColorFromHexString:@"#4E4B62"];
         self.intervalLabel.textColor = [UIColor getUIColorFromHexString:@"#4E4B62"];
         self.infoLabel.textColor = [UIColor getUIColorFromHexString:@"#4E4B62"];
+    } else {
+        self.roomIDLabel.textColor = [UIColor getUIColorFromHexString:@"#008ffb"];
+        self.intervalLabel.textColor = [UIColor getUIColorFromHexString:@"#008ffb"];
+        self.infoLabel.textColor = [UIColor whiteColor];
     }
     self.roomIDLabel.text = [NSString stringWithFormat:@"%ld. %@", (long)indexPath.row + 1, meeting.meetingRoom.roomTitle];
     NSString *startDate = [self getDateAsString:meeting.meetingStart];

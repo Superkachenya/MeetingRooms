@@ -11,6 +11,8 @@
 #import "MRTableViewHorizontalCell.h"
 #import "MRMeeting.h"
 #import "MRUser.h"
+#import "MRRoom.h"
+#import "MROwner.h"
 #import "AFNetworking/AFNetworking.h"
 #import "NSDate+MRNextMinute.h"
 #import "MRNetworkManager.h"
@@ -19,7 +21,7 @@
 #import "UIColor+MRColorFromHEX.h"
 #import "MRBookingViewController.h"
 
-static const long kCountOfTimeSigmente = 48;
+static const long kCountOfTimeSegment = 48;
 static const long kWidthOfCell = 20;
 
 @interface MRRoomWithHorizontalScrollViewController () <PTETableViewDelegate>
@@ -34,7 +36,7 @@ static const long kWidthOfCell = 20;
 @property (weak, nonatomic) IBOutlet UIView *viewOfDetail;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *imageLine;
-@property (weak, nonatomic) IBOutlet UIImageView *userAvatare;
+@property (weak, nonatomic) IBOutlet UIImageView *userAvatar;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *hieghtOfTableView;
 @property (weak, nonatomic) IBOutlet UIView *bounseOfPicture;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabelOfMeeting;
@@ -72,7 +74,7 @@ static const long kWidthOfCell = 20;
 #pragma mark - UITableViewDataSource - 
 
 - (NSInteger)tableView:(PTEHorizontalTableView *)horizontalTableView numberOfRowsInSection:(NSInteger)section {
-    return kCountOfTimeSigmente + (self.countOfHidenCellOnView * 2) ;
+    return kCountOfTimeSegment + (self.countOfHidenCellOnView * 2) ;
 }
 
 - (CGFloat)tableView:(PTEHorizontalTableView *)horizontalTableView widthForCellAtIndexPath:(NSIndexPath *)indexPath {
@@ -81,7 +83,7 @@ static const long kWidthOfCell = 20;
 
 - (UITableViewCell *)tableView:(PTEHorizontalTableView *)horizontalTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MRTableViewHorizontalCell * cell = [horizontalTableView.tableView dequeueReusableCellWithIdentifier:@"cell"];
-    [cell showTimeLineWithCountOfLine:kCountOfTimeSigmente sizeOfViewIs:self.countOfHidenCellOnView onIndexCell:indexPath.row];
+    [cell showTimeLineWithCountOfLine:kCountOfTimeSegment sizeOfViewIs:self.countOfHidenCellOnView atIndexCell:indexPath.row];
     long centrallCellRow = [self getCentralCellRowByIndexPath:indexPath.row];
     MRMeeting* meetting = [self.dictonaryOfMeeting objectForKey:[NSString stringWithFormat:@"%ld",centrallCellRow]];
     [self changeColorOfMeetingDetailsByMeeting:meetting andAbstractTime:centrallCellRow];
@@ -103,7 +105,7 @@ static const long kWidthOfCell = 20;
     return cell;
 }
 
-# pragma mark - Helpers -
+# pragma mark - Helpers
 
 - (long) getCentralCellRowByIndexPath:(long)index {
     long keyOfCell = index + self.countOfHidenCellOnView;
@@ -120,8 +122,8 @@ static const long kWidthOfCell = 20;
         MRMeeting* meetting = [MRMeeting new];
         for (long i = 0; i < [self.room.meetings count]; i++) {
             meetting = self.room.meetings[i];
-            long startAbstractTime = [NSDate timeToAbstractTime:meetting.meetingStart visiblePath:kCountOfTimeSigmente andHidenPath:self.countOfHidenCellOnView];
-            long endAbstractTime = [NSDate timeToAbstractTime:meetting.meetingFinish visiblePath:kCountOfTimeSigmente andHidenPath:self.countOfHidenCellOnView];
+            long startAbstractTime = [NSDate timeToAbstractTime:meetting.meetingStart visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];
+            long endAbstractTime = [NSDate timeToAbstractTime:meetting.meetingFinish visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];
             for (long i = startAbstractTime; i < endAbstractTime; i++) {
                 [self.dictonaryOfMeeting setObject:meetting forKey:[NSString stringWithFormat:@"%ld",i]];
             }
@@ -134,7 +136,7 @@ static const long kWidthOfCell = 20;
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
             UIImage* avatare = [UIImage imageWithData:[[NSData alloc] initWithContentsOfURL:meet.meetingOwner.avatar]];
             dispatch_async(dispatch_get_main_queue(), ^(void){
-                self.userAvatare.image = avatare;
+                self.userAvatar.image = avatare;
             });
         });
         self.name.text = [meet.meetingOwner.email componentsSeparatedByString: @"@"][0];
@@ -146,36 +148,36 @@ static const long kWidthOfCell = 20;
         NSString* timeFirst = [formatter stringFromDate:meet.meetingStart];
         NSString* timeSecond = [formatter stringFromDate:meet.meetingFinish];
         self.time.text = [NSString stringWithFormat:@"%@ - %@",timeFirst , timeSecond];
-        CALayer * layer = [self.userAvatare layer];
+        CALayer * layer = [self.userAvatar layer];
         [layer setMasksToBounds:YES];
-        [layer setCornerRadius:self.userAvatare.frame.size.width / 2];
+        [layer setCornerRadius:self.userAvatar.frame.size.width / 2];
         self.viewOfDetail.hidden = NO;
     } else {
-        self.userAvatare.image = [UIImage new];
+        self.userAvatar.image = [UIImage new];
         self.viewOfDetail.hidden = YES;
     }
 }
 
 - (void) changeColorOfMeetingDetailsByMeeting:(MRMeeting*) meeting andAbstractTime:(long)abstractTime {
-    long currentAbstractTime = [NSDate timeToAbstractTime:[NSDate new] visiblePath:kCountOfTimeSigmente andHidenPath:self.countOfHidenCellOnView];
+    long currentAbstractTime = [NSDate timeToAbstractTime:[NSDate new] visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];
     if (currentAbstractTime < abstractTime) {
         if (meeting) {
             if ([meeting.meetingOwner.email isEqualToString:[MRNetworkManager sharedManager].owner.email]) {
                 self.imageLine.image = [UIImage imageNamed:@"ic_curve_yellow"];
-                self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"F8E71C" alpha:1.0];
-                self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"F8E71C" alpha:1.0];
+                self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"F8E71C"];
+                self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"F8E71C"];
             } else {
                 self.imageLine.image = [UIImage imageNamed:@"ic_curve_blue"];
-                self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"008FFB" alpha:1.0];
-                self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"008FFB" alpha:1.0];
+                self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"008FFB"];
+                self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"008FFB"];
             }
         } else {
             self.imageLine.image = [UIImage imageNamed:@"ic_curve_blue_red"];
         }
     } else {
         self.imageLine.image = [UIImage imageNamed:@"ic_curve_grey"];
-        self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"4E4B62" alpha:1.0];
-        self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"4E4B62" alpha:1.0];
+        self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"4E4B62"];
+        self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"4E4B62"];
     }
     [self showInfo:meeting];
 }
@@ -228,13 +230,13 @@ static const long kWidthOfCell = 20;
 }
 
 - (void) viewUpdate {
-    long abstractTime = [NSDate timeToAbstractTime:[NSDate date] visiblePath:kCountOfTimeSigmente andHidenPath:self.countOfHidenCellOnView];
+    long abstractTime = [NSDate timeToAbstractTime:[NSDate date] visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];
     self.indexOfCellWithNowLine = [NSIndexPath indexPathForRow:abstractTime inSection:0].row;
     [self downloadAndUpdateDate];
 }
 
 - (void) selectTimeOnTimeLine {
-    long abstractTime = [NSDate timeToAbstractTime:[NSDate date] visiblePath:kCountOfTimeSigmente andHidenPath:self.countOfHidenCellOnView];
+    long abstractTime = [NSDate timeToAbstractTime:[NSDate date] visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];
     NSIndexPath* ip = [NSIndexPath indexPathForRow:abstractTime - self.countOfHidenCellOnView inSection:0];
     [self.tableView scrollToRowAtIndexPath:ip atScrollPosition:UITableViewScrollPositionTop animated:YES];
     self.indexOfCellWithNowLine = [NSIndexPath indexPathForRow:abstractTime inSection:0].row;
@@ -256,11 +258,11 @@ static const long kWidthOfCell = 20;
 #pragma mark - Navigation -
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"horizontalView"]) {
+    if ([segue.identifier isEqualToString:@"toVerticalScreen"]) {
         MRRoomWithVerticalScrollViewController *details = segue.destinationViewController;
         details.room = self.room;
     }
-    if ([segue.identifier isEqualToString:@"bookRoom"]) {
+    if ([segue.identifier isEqualToString:@"toBookingScreenFromHorizontal"]) {
         MRBookingViewController *bookRoom = segue.destinationViewController;
         bookRoom.room = self.room;
     }

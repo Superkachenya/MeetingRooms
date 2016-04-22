@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *startLabel;
 @property (weak, nonatomic) IBOutlet UILabel *finishLabel;
 @property (weak, nonatomic) IBOutlet UITextView *messageView;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
 @end
 
@@ -32,6 +33,12 @@
     self.startLabel.text = [clocksFormat stringFromDate:self.meeting.meetingStart];
     self.finishLabel.text = [clocksFormat stringFromDate:self.meeting.meetingFinish];
     self.messageView.text = [NSString embedStringinQuotes:self.meeting.meetingInfo];
+    NSComparisonResult result = [self.meeting.meetingStart compare:[NSDate date]];
+    if (result == NSOrderedAscending) {
+        self.cancelButton.enabled = NO;
+    } else {
+        self.cancelButton.enabled = YES;
+    }
 }
 
 - (IBAction)cancelButton:(id)sender {

@@ -53,7 +53,7 @@
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"toRoomDetails"]) {
+    if ([segue.identifier isEqualToString:@"toHorizontalScrollScene"]) {
         MRRoomWithHorizontalScrollViewController *details = segue.destinationViewController;
         NSIndexPath *indexPath = self.tableView.indexPathForSelectedRow;
         details.room = self.rooms[indexPath.row];
