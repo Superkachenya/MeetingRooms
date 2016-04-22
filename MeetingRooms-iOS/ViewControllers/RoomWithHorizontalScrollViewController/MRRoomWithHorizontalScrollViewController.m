@@ -11,8 +11,6 @@
 #import "MRTableViewHorizontalCell.h"
 #import "MRMeeting.h"
 #import "MRUser.h"
-#import "MROwner.h"
-#import "MRRoom.h"
 #import "AFNetworking/AFNetworking.h"
 #import "NSDate+MRNextMinute.h"
 #import "MRNetworkManager.h"
@@ -20,10 +18,9 @@
 #import "MRRoomWithVerticalScrollViewController.h"
 #import "UIColor+MRColorFromHEX.h"
 #import "MRBookingViewController.h"
-#import "NSString+MRQuotesString.h"
 
-static const double kCountOfTimeSegment = 48;
-static const double kWidthOfCell = 20;
+static const long kCountOfTimeSigmente = 48;
+static const long kWidthOfCell = 20;
 
 @interface MRRoomWithHorizontalScrollViewController () <PTETableViewDelegate>
 
@@ -37,123 +34,111 @@ static const double kWidthOfCell = 20;
 @property (weak, nonatomic) IBOutlet UIView *viewOfDetail;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *imageLine;
-@property (weak, nonatomic) IBOutlet UIImageView *userAvatar;
+@property (weak, nonatomic) IBOutlet UIImageView *userAvatare;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *hieghtOfTableView;
 @property (weak, nonatomic) IBOutlet UIView *bounseOfPicture;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabelOfMeeting;
 
 @property (strong, nonatomic) NSMutableDictionary* dictonaryOfMeeting;
-@property (strong, nonatomic) NSIndexPath* indexPathOfLastShowCell;
-@property (strong, nonatomic) NSIndexPath* indexPathOfCentralCell;
-@property (strong, nonatomic) MRMeeting* meetting;
-@property (assign, nonatomic) long countOfCellOnView;
+@property (assign, nonatomic) long countOfHidenCellOnView;
+@property (assign, nonatomic) long indexOfCellWithNowLine;
+@property (assign, nonatomic) long indexOfLastShowCell;
 
 @end
 
 @implementation MRRoomWithHorizontalScrollViewController
 
-
-#pragma mark - UIViewControllerLifeCycle
+#pragma mark - UIViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.navigationItem.title = self.room.roomTitle;
-    self.dictonaryOfMeeting = [NSMutableDictionary new];
-    self.countOfCellOnView = ([self.horizontalTableView bounds].size.width / kWidthOfCell);
+    self.room.meetings = [NSMutableArray new];
+    self.countOfHidenCellOnView = ([self.horizontalTableView bounds].size.width / kWidthOfCell) / 2;
     self.hieghtOfTableView.constant = self.horizontalTableView.frame.size.width;
     self.tableView.frame = self.horizontalTableView.frame;
     self.tableView.contentSize = self.horizontalTableView.contentSize;
     [self selectTimeOnTimeLine];
     [self updateClocks];
-    [self downloadAndUpdateDate];
 }
 
-#pragma mark - UITableViewDataSource
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self viewUpdate];
+}
+
+#pragma mark - UITableViewDataSource - 
 
 - (NSInteger)tableView:(PTEHorizontalTableView *)horizontalTableView numberOfRowsInSection:(NSInteger)section {
-    return kCountOfTimeSegment + self.countOfCellOnView ;
+    return kCountOfTimeSigmente + (self.countOfHidenCellOnView * 2) ;
 }
 
 - (CGFloat)tableView:(PTEHorizontalTableView *)horizontalTableView widthForCellAtIndexPath:(NSIndexPath *)indexPath {
     return kWidthOfCell;
 }
 
-
 - (UITableViewCell *)tableView:(PTEHorizontalTableView *)horizontalTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MRTableViewHorizontalCell * cell = [horizontalTableView.tableView dequeueReusableCellWithIdentifier:@"cell"];
-    [cell showTimeLineWithCountOfLine:kCountOfTimeSegment sizeOfViewIs:(self.countOfCellOnView/2)
-                          atIndexCell:indexPath.row];
-    long keyOfCell = (long)indexPath.row + self.countOfCellOnView/2;
-    if (indexPath > self.indexPathOfLastShowCell) {
-        keyOfCell = (long)indexPath.row - self.countOfCellOnView/2;
-    }
-    NSString *key = [NSString stringWithFormat:@"%ld",keyOfCell];
-    self.imageLine.image = [UIImage imageNamed:@"ic_curve_blue_red"];
-    self.meetting = [self.dictonaryOfMeeting objectForKey:key];
-    self.timeLabel.text = [NSDate abstractTimeToTimeAfterNow:keyOfCell inTimeLineSegment:kCountOfTimeSegment/2];
-    if (![self.timeLabel.text isEqualToString:@"Past"]) {
-        if (self.meetting) {
-            if ([self.meetting.meetingOwner.userId isEqualToNumber:[MRNetworkManager sharedManager].owner.userId]) {
-                [cell showYellow];
-                self.imageLine.image = [UIImage imageNamed:@"ic_curve_yellow"];
-                self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"F8E71C"];
-                self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"F8E71C"];
-            } else {
-                self.imageLine.image = [UIImage imageNamed:@"ic_curve_blue"];
-                self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"008FFB"];
-                self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"008FFB"];
-            }
-        }
-    } else {
-        self.imageLine.image = [UIImage imageNamed:@"ic_curve_grey"];
-        self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"4E4B62"];
-        self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"4E4B62"];
-    }
-    [self showInfo:self.meetting];
-    
-    if (self.room.meetings.count) {
-        for (MRMeeting *meeting in self.room.meetings) {
-            self.meetting = [MRMeeting new];
-            self.meetting = meeting;
-            NSNumber* startAbstractTime = [NSNumber numberWithLong:([[NSDate timeToAbstractTime:self.meetting.meetingStart
-                                                                                        endTime:kCountOfTimeSegment  +
-                                                                      (self.countOfCellOnView/2)] longValue] +
-                                                                    self.countOfCellOnView/2)];
-            NSNumber* endAbstractTime = [NSNumber numberWithFloat:([[NSDate timeToAbstractTime:self.meetting.meetingFinish
-                                                                                       endTime:kCountOfTimeSegment  +
-                                                                     (self.countOfCellOnView/2)] longValue] +
-                                                                   self.countOfCellOnView/2)];
-            if ((indexPath.row >= startAbstractTime.integerValue) && (indexPath.row < endAbstractTime.integerValue)) {
-                if ([self.meetting.meetingOwner.email isEqualToString:[MRNetworkManager sharedManager].owner.email]) {
-                    [cell addMeeting:YES];
-                } else {
-                    [cell addMeeting:NO];
-                }
-                NSString *key = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
-                [self.dictonaryOfMeeting setObject:self.meetting forKey:key];
-            }
+    [cell showTimeLineWithCountOfLine:kCountOfTimeSigmente sizeOfViewIs:self.countOfHidenCellOnView onIndexCell:indexPath.row];
+    long centrallCellRow = [self getCentralCellRowByIndexPath:indexPath.row];
+    MRMeeting* meetting = [self.dictonaryOfMeeting objectForKey:[NSString stringWithFormat:@"%ld",centrallCellRow]];
+    [self changeColorOfMeetingDetailsByMeeting:meetting andAbstractTime:centrallCellRow];
+    MRMeeting* meeting = [self.dictonaryOfMeeting objectForKey:[NSString stringWithFormat:@"%ld",[NSNumber numberWithInteger:indexPath.row].longValue]];
+    if (meeting) {
+        if ([meeting.meetingOwner.email isEqualToString:[MRNetworkManager sharedManager].owner.email]) {
+            [cell addMeeting:YES];
+        } else {
+            [cell addMeeting:NO];
         }
     }
-    if (indexPath < self.indexPathOfCentralCell) {
+    if (indexPath.row < self.indexOfCellWithNowLine) {
         [cell pastTime];
     } else {
-        if (indexPath == self.indexPathOfCentralCell) {
-            [cell nowLineShow];
+        if (indexPath.row == self.indexOfCellWithNowLine) {
+            [cell updateClocks];
         }
     }
-    [cell updateClocks];
-    self.indexPathOfLastShowCell = indexPath;
     return cell;
 }
 
-# pragma mark - Helpers
+# pragma mark - Helpers -
 
-- (void)showInfo:(MRMeeting*) meet {
+- (long) getCentralCellRowByIndexPath:(long)index {
+    long keyOfCell = index + self.countOfHidenCellOnView;
+    if (index > self.indexOfLastShowCell) {
+        keyOfCell = index - self.countOfHidenCellOnView;
+    }
+    self.indexOfLastShowCell = index;
+    return keyOfCell;
+}
+
+- (void) createDictionaryWithMeeting {
+    self.dictonaryOfMeeting = [NSMutableDictionary new];
+    if ([self.room.meetings count]) {
+        MRMeeting* meetting = [MRMeeting new];
+        for (long i = 0; i < [self.room.meetings count]; i++) {
+            meetting = self.room.meetings[i];
+            long startAbstractTime = [NSDate timeToAbstractTime:meetting.meetingStart visiblePath:kCountOfTimeSigmente andHidenPath:self.countOfHidenCellOnView];
+            long endAbstractTime = [NSDate timeToAbstractTime:meetting.meetingFinish visiblePath:kCountOfTimeSigmente andHidenPath:self.countOfHidenCellOnView];
+            for (long i = startAbstractTime; i < endAbstractTime; i++) {
+                [self.dictonaryOfMeeting setObject:meetting forKey:[NSString stringWithFormat:@"%ld",i]];
+            }
+        }
+    }
+}
+
+- (void) showInfo:(MRMeeting*) meet {
     if (meet) {
-        NSArray *components = [meet.meetingOwner.email componentsSeparatedByString: @"@"];
-        self.name.text = components[0];
-        self.detail.text = [NSString embedStringinQuotes:meet.meetingInfo];
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+            UIImage* avatare = [UIImage imageWithData:[[NSData alloc] initWithContentsOfURL:meet.meetingOwner.avatar]];
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                self.userAvatare.image = avatare;
+            });
+        });
+        self.name.text = [meet.meetingOwner.email componentsSeparatedByString: @"@"][0];
+        self.detail.text = [NSString stringWithFormat:@"<< %@ >>",meet.meetingInfo];
         [self.detail setTextAlignment:NSTextAlignmentCenter];
         [self.detail setTextColor:[UIColor lightGrayColor]];
         NSDateFormatter *formatter = [NSDateFormatter new];
@@ -161,29 +146,65 @@ static const double kWidthOfCell = 20;
         NSString* timeFirst = [formatter stringFromDate:meet.meetingStart];
         NSString* timeSecond = [formatter stringFromDate:meet.meetingFinish];
         self.time.text = [NSString stringWithFormat:@"%@ - %@",timeFirst , timeSecond];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.userAvatar.image = [UIImage imageWithData:[[NSData alloc] initWithContentsOfURL:meet.meetingOwner.avatar]];
-        });
-        CALayer * l = [self.userAvatar layer];
-        [l setMasksToBounds:YES];
-        [l setCornerRadius:self.userAvatar.frame.size.width / 2];
+        CALayer * layer = [self.userAvatare layer];
+        [layer setMasksToBounds:YES];
+        [layer setCornerRadius:self.userAvatare.frame.size.width / 2];
         self.viewOfDetail.hidden = NO;
     } else {
+        self.userAvatare.image = [UIImage new];
         self.viewOfDetail.hidden = YES;
+    }
+}
+
+- (void) changeColorOfMeetingDetailsByMeeting:(MRMeeting*) meeting andAbstractTime:(long)abstractTime {
+    long currentAbstractTime = [NSDate timeToAbstractTime:[NSDate new] visiblePath:kCountOfTimeSigmente andHidenPath:self.countOfHidenCellOnView];
+    if (currentAbstractTime < abstractTime) {
+        if (meeting) {
+            if ([meeting.meetingOwner.email isEqualToString:[MRNetworkManager sharedManager].owner.email]) {
+                self.imageLine.image = [UIImage imageNamed:@"ic_curve_yellow"];
+                self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"F8E71C" alpha:1.0];
+                self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"F8E71C" alpha:1.0];
+            } else {
+                self.imageLine.image = [UIImage imageNamed:@"ic_curve_blue"];
+                self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"008FFB" alpha:1.0];
+                self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"008FFB" alpha:1.0];
+            }
+        } else {
+            self.imageLine.image = [UIImage imageNamed:@"ic_curve_blue_red"];
+        }
+    } else {
+        self.imageLine.image = [UIImage imageNamed:@"ic_curve_grey"];
+        self.bounseOfPicture.backgroundColor = [UIColor getUIColorFromHexString:@"4E4B62" alpha:1.0];
+        self.timeLabelOfMeeting.textColor = [UIColor getUIColorFromHexString:@"4E4B62" alpha:1.0];
+    }
+    [self showInfo:meeting];
+}
+
+- (void)refleshTimeLabel {
+    if ([self getTimeFreeRoom:self.indexOfCellWithNowLine]) {
+        NSTimeInterval interval = [[self getTimeFreeRoom:self.indexOfCellWithNowLine] timeIntervalSinceDate:[NSDate new]];
+        int timeToFree = [NSNumber numberWithFloat:interval / 60].intValue;
+        if (timeToFree < 60) {
+            self.timeLabel.text = [NSString stringWithFormat:@"%dm. to the ending",timeToFree];
+        } else {
+            self.timeLabel.text = [NSString stringWithFormat:@"%dh. %dm. to the ending",timeToFree / 60,timeToFree % 60];
+        }
+    } else {
+        self.timeLabel.text = @"Free now!";
     }
 }
 
 - (void)updateClocks {
     NSDate *actualTime = [NSDate date];
     NSTimeInterval delay = [[actualTime nextMinute] timeIntervalSinceDate:actualTime];
-    NSDateFormatter *clocksFormat = [NSDateFormatter new];
-    clocksFormat.dateFormat = @"HH:mm";
-    NSDateFormatter *dateFormat = [NSDateFormatter new];
-    dateFormat.dateFormat = @"MMMM d";
-    self.clockTimeLabel.text = [clocksFormat stringFromDate:actualTime];
-    self.clockDateLabel.text = [dateFormat stringFromDate:actualTime];
-    clocksFormat.dateFormat = @"mm";
-    int time = [[clocksFormat stringFromDate:actualTime] intValue];
+    NSDateFormatter *formater = [NSDateFormatter new];
+    formater.dateFormat = @"HH:mm";
+    self.clockTimeLabel.text = [formater stringFromDate:actualTime];
+    formater.dateFormat = @"MMMM d";
+    self.clockDateLabel.text = [formater stringFromDate:actualTime];
+    formater.dateFormat = @"mm";
+    [self refleshTimeLabel];
+    int time = [[formater stringFromDate:actualTime] intValue];
     if (time == 0 || time == 15 || time == 30 || time == 45) {
         [self viewUpdate];
     }
@@ -193,23 +214,30 @@ static const double kWidthOfCell = 20;
     });
 }
 
+- (NSDate*) getTimeFreeRoom:(long)forTimeInAbstractTime {
+    MRMeeting* meetting = [self.dictonaryOfMeeting objectForKey:[NSString stringWithFormat:@"%ld",forTimeInAbstractTime]];
+    if (!meetting) {
+        return nil;
+    } else {
+        if (![self.dictonaryOfMeeting objectForKey:[NSString stringWithFormat:@"%ld",forTimeInAbstractTime + 1]]) {
+            return meetting.meetingFinish;
+        } else {
+            return [self getTimeFreeRoom:forTimeInAbstractTime + 1];
+        }
+    }
+}
+
 - (void) viewUpdate {
-    NSDate *currentDate = [NSDate date];
-    NSNumber* abstractTime = [NSDate timeToAbstractTime:currentDate endTime:kCountOfTimeSegment  +
-                              (self.countOfCellOnView/2)];
-    abstractTime = [NSNumber numberWithFloat:([abstractTime floatValue] + self.countOfCellOnView/2)];
-    self.indexPathOfCentralCell = [NSIndexPath indexPathForRow:abstractTime.integerValue inSection:0];
+    long abstractTime = [NSDate timeToAbstractTime:[NSDate date] visiblePath:kCountOfTimeSigmente andHidenPath:self.countOfHidenCellOnView];
+    self.indexOfCellWithNowLine = [NSIndexPath indexPathForRow:abstractTime inSection:0].row;
     [self downloadAndUpdateDate];
 }
 
 - (void) selectTimeOnTimeLine {
-    NSDate *currentDate = [NSDate date];
-    NSNumber* abstractTime = [NSDate timeToAbstractTime:currentDate endTime:kCountOfTimeSegment  +
-                              (self.countOfCellOnView/2)];
-    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:abstractTime.integerValue inSection:0];
-    abstractTime = [NSNumber numberWithFloat:([abstractTime floatValue] + self.countOfCellOnView/2)];
-    self.indexPathOfCentralCell = [NSIndexPath indexPathForRow:abstractTime.integerValue inSection:0];
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    long abstractTime = [NSDate timeToAbstractTime:[NSDate date] visiblePath:kCountOfTimeSigmente andHidenPath:self.countOfHidenCellOnView];
+    NSIndexPath* ip = [NSIndexPath indexPathForRow:abstractTime - self.countOfHidenCellOnView inSection:0];
+    [self.tableView scrollToRowAtIndexPath:ip atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    self.indexOfCellWithNowLine = [NSIndexPath indexPathForRow:abstractTime inSection:0].row;
 }
 
 - (void) downloadAndUpdateDate {
@@ -217,21 +245,24 @@ static const double kWidthOfCell = 20;
         if (error) {
             [self createAlertForError:error];
         } else {
-            self.room.meetings = success;
+            self.room.meetings = [success copy];
+            [self createDictionaryWithMeeting];
             [self.tableView reloadData];
+            [self refleshTimeLabel];
         }
     }];
 }
 
-#pragma mark - Navigation
+#pragma mark - Navigation -
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"toVerticalScreen"]) {
+    if ([segue.identifier isEqualToString:@"horizontalView"]) {
         MRRoomWithVerticalScrollViewController *details = segue.destinationViewController;
         details.room = self.room;
-    } else if ([segue.identifier isEqualToString:@"toBookingScreenFromHorizontal"]) {
-        MRBookingViewController *booking = segue.destinationViewController;
-        booking.room = self.room;
+    }
+    if ([segue.identifier isEqualToString:@"bookRoom"]) {
+        MRBookingViewController *bookRoom = segue.destinationViewController;
+        bookRoom.room = self.room;
     }
 }
 

@@ -69,9 +69,9 @@ static double const kWidthOfCell               = 20.0;
 @property (strong, nonatomic) NSDate *startDate;
 @property (strong, nonatomic) NSDate *finishDate;
 @property (strong, nonatomic) NSMutableDictionary *dictonaryOfMeeting;
-@property (assign, nonatomic) long countOfCellOnView;
-@property (strong, nonatomic) NSIndexPath *indexPathOfCentralCell;
-@property (strong, nonatomic) NSIndexPath *indexPathOfLastShowCell;
+@property (assign, nonatomic) NSUInteger countOfHidenCellOnView;
+@property (assign, nonatomic) NSUInteger indexOfCellWithNowLine;
+@property (assign, nonatomic) NSUInteger indexOfLastShowCell;
 @property (strong, nonatomic) MRMeeting *meetting;
 @property (strong, nonatomic) MROwner *owner;
 
@@ -87,7 +87,7 @@ static double const kWidthOfCell               = 20.0;
     self.owner = [MRNetworkManager sharedManager].owner;
     self.room.meetings = [NSMutableArray new];
     self.dictonaryOfMeeting = [NSMutableDictionary new];
-    self.countOfCellOnView = ([self.horizontalTableView bounds].size.width / kWidthOfCell);
+    self.countOfHidenCellOnView = ([self.horizontalTableView bounds].size.width / kWidthOfCell) / 2;
     self.heightOfTableView.constant = self.horizontalTableView.frame.size.width;
     self.tableView.frame = self.horizontalTableView.frame;
     self.tableView.contentSize = self.horizontalTableView.contentSize;
@@ -157,7 +157,7 @@ static double const kWidthOfCell               = 20.0;
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(PTEHorizontalTableView *)horizontalTableView numberOfRowsInSection:(NSInteger)section {
-    return kCountOfTimeSegment + self.countOfCellOnView ;
+    return kCountOfTimeSegment + (self.countOfHidenCellOnView * 2) ;
 }
 
 - (CGFloat)tableView:(PTEHorizontalTableView *)horizontalTableView widthForCellAtIndexPath:(NSIndexPath *)indexPath {
@@ -166,55 +166,28 @@ static double const kWidthOfCell               = 20.0;
 
 - (UITableViewCell *)tableView:(PTEHorizontalTableView *)horizontalTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MRTableViewHorizontalCell * cell = [horizontalTableView.tableView dequeueReusableCellWithIdentifier:@"cell"];
-    [cell showTimeLineWithCountOfLine:kCountOfTimeSegment sizeOfViewIs:(self.countOfCellOnView / 2)
-                          atIndexCell:indexPath.row];
-    long keyOfCell = (long)indexPath.row + self.countOfCellOnView / 2;
-    if (indexPath > self.indexPathOfLastShowCell) {
-        keyOfCell = (long)indexPath.row - self.countOfCellOnView / 2;
-    }
-    self.timeLabel.text = [NSDate abstractTimeToTimeAfterNow:keyOfCell inTimeLineSegment:kCountOfTimeSegment / 2];
-    NSString* key = [NSString stringWithFormat:@"%ld",keyOfCell];
-    self.meetting = [self.dictonaryOfMeeting objectForKey:key];
-    self.timeLabel.text = [NSDate abstractTimeToTimeAfterNow:keyOfCell inTimeLineSegment:kCountOfTimeSegment / 2];
-    if (![self.timeLabel.text isEqualToString:@"Past"]) {
-        if (self.meetting) {
-            if ([self.meetting.meetingOwner.userId isEqualToNumber:self.owner.userId]) {
-                [cell showYellow];
-            }
+    [cell showTimeLineWithCountOfLine:kCountOfTimeSegment sizeOfViewIs:self.countOfHidenCellOnView atIndexCell:indexPath.row];
+    MRMeeting* meeting = [self.dictonaryOfMeeting objectForKey:[NSString stringWithFormat:@"%ld",[NSNumber numberWithInteger:indexPath.row].longValue]];
+    if (meeting) {
+        if ([meeting.meetingOwner.email isEqualToString:[MRNetworkManager sharedManager].owner.email]) {
+            [cell addMeeting:YES];
+        } else {
+            [cell addMeeting:NO];
         }
     }
-    if ([self.room.meetings count]) {
-        for (long i = 0; i < [self.room.meetings count]; i++) {
-            self.meetting = [MRMeeting new];
-            self.meetting = self.room.meetings[i];
-            NSNumber* startAbstractTime = [NSNumber numberWithLong:([[NSDate timeToAbstractTime:self.meetting.meetingStart
-                                                                                        endTime:kCountOfTimeSegment +
-                                                                      (self.countOfCellOnView/2)] longValue] +
-                                                                    self.countOfCellOnView/2)];
-            NSNumber* endAbstractTime = [NSNumber numberWithFloat:([[NSDate timeToAbstractTime:self.meetting.meetingFinish
-                                                                                       endTime:kCountOfTimeSegment  +
-                                                                     (self.countOfCellOnView/2)] longValue] +
-                                                                   self.countOfCellOnView/2)];
-            if ((indexPath.row >= startAbstractTime.integerValue) && (indexPath.row < endAbstractTime.integerValue)) {
-                if ([self.meetting.meetingOwner.userId isEqualToNumber:self.owner.userId]) {
-                    [cell addMeeting:YES];
-                } else {
-                    [cell addMeeting:NO];
-                }
-                NSString *key = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
-                [self.dictonaryOfMeeting setObject:self.meetting forKey:key];
-            }
-        }
-    }
-    if ([self.calendarDate isEqualToAnotherDay:[NSDate date]]) {
-        if (indexPath < self.indexPathOfCentralCell) {
+    [self refleshTimeLabel:[self getCentralCellRowByIndexPath:[NSNumber numberWithInteger:indexPath.row].longValue]];
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    dateFormatter.dateFormat = @"dd/MM/yy";
+    NSString *selectedDate = [dateFormatter stringFromDate:self.calendarDate];
+    NSString *currentDate = [dateFormatter stringFromDate:[NSDate  new]];
+    if ([selectedDate isEqualToString:currentDate]) {
+        if (indexPath.row < self.indexOfCellWithNowLine) {
             [cell pastTime];
         } else {
-            if (indexPath == self.indexPathOfCentralCell) {
-                [cell nowLineShow];
+            if (indexPath.row == self.indexOfCellWithNowLine) {
+                [cell updateClocks];
             }
         }
-        self.indexPathOfLastShowCell = indexPath;
     }
     return cell;
 }
@@ -391,12 +364,9 @@ static double const kWidthOfCell               = 20.0;
     }
 }
 
-- (void)viewUpdate {
-    NSDate *currentDate = [NSDate date];
-    NSNumber* abstractTime = [NSDate timeToAbstractTime:currentDate endTime:kCountOfTimeSegment  +
-                              (self.countOfCellOnView / 2)];
-    abstractTime = [NSNumber numberWithFloat:([abstractTime floatValue] + self.countOfCellOnView / 2)];
-    self.indexPathOfCentralCell = [NSIndexPath indexPathForRow:abstractTime.integerValue inSection:0];
+- (void) viewUpdate {
+    NSUInteger abstractTime = [NSDate timeToAbstractTime:[NSDate date] visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];
+    self.indexOfCellWithNowLine = [NSIndexPath indexPathForRow:abstractTime inSection:0].row;
     [self downloadAndUpdateDate];
 }
 
@@ -410,19 +380,17 @@ static double const kWidthOfCell               = 20.0;
             [self createAlertForError:error];
         } else {
             self.room.meetings = success;
+            [self createDictionaryWithMeeting];
             [self.tableView reloadData];
         }
     }];
 }
 
-- (void)selectTimeOnTimeLine {
-    NSDate *currentDate = [NSDate date];
-    NSNumber* abstractTime = [NSDate timeToAbstractTime:currentDate endTime:kCountOfTimeSegment  +
-                              (self.countOfCellOnView / 2)];
-    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:abstractTime.integerValue inSection:0];
-    abstractTime = [NSNumber numberWithFloat:([abstractTime floatValue] + self.countOfCellOnView/2)];
-    self.indexPathOfCentralCell = [NSIndexPath indexPathForRow:abstractTime.integerValue inSection:0];
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+- (void) selectTimeOnTimeLine {
+    NSUInteger abstractTime = [NSDate timeToAbstractTime:[NSDate date] visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];
+    NSIndexPath* ip = [NSIndexPath indexPathForRow:abstractTime - self.countOfHidenCellOnView inSection:0];
+    [self.tableView scrollToRowAtIndexPath:ip atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    self.indexOfCellWithNowLine = [NSIndexPath indexPathForRow:abstractTime inSection:0].row;
 }
 
 - (NSNumber *)convertDateToMiliseconds:(NSDate *)date {
@@ -460,4 +428,38 @@ static double const kWidthOfCell               = 20.0;
     self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
 }
 
+- (NSUInteger) getCentralCellRowByIndexPath:(long)index {
+    NSUInteger keyOfCell = index + self.countOfHidenCellOnView;
+    if (index > self.indexOfLastShowCell) {
+        keyOfCell = index - self.countOfHidenCellOnView;
+    }
+    self.indexOfLastShowCell = index;
+    return keyOfCell;
+}
+
+- (void)refleshTimeLabel:(long) abstractTime {
+    MRMeeting* meetting = [self.dictonaryOfMeeting objectForKey:[NSString stringWithFormat:@"%ld",abstractTime]];
+    if (!meetting) {
+        self.timeLabel.text = @"Free now!";
+    } else {
+        NSDateFormatter *dateFormatter = [NSDateFormatter new];
+        dateFormatter.dateFormat = @"HH:mm";
+        self.timeLabel.text = [NSString stringWithFormat:@"%@ - %@",[dateFormatter stringFromDate:meetting.meetingStart],[dateFormatter stringFromDate:meetting.meetingFinish]];
+    }
+}
+
+- (void) createDictionaryWithMeeting {
+    self.dictonaryOfMeeting = [NSMutableDictionary new];
+    if ([self.room.meetings count]) {
+        MRMeeting* meetting = [MRMeeting new];
+        for (NSUInteger i = 0; i < [self.room.meetings count]; i++) {
+            meetting = self.room.meetings[i];
+            NSUInteger startAbstractTime = [NSDate timeToAbstractTime:meetting.meetingStart visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];
+            NSUInteger endAbstractTime = [NSDate timeToAbstractTime:meetting.meetingFinish visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];
+            for (NSUInteger i = startAbstractTime; i < endAbstractTime; i++) {
+                [self.dictonaryOfMeeting setObject:meetting forKey:[NSString stringWithFormat:@"%ld",i]];
+            }
+        }
+    }
+}
 @end
