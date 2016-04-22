@@ -10,78 +10,66 @@
 
 @implementation NSDate (MRNextMinute)
 
-+ (NSString *)abstractTimeToTimeAfterNow:(NSInteger)abstractTime inTimeLineSegment:(double)countOfTimeSegment {
++ (NSString *)abstractTimeToTimeAfterNow:(NSUInteger)abstractTime inTimeLineSegment:(NSUInteger)CountOfTimeSegment {
     NSString *leftTimeIfStr = nil;
-    NSNumber *hours = [NSNumber numberWithFloat:((abstractTime + (countOfTimeSegment)) / 4) - 1];
+    NSNumber *hours = [NSNumber numberWithFloat:((abstractTime + (CountOfTimeSegment)) / 4) - 1];
     NSNumber *minute = [NSNumber numberWithLong:(((abstractTime % 4) - 2) * 15)];
-    NSDate *currentDate = [NSDate date];
+    NSDate *curentDate = [NSDate new];
     NSDateFormatter *formatter = [NSDateFormatter new];
     [formatter setDateFormat:@"HH:mm"];
-    NSString *curentTimeString = [formatter stringFromDate:currentDate];
+    NSString *curentTimeString = [formatter stringFromDate:curentDate];
     NSArray *components = [curentTimeString componentsSeparatedByString: @":"];
-    if ([components[0] intValue] > hours.intValue) {
+    NSNumberFormatter *numberFormatter = [NSNumberFormatter new];
+    numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+    NSNumber *curentHours = [numberFormatter numberFromString:components[0]];
+    NSNumber *curentMinute = [numberFormatter numberFromString:components[1]];
+    NSInteger time = (hours.integerValue * 60) + minute.integerValue;
+    NSInteger curentTime = (curentHours.integerValue * 60) + curentMinute.integerValue;
+    if (curentTime > time) {
         leftTimeIfStr = @"Past";
     } else {
-        if (([components[0] intValue] == hours.intValue) && ([components[1] intValue] > minute.intValue)) {
-            leftTimeIfStr = @"Past";
+        if (curentTime + 15 >= time) {
+            leftTimeIfStr = @"Now";
         } else {
-            if (([components[0] intValue] == hours.intValue) && ([components[1] intValue] > (minute.intValue+15))) {
-                leftTimeIfStr = @"Now";
+            if ((time - curentTime) < 60) {
+                leftTimeIfStr = [NSString stringWithFormat:@"In %ld minute", (long)(time - curentTime)];
             } else {
-                if (([components[0] intValue] == hours.intValue) && ([components[1] intValue] <= (minute.intValue+15))) {
-                    NSInteger minutes = minute.intValue - [components[1] intValue];
-                    leftTimeIfStr = [NSString stringWithFormat:@"In %ld minutes",(long)minutes];
-                }
+                leftTimeIfStr = [NSString stringWithFormat:@"In %ld hours and %ld minute", (long)(time - curentTime) / 60, (long)(time - curentTime) % 60];
             }
-        }
-    }
-    if ([components[0] intValue] < hours.intValue) {
-        if ([components[1] intValue] > [minute intValue]) {
-            NSInteger hour = hours.intValue - 1 - [components[0] intValue];
-            if (hour == 0) {
-                NSInteger minutes = minute.intValue + 60 - [components[1] intValue];
-                leftTimeIfStr = [NSString stringWithFormat:@"In %ld minutes",(long)minutes];
-            } else {
-                leftTimeIfStr = [NSString stringWithFormat:@"In %ld hours and %d minutes",(long)hour, (minute.intValue + 60 - [components[1] intValue])];
-            }
-        } else if ([components[1] intValue] == minute.intValue) {
-            leftTimeIfStr = [NSString stringWithFormat:@"In %d hours",(hours.intValue - [components[0] intValue])];
-        } else {
-            leftTimeIfStr = [NSString stringWithFormat:@"In %d hours and %d minutes",(hours.intValue - [components[0] intValue]),(minute.intValue - [components[1] intValue])];
         }
     }
     return leftTimeIfStr;
 }
 
-+ (NSNumber *)timeToAbstractTime:(NSDate *)time endTime:(NSInteger)endTime {
++ (NSNumber *)timeToAbstractTime:(NSDate *)time endTime:(NSUInteger) endTime {
     NSDateFormatter *formatter = [NSDateFormatter new];
     [formatter setDateFormat:@"HH:mm"];
     NSString *timeString = [formatter stringFromDate:time];
     NSArray *components = [timeString componentsSeparatedByString: @":"];
-    NSNumberFormatter *formater = [[NSNumberFormatter alloc] init];
-    formater.numberStyle = NSNumberFormatterDecimalStyle;
-    NSNumber *hours = [formater numberFromString:components[0]];
-    NSNumber *minute = [formater numberFromString:components[1]];
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+    NSNumber *hours = [numberFormatter numberFromString:components[0]];
+    NSNumber *minute = [numberFormatter numberFromString:components[1]];
     NSNumber *abstractTime = [NSNumber new];
-    if ((hours >= [NSNumber numberWithInt:8]) && (hours <= [NSNumber numberWithInt:20])) {
-        abstractTime = [NSNumber numberWithFloat:(([hours floatValue] - 8) * 4)];
-        if (minute >= [NSNumber numberWithInt:45]) {
-            abstractTime = [NSNumber numberWithFloat:([abstractTime floatValue] + 3)];
+    if ((hours >= [NSNumber numberWithInteger:8]) && (hours <= [NSNumber numberWithInteger:20])) {
+        abstractTime = [NSNumber numberWithInteger:(hours.integerValue - 8) * 4];
+        if (minute >= [NSNumber numberWithInteger:45]) {
+            abstractTime = [NSNumber numberWithFloat:abstractTime.integerValue + 3];
         } else {
-            if (minute >= [NSNumber numberWithInt:30]) {
-                abstractTime = [NSNumber numberWithFloat:([abstractTime floatValue] + 2)];
+            if (minute >= [NSNumber numberWithInteger:30]) {
+                abstractTime = [NSNumber numberWithInteger:abstractTime.integerValue + 2];
             } else {
-                if (minute >= [NSNumber numberWithInt:15]) {
-                    abstractTime = [NSNumber numberWithFloat:([abstractTime floatValue] + 1)];
+                if (minute >= [NSNumber numberWithInteger:15]) {
+                    abstractTime = [NSNumber numberWithInteger:abstractTime.integerValue + 1];
                 }
             }
         }
     }
     if (!abstractTime) {
-        if (hours < [NSNumber numberWithInt:8]) {
-            abstractTime = [NSNumber numberWithFloat:(0)];
+        if (hours < [NSNumber numberWithInteger:8]) {
+            abstractTime = [NSNumber numberWithInteger:0];
         } else {
-            abstractTime = [NSNumber numberWithFloat:endTime];
+            abstractTime = [NSNumber numberWithInteger:endTime];
         }
     }
     return abstractTime;

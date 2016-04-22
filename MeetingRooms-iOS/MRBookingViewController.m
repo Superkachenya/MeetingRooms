@@ -339,12 +339,12 @@ static double const kWidthOfCell               = 20.0;
             if (error) {
                 [self createAlertForError:error];
             } else {
+                [self performSegueWithIdentifier:@"toSheduleFromBooking" sender:self];
                 [self createAlertWithMessage:success];
             }
         }];
     }
     [self dismissKeyboard:self];
-    [self performSegueWithIdentifier:@"toSheduleFromBooking" sender:self];
 }
 - (IBAction)cancelButtonDidPress:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];

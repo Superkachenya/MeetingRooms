@@ -38,7 +38,7 @@
     self.nowRedLine.hidden = YES;
 }
 
-- (void)showTimeLineWithCountOfLine:(NSInteger)countOfTimeLine sizeOfViewIs:(NSInteger)sizeOfHalfScreen atIndexCell:(NSInteger)index {
+- (void)showTimeLineWithCountOfLine:(NSUInteger)countOfTimeLine sizeOfViewIs:(NSUInteger)sizeOfHalfScreen atIndexCell:(NSUInteger)index {
     if ((index + 1 > sizeOfHalfScreen) && (index < (countOfTimeLine + sizeOfHalfScreen))) {
         self.rightLine.hidden = NO;
         self.leftLine.hidden = NO;
@@ -68,7 +68,7 @@
     }
 }
 
-- (void)showTimeLine:(NSInteger) number {
+- (void)showTimeLine:(NSUInteger)number {
     switch ((number % 4)) {
         case 0:
             self.timeLabel.text = @"00";
@@ -87,7 +87,7 @@
             self.littleRightLine.backgroundColor = [UIColor getUIColorFromHexString:@"#6A6776"];
             break;
         case 3:
-            self.timeLabel.text = [NSString stringWithFormat:@"%ld:",((number / 4) + 5)];
+            self.timeLabel.text = [NSString stringWithFormat:@"%ld:",((long)(number / 4) + 5)];
             self.timeLabel.textAlignment = NSTextAlignmentRight;
             self.littleLeftLine.backgroundColor = [UIColor getUIColorFromHexString:@"#6A6776"];
             self.littleRightLine.backgroundColor = [UIColor whiteColor];

@@ -69,22 +69,12 @@
         default:
             break;
     }
-    NSString *curentTimeString = [self getDateAsString:[NSDate new]];
-    NSArray *componentsTime = [curentTimeString componentsSeparatedByString: @":"];
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    formatter.numberStyle = NSNumberFormatterDecimalStyle;
-    NSNumber *curentHours = [formatter numberFromString:componentsTime[0]];
-    NSNumber *curentMinute = [formatter numberFromString:componentsTime[1]];
-    int currentTime = ([curentHours intValue] * 60) + [curentMinute intValue];
-    componentsTime = [startDate componentsSeparatedByString: @":"];
-    NSNumber *hours = [formatter numberFromString:componentsTime[0]];
-    NSNumber *minute = [formatter numberFromString:componentsTime[1]];
-    int time = ([hours intValue] * 60) + [minute intValue];
-    if (time < currentTime) {
-        self.timeIntervalLabel.textColor = [UIColor getUIColorFromHexString:@"#39364D"];
-        self.titleMeetingLabel.textColor = [UIColor getUIColorFromHexString:@"#39364D"];
+    NSComparisonResult result = [meeting.meetingFinish compare:[NSDate date]];
+    if (result == NSOrderedAscending) {
+        self.timeIntervalLabel.textColor = [UIColor getUIColorFromHexString:@"#4E4B62"];
+        self.titleMeetingLabel.textColor = [UIColor getUIColorFromHexString:@"#4E4B62"];
         for (UIView *point in self.timePoints) {
-            point.backgroundColor = [UIColor getUIColorFromHexString:@"#39364D"];
+            point.backgroundColor = [UIColor getUIColorFromHexString:@"#4E4B62"];
         }
     }
 }

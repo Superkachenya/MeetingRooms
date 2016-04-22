@@ -52,15 +52,13 @@ static const double kWidthOfCell = 20;
 
 @implementation MRRoomWithHorizontalScrollViewController
 
-#pragma mark - UIViewController
 
-#pragma mark - UIViewController
+#pragma mark - UIViewControllerLifeCycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.navigationItem.title = self.room.roomTitle;
-    self.room.meetings = [NSMutableArray new];
     self.dictonaryOfMeeting = [NSMutableDictionary new];
     self.countOfCellOnView = ([self.horizontalTableView bounds].size.width / kWidthOfCell);
     self.hieghtOfTableView.constant = self.horizontalTableView.frame.size.width;
@@ -163,8 +161,9 @@ static const double kWidthOfCell = 20;
         NSString* timeFirst = [formatter stringFromDate:meet.meetingStart];
         NSString* timeSecond = [formatter stringFromDate:meet.meetingFinish];
         self.time.text = [NSString stringWithFormat:@"%@ - %@",timeFirst , timeSecond];
-        self.userAvatar.image = [UIImage imageNamed:@"Google+"];
-        self.userAvatar.image = [UIImage imageWithData:[[NSData alloc] initWithContentsOfURL:meet.meetingOwner.avatar]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.userAvatar.image = [UIImage imageWithData:[[NSData alloc] initWithContentsOfURL:meet.meetingOwner.avatar]];
+        });
         CALayer * l = [self.userAvatar layer];
         [l setMasksToBounds:YES];
         [l setCornerRadius:self.userAvatar.frame.size.width / 2];

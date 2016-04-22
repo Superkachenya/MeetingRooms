@@ -11,6 +11,6 @@
 
 @interface MRCustomScheduleCell : UITableViewCell
 
-- (void)configureCellWithMeeting:(MRMeeting *)meeting atIndexpath:(NSIndexPath *)indexPath;
+- (void)configureCellWithMeeting:(MRMeeting *)meeting atIndexPath:(NSIndexPath *)indexPath;
 
 @end

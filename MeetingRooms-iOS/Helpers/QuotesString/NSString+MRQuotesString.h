@@ -6,8 +6,7 @@
 //  Copyright © 2016 Cleveroad. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
+@import Foundation;
 @interface NSString (MRQuotesString)
 
 + (NSString *)embedStringinQuotes:(NSString *)string;

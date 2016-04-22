@@ -12,5 +12,5 @@
 
 - (void)createAlertForError:(NSError *)error;
 - (void)createAlertWithMessage:(NSString *)message;
-
+- (void)createAlertToConfirmDeleting;
 @end

@@ -12,6 +12,7 @@
 #import "MRCustomScheduleCell.h"
 #import "MRNetworkManager.h"
 #import "UIViewController+MRErrorAlert.h"
+#import "MRMeetingDetails.h"
 
 typedef NS_ENUM(NSInteger, MRWeekdays) {
     MRSunday = 1,
@@ -22,6 +23,8 @@ typedef NS_ENUM(NSInteger, MRWeekdays) {
     MRFriday,
     MRSaturday
 };
+
+static CGFloat const kMinimalRowHeight = 116.0;
 
 @interface MRScheduleViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -67,9 +70,8 @@ typedef NS_ENUM(NSInteger, MRWeekdays) {
     self.sortedArrayMeetings = [NSMutableArray new];
     self.manager = [MRNetworkManager sharedManager];
     [self loadMeetings];
-    self.tableView.allowsSelection = NO;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView.estimatedRowHeight = 116.0;
+    self.tableView.estimatedRowHeight = kMinimalRowHeight;
     [self configureViewsForDays];
     [self configureLabels];
 }
@@ -82,8 +84,13 @@ typedef NS_ENUM(NSInteger, MRWeekdays) {
 
 - (void)configureViewsForDays {
     NSDate *date = [NSDate date];
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    [dateFormatter setDateFormat:@"MMM d"];
+    self.monthDateLabel.text = [dateFormatter stringFromDate:date];
+    [dateFormatter setDateFormat:@"yyyy"];
+    self.yearLabel.text = [dateFormatter stringFromDate:date];
     NSCalendar *gregorian = [NSCalendar currentCalendar];
-    NSDateComponents *components = [gregorian components: NSUIntegerMax fromDate:date];
+    NSDateComponents *components = [gregorian components:NSUIntegerMax fromDate:date];
     switch (components.weekday) {
         case MRSunday:
             self.sundayViewOut.backgroundColor = [UIColor whiteColor];
@@ -92,28 +99,22 @@ typedef NS_ENUM(NSInteger, MRWeekdays) {
         case MRMonday:
             self.mondayViewOut.backgroundColor = [UIColor whiteColor];
             self.mondayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F"];
-            self.mondayLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.sortedArrayMeetings.count];
-            self.mondayLabel.adjustsFontSizeToFitWidth = YES;
             break;
         case MRTuesday:
             self.tuesdayViewOut.backgroundColor = [UIColor whiteColor];
             self.tuesdayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F"];
-            self.tuesdayLabel.adjustsFontSizeToFitWidth = YES;
             break;
         case MRWednesday:
             self.wednesdayViewOut.backgroundColor = [UIColor whiteColor];
             self.wednesdayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F"];
-            self.wednesdayLabel.adjustsFontSizeToFitWidth = YES;
             break;
         case MRThursday:
             self.thursdayViewOut.backgroundColor = [UIColor whiteColor];
             self.thursdayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F"];
-            self.thursdayLabel.adjustsFontSizeToFitWidth = YES;
             break;
         case MRFriday:
             self.fridayViewOut.backgroundColor = [UIColor whiteColor];
             self.fridayViewIn.backgroundColor = [UIColor getUIColorFromHexString:@"FF5A5F"];
-            self.fridayLabel.adjustsFontSizeToFitWidth = YES;
             break;
         case MRSaturday:
             self.saturdayViewOut.backgroundColor = [UIColor whiteColor];
@@ -124,8 +125,8 @@ typedef NS_ENUM(NSInteger, MRWeekdays) {
 
 - (void)configureLabels {
     NSDate *nearestMonday = [self findNearestMonday];
-    NSArray *arrayOfLabels = [NSArray arrayWithObjects:self.mondayLabel, self.tuesdayLabel, self.wednesdayLabel,
-                              self.thursdayLabel, self.fridayLabel, nil];
+    NSArray *arrayOfLabels = @[self.mondayLabel, self.tuesdayLabel, self.wednesdayLabel,
+                               self.thursdayLabel, self.fridayLabel];
     NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
     dayComponent.day = 0;
     for (UILabel *label in arrayOfLabels) {
@@ -145,10 +146,10 @@ typedef NS_ENUM(NSInteger, MRWeekdays) {
 }
 
 - (NSDate *)findNearestMonday {
-    NSDate *today = [[NSDate alloc] init];
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDate *today = [NSDate date];
+    NSCalendar *gregorian = [NSCalendar currentCalendar];
     NSDateComponents *weekdayComponents = [gregorian components:NSCalendarUnitWeekday fromDate:today];
-    NSDateComponents *componentsToSubtract = [[NSDateComponents alloc] init];
+    NSDateComponents *componentsToSubtract = [NSDateComponents new];
     [componentsToSubtract setDay: 1 - (weekdayComponents.weekday - 1)];
     NSDate *nearestMonday = [gregorian dateByAddingComponents:componentsToSubtract toDate:today options:0];
     return nearestMonday;
@@ -172,7 +173,6 @@ typedef NS_ENUM(NSInteger, MRWeekdays) {
     return  array;
 }
 
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -182,7 +182,7 @@ typedef NS_ENUM(NSInteger, MRWeekdays) {
 - (MRCustomScheduleCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MRCustomScheduleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     MRMeeting *currentMeeting = [self.sortedArrayMeetings objectAtIndex:indexPath.row];
-    [cell configureCellWithMeeting:currentMeeting atIndexpath:indexPath];
+    [cell configureCellWithMeeting:currentMeeting atIndexPath:indexPath];
     return cell;
 }
 
@@ -192,6 +192,22 @@ typedef NS_ENUM(NSInteger, MRWeekdays) {
     if (indexPath.row == self.sortedArrayMeetings.count - 1) {
         [self loadMeetings];
     }
+}
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"toMeetingDetails"]) {
+        MRMeetingDetails *details = segue.destinationViewController;
+        NSIndexPath *indexPath = self.tableView.indexPathForSelectedRow;
+        MRMeeting *sendMeeting = self.sortedArrayMeetings[indexPath.row];
+        details.meeting = sendMeeting;
+        [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
+    }
+}
+
+- (IBAction)prepareForUnwindSegueToSheduleScene:(UIStoryboardSegue *)segue {
+    [self loadMeetings];
 }
 
 @end

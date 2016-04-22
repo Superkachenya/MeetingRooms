@@ -35,6 +35,7 @@
 		8EBB9E9F1CB640100033C839 /* MRNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB9E9E1CB640100033C839 /* MRNetworkManager.m */; };
 		8EBB9EA11CB6401E0033C839 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8EBB9EA01CB6401E0033C839 /* GoogleService-Info.plist */; };
 		8EBB9EA61CB69E350033C839 /* UIViewController+MRErrorAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB9EA51CB69E350033C839 /* UIViewController+MRErrorAlert.m */; };
+		8ED9C62C1CC91607007DFB29 /* MRMeetingDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED9C62B1CC91607007DFB29 /* MRMeetingDetails.m */; };
 		8EE5615D1CB7A308005DB87C /* MRRoomsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE5615C1CB7A308005DB87C /* MRRoomsViewController.m */; };
 		8EE561611CB7C9B5005DB87C /* MRCustomRoomsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE561601CB7C9B5005DB87C /* MRCustomRoomsCell.m */; };
 		8EE561651CB7DD92005DB87C /* UIColor+MRColorFromHEX.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE561641CB7DD92005DB87C /* UIColor+MRColorFromHEX.m */; };
@@ -113,6 +114,8 @@
 		8EBB9EA01CB6401E0033C839 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8EBB9EA41CB69E350033C839 /* UIViewController+MRErrorAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MRErrorAlert.h"; sourceTree = "<group>"; };
 		8EBB9EA51CB69E350033C839 /* UIViewController+MRErrorAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MRErrorAlert.m"; sourceTree = "<group>"; };
+		8ED9C62A1CC91607007DFB29 /* MRMeetingDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRMeetingDetails.h; path = MeetingDetailsViewController/MRMeetingDetails.h; sourceTree = "<group>"; };
+		8ED9C62B1CC91607007DFB29 /* MRMeetingDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRMeetingDetails.m; path = MeetingDetailsViewController/MRMeetingDetails.m; sourceTree = "<group>"; };
 		8EE5615B1CB7A308005DB87C /* MRRoomsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRRoomsViewController.h; path = "MeetingRooms-iOS/ViewControllers/RoomsViewController/MRRoomsViewController.h"; sourceTree = SOURCE_ROOT; };
 		8EE5615C1CB7A308005DB87C /* MRRoomsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRRoomsViewController.m; path = "MeetingRooms-iOS/ViewControllers/RoomsViewController/MRRoomsViewController.m"; sourceTree = SOURCE_ROOT; };
 		8EE5615F1CB7C9B5005DB87C /* MRCustomRoomsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRCustomRoomsCell.h; path = View/CustomRoomsCell/MRCustomRoomsCell.h; sourceTree = "<group>"; };
@@ -164,6 +167,7 @@
 			children = (
 				820673601CB63F5400D1D205 /* LoginViewConroller */,
 				8EA6BD491CC6389D00E9EE03 /* SheduleViewController */,
+				8ED9C62D1CC91614007DFB29 /* MeetingDetailsViewController */,
 				820673631CB63F5400D1D205 /* RoomWithHorizontalScrollViewController */,
 				828843AF1CB79B5900AD961E /* RoomWithVerticalScrollViewController */,
 				8EE5615E1CB7A30C005DB87C /* RoomsViewContoller */,
@@ -424,6 +428,15 @@
 				8EBB9EA51CB69E350033C839 /* UIViewController+MRErrorAlert.m */,
 			);
 			name = Alert;
+			sourceTree = "<group>";
+		};
+		8ED9C62D1CC91614007DFB29 /* MeetingDetailsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8ED9C62A1CC91607007DFB29 /* MRMeetingDetails.h */,
+				8ED9C62B1CC91607007DFB29 /* MRMeetingDetails.m */,
+			);
+			name = MeetingDetailsViewController;
 			sourceTree = "<group>";
 		};
 		8EE5615E1CB7A30C005DB87C /* RoomsViewContoller */ = {
@@ -714,6 +727,7 @@
 				8EBB9E9F1CB640100033C839 /* MRNetworkManager.m in Sources */,
 				8E7294551CBFCAC4004D5A71 /* MRTimePickerViewController.m in Sources */,
 				8EA6BD431CC61FB000E9EE03 /* MRTableViewCustomCell.m in Sources */,
+				8ED9C62C1CC91607007DFB29 /* MRMeetingDetails.m in Sources */,
 				8EA6BD2B1CC61C5100E9EE03 /* MRScheduleViewController.m in Sources */,
 				82E79F3F1CB570CC00D687DC /* main.m in Sources */,
 				8EA6BD401CC61F8A00E9EE03 /* MRCustomLabel.m in Sources */,

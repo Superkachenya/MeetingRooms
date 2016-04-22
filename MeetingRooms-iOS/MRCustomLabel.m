@@ -21,6 +21,7 @@
 
 - (CGSize)intrinsicContentSize {
     CGSize sizeContent = [super intrinsicContentSize];
+    
     if (self.numberOfLines == 0) {
         sizeContent.height += 1;
     }

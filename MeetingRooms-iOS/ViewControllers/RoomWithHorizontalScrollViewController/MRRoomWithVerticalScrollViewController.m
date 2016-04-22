@@ -100,7 +100,7 @@
     componentsTime = [string componentsSeparatedByString: @":"];
     NSNumber *hours = [numberFormatter numberFromString:componentsTime[0]];
     if ([hours intValue] < [curentHours intValue]) {
-        [label setTextColor:[UIColor getUIColorFromHexString:@"#39364D"]];
+        [label setTextColor:[UIColor getUIColorFromHexString:@"#4E4B62"]];
     }
     [label setText:string];
     [view addSubview:label];

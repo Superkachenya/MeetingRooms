@@ -11,6 +11,7 @@
 #import "MROwner.h"
 #import "MRRoom.h"
 #import "MRMeeting.h"
+#import "SVProgressHUD.h"
 
 NSString *const baseURL = @"http://redmine.cleveroad.com:3503";
 
@@ -38,19 +39,23 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3503";
     MRCompletion copyBlock = [block copy];
     NSString *tempString = [baseURL stringByAppendingString:@"/api/v1/login"];
     NSDictionary *params = @{@"googleAccessToken": token};
+    [SVProgressHUD show];
     [self.manager POST:tempString parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         self.owner = [[MROwner alloc] initWithJSON:responseObject];
         self.headerToken = [@"bearer " stringByAppendingString:self.owner.accessToken];
         [self.manager.requestSerializer setValue:self.headerToken forHTTPHeaderField:@"Authorization"];
         copyBlock(responseObject, nil);
+        [SVProgressHUD dismiss];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         copyBlock(nil, error);
+        [SVProgressHUD dismiss];
     }];
 }
 
 - (void)getRoomsStatusWithCompletionBlock:(MRCompletion)block {
     MRCompletion copyBlock = [block copy];
     NSString *tempString = [baseURL stringByAppendingString:@"/api/v1/rooms"];
+    [SVProgressHUD show];
     [self.manager GET:tempString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if ([responseObject isKindOfClass:[NSArray class]]) {
             NSMutableArray *rooms = [NSMutableArray new];
@@ -59,13 +64,15 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3503";
                 [rooms addObject:tempRoom];
             }
             copyBlock([rooms copy], nil);
+            [SVProgressHUD dismiss];
         } else {
             NSError *error = nil;
             copyBlock(nil, error);
+            [SVProgressHUD dismiss];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         copyBlock(nil, error);
-        
+        [SVProgressHUD dismiss];
     }];
 }
 
@@ -79,6 +86,7 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3503";
         formatter.dateFormat = @"YYYY-MM-dd";
         tempString = [NSString stringWithFormat:@"%@%@?date=%@",tempString,roomId.stringValue, [formatter stringFromDate:date]];
     }
+    [SVProgressHUD show];
     [self.manager GET:tempString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if ([responseObject isKindOfClass:[NSArray class]]) {
             NSMutableArray *meetings = [NSMutableArray new];
@@ -87,12 +95,15 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3503";
                 [meetings addObject:newMeeting];
             }
             copyBlock([meetings copy], nil);
+            [SVProgressHUD dismiss];
         } else {
             NSError *error = nil;
             copyBlock(nil, error);
+            [SVProgressHUD dismiss];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         copyBlock(nil, error);
+        [SVProgressHUD dismiss];
     }];
 }
 
@@ -100,15 +111,17 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3503";
     MRCompletion copyBlock = [block copy];
     NSString *composeStr = [NSString stringWithFormat:@"/api/v1/rooms/%ld/bookings", (long)roomId.integerValue];
     NSString *tempString = [baseURL stringByAppendingString:composeStr];
+    [SVProgressHUD show];
     [self.manager POST:tempString parameters:@{@"timeStart" : start,
                                                @"timeEnd" : finish,
                                                @"message" : message}
               progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                   NSString *success = [responseObject valueForKey:@"details"];
                   copyBlock(success, nil);
-                  NSLog(@"%@", responseObject);
+                  [SVProgressHUD dismiss];
               } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                   copyBlock(nil, error);
+                  [SVProgressHUD dismiss];
               }];
 }
 
@@ -132,7 +145,6 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3503";
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         copyBlock(nil, error);
     }];
-    
 }
 
 @end

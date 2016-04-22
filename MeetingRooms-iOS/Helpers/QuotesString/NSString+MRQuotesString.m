@@ -11,7 +11,7 @@
 @implementation NSString (MRQuotesString)
 
 + (NSString *)embedStringinQuotes:(NSString *)string {
-    NSString *result = [NSString stringWithFormat:@"\"%@\"",string];
+    NSString *result = [NSString stringWithFormat:@"«%@»",string];
     return result;
 }
 

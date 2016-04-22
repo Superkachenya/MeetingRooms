@@ -9,8 +9,8 @@
 @import Foundation;
 @interface NSDate (MRNextMinute)
 
-+ (NSNumber *)timeToAbstractTime:(NSDate *)time endTime:(long)endTime;
-+ (NSString *)abstractTimeToTimeAfterNow:(long)abstractTime inTimeLineSegment:(double)CountOfTimeSegment;
++ (NSNumber *)timeToAbstractTime:(NSDate *)time endTime:(NSUInteger)endTime;
++ (NSString *)abstractTimeToTimeAfterNow:(NSUInteger)abstractTime inTimeLineSegment:(NSUInteger)CountOfTimeSegment;
 
 - (NSDate *)nextMinute;
 - (BOOL)isEqualToAnotherDay:(NSDate *)anotherDay;
