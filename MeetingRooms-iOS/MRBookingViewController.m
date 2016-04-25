@@ -29,6 +29,9 @@ typedef NS_ENUM(NSUInteger, MRRedCircle) {
     MRSixtyMinutesRedCircle
 };
 
+static NSInteger const kSunday = 1;
+static NSUInteger const kMonday = 2;
+static NSInteger const kSaturday = 7;
 static NSTimeInterval const kFifteenMinutes    = 900.0;
 static NSTimeInterval const kThirtyMinutes     = 1800.0;
 static NSTimeInterval const kFourtyFiveMinutes = 2700.0;
@@ -194,6 +197,15 @@ static double const kWidthOfCell               = 20.0;
 
 #pragma mark - FSCalendarDelegate
 
+- (BOOL)calendar:(FSCalendar *)calendar shouldSelectDate:(NSDate *)date {
+    NSCalendar *myCalendar = [NSCalendar currentCalendar];
+    NSInteger weekday = [myCalendar component:NSCalendarUnitWeekday fromDate:date];
+    if (weekday == kSunday || weekday == kSaturday) {
+        return NO;
+    }
+    return YES;
+}
+
 - (void)calendar:(FSCalendar *)calendar didSelectDate:(NSDate *)date {
     self.calendarDate = date;
     self.startDate = [self createDateFromTime:self.timePickerTime andDate:self.calendarDate];
@@ -246,6 +258,7 @@ static double const kWidthOfCell               = 20.0;
 #pragma mark - Handle Events
 
 - (IBAction)timeButtonDidTap:(UIButton *)sender {
+    [self dismissKeyboard:sender];
     MRTimePickerViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"IDTimePickerVC"];
     controller.modalInPopover = NO;
     controller.preferredContentSize = CGSizeMake(sender.bounds.size.width, self.view.bounds.size.height /3);
@@ -260,10 +273,11 @@ static double const kWidthOfCell               = 20.0;
     self.popover = [[WYPopoverController alloc] initWithContentViewController:controller];
     self.popover.delegate = self;
     self.popover.wantsDefaultContentAppearance = NO;
-    [self.popover presentPopoverFromRect:sender.bounds inView:sender permittedArrowDirections:WYPopoverArrowDirectionUp animated:YES];
+    [self.popover presentPopoverFromRect:sender.bounds inView:sender permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
 }
 
 - (IBAction)dateButtonDidTap:(UIButton *)sender {
+    [self dismissKeyboard:sender];
     [self showInRedCircle:MRFifteenMinutesRedCircle];
     UIViewController *controller = [[UIViewController alloc] init];
     controller.modalInPopover = NO;
@@ -271,6 +285,8 @@ static double const kWidthOfCell               = 20.0;
     FSCalendar *calendarView = [[FSCalendar alloc] initWithFrame:CGRectMake(0, 0, 280.0, self.view.bounds.size.height /2)];
     calendarView.delegate = self;
     calendarView.dataSource = self;
+    calendarView.appearance.titleWeekendColor = [UIColor grayColor];
+    calendarView.firstWeekday = kMonday;
     controller.view = calendarView;
     self.popover = [[WYPopoverController alloc] initWithContentViewController:controller];
     self.popover.delegate = self;
@@ -279,21 +295,25 @@ static double const kWidthOfCell               = 20.0;
 }
 
 - (IBAction)addFifteenMinutes:(id)sender {
+    [self dismissKeyboard:sender];
     [self showInRedCircle:MRFifteenMinutesRedCircle];
     [self addTimeInterval:kFifteenMinutes];
 }
 
 - (IBAction)addThirtyMinutes:(id)sender {
+    [self dismissKeyboard:sender];
     [self showInRedCircle:MRThirtyMinutesRedCircle];
     [self addTimeInterval:kThirtyMinutes];
 }
 
 - (IBAction)addFourtyFiveMinutes:(id)sender {
+    [self dismissKeyboard:sender];
     [self showInRedCircle:MRFourtyFiveMinutesRedCircle];
     [self addTimeInterval:kFourtyFiveMinutes];
 }
 
 - (IBAction)addSixtyMinutes:(id)sender {
+    [self dismissKeyboard:sender];
     [self showInRedCircle:MRSixtyMinutesRedCircle];
     [self addTimeInterval:kSixtyMinutes];
 }
@@ -348,7 +368,7 @@ static double const kWidthOfCell               = 20.0;
     }];
 }
 
--(IBAction)dismissKeyboard:(id)sender {
+- (IBAction)dismissKeyboard:(id)sender {
     [self.textView resignFirstResponder];
 }
 

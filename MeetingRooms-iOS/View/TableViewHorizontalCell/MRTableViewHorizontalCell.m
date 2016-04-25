@@ -121,18 +121,10 @@
     self.nowRedLine.hidden = NO;
     NSDate *actualTime = [NSDate date];
     NSTimeInterval delay = [[actualTime nextMinute] timeIntervalSinceDate:actualTime];
-    NSDateFormatter *clocksFormat = [NSDateFormatter new];
-    clocksFormat.dateFormat = @"mm";
-    int timeInInt = [[clocksFormat stringFromDate:actualTime] intValue];
-    for (int i = 0; i < 15; i++) {
-        if ((timeInInt == i) || (timeInInt == i + 15) || (timeInInt == i + 30) || (timeInInt == i + 45)) {
-            self.leftOutletForNowRedLine.constant = i * 0.75;
-        }
-        __weak id weakSelf = self;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf performSelector:@selector(updateClocks) withObject:nil afterDelay:delay];
-        });
-    }
+    __weak id weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [weakSelf performSelector:@selector(updateClocks) withObject:nil afterDelay:delay];
+    });
 }
 
 - (void) pastTime {

@@ -39,9 +39,10 @@
         self.timePicker.minimumDate = min;
     }
     components.hour = 19;
-    components.minute = 30;
+    components.minute = 45;
     NSDate *max = [calendar dateFromComponents:components];
     self.timePicker.maximumDate = max;
+    self.changedTime(self.timePicker.minimumDate);
 }
 
 - (IBAction)userDidChangeTime:(UIDatePicker *)sender {

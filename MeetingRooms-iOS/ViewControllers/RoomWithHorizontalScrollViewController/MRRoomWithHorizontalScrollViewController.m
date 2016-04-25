@@ -134,9 +134,9 @@ static const long kWidthOfCell = 20;
 - (void) showInfo:(MRMeeting*) meet {
     if (meet) {
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-            UIImage* avatare = [UIImage imageWithData:[[NSData alloc] initWithContentsOfURL:meet.meetingOwner.avatar]];
+            UIImage* avatar = [UIImage imageWithData:[[NSData alloc] initWithContentsOfURL:meet.meetingOwner.avatar]];
             dispatch_async(dispatch_get_main_queue(), ^(void){
-                self.userAvatar.image = avatare;
+                self.userAvatar.image = avatar;
             });
         });
         self.name.text = [meet.meetingOwner.email componentsSeparatedByString: @"@"][0];
@@ -153,14 +153,14 @@ static const long kWidthOfCell = 20;
         [layer setCornerRadius:self.userAvatar.frame.size.width / 2];
         self.viewOfDetail.hidden = NO;
     } else {
-        self.userAvatar.image = [UIImage new];
+        self.userAvatar.image = nil;
         self.viewOfDetail.hidden = YES;
     }
 }
 
-- (void) changeColorOfMeetingDetailsByMeeting:(MRMeeting*) meeting andAbstractTime:(long)abstractTime {
-    long currentAbstractTime = [NSDate timeToAbstractTime:[NSDate new] visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];
-    if (currentAbstractTime < abstractTime) {
+- (void) changeColorOfMeetingDetailsByMeeting:(MRMeeting*) meeting andAbstractTime:(NSUInteger)abstractTime {
+    NSUInteger currentAbstractTime = [NSDate timeToAbstractTime:[NSDate new] visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];
+    if (currentAbstractTime <= abstractTime) {
         if (meeting) {
             if ([meeting.meetingOwner.email isEqualToString:[MRNetworkManager sharedManager].owner.email]) {
                 self.imageLine.image = [UIImage imageNamed:@"ic_curve_yellow"];
@@ -231,7 +231,7 @@ static const long kWidthOfCell = 20;
 }
 
 - (void) selectTimeOnTimeLine {
-    long abstractTime = [NSDate timeToAbstractTime:[NSDate date] visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];
+    NSUInteger abstractTime = [NSDate timeToAbstractTime:[NSDate date] visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];
     NSIndexPath* ip = [NSIndexPath indexPathForRow:abstractTime - self.countOfHidenCellOnView inSection:0];
     [self.tableView scrollToRowAtIndexPath:ip atScrollPosition:UITableViewScrollPositionTop animated:YES];
     self.indexOfCellWithNowLine = [NSIndexPath indexPathForRow:abstractTime inSection:0].row;
