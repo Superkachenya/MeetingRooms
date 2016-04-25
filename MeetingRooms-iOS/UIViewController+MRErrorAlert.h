@@ -8,9 +8,12 @@
 
 @import UIKit.UIAlertController;
 
+typedef void(^MRConfirmDelete)();
+typedef void(^MRCompletionSuccess)();
+
 @interface UIViewController (MRErrorAlert)
 
 - (void)createAlertForError:(NSError *)error;
-- (void)createAlertWithMessage:(NSString *)message;
-- (void)createAlertToConfirmDeleting;
+- (void)createAlertWithMessage:(NSString *)message completion:(MRCompletionSuccess)block;
+- (void)createAlertToConfirmDeleting:(MRConfirmDelete)block;
 @end

@@ -16,6 +16,9 @@
 
 static CGFloat const kMinimalRowHeight = 116.0;
 static NSInteger const kSunday = 1;
+static NSInteger const kNextWeek = 7;
+static NSInteger const kPreviousWeek = -7;
+
 
 @interface MRScheduleViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -155,7 +158,11 @@ static NSInteger const kSunday = 1;
 }
 
 - (IBAction)prepareForUnwindSegueToSheduleScene:(UIStoryboardSegue *)segue {
+    self.arrayOfAllMeetings = nil;
     [self loadMeetingsToDate:self.currentDate];
+    [self configureLabels];
+    [self configureViewsForDays];
+    [self.tableView reloadData];
 }
 
 #pragma mark - HandleEvents
@@ -176,7 +183,7 @@ static NSInteger const kSunday = 1;
                        options:UIViewAnimationOptionTransitionFlipFromRight
                     animations:^{
                         NSDateComponents *dayComponent = [NSDateComponents new];
-                        dayComponent.day = 7;
+                        dayComponent.day = kNextWeek;
                         NSDate *date = [self.calendar dateByAddingComponents:dayComponent toDate:[self findNearestMonday] options:0];
                         self.currentDate = date;
                         self.arrayOfAllMeetings = nil;
@@ -193,7 +200,7 @@ static NSInteger const kSunday = 1;
                        options:UIViewAnimationOptionTransitionFlipFromLeft
                     animations:^{
                         NSDateComponents *dayComponent = [NSDateComponents new];
-                        dayComponent.day = -7;
+                        dayComponent.day = kPreviousWeek;
                         NSDate *date = [self.calendar dateByAddingComponents:dayComponent toDate:[self findNearestMonday] options:0];
                         self.currentDate = date;
                         self.arrayOfAllMeetings = nil;

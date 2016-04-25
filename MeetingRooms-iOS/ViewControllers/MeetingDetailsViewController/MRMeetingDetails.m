@@ -11,6 +11,7 @@
 #import "MRRoom.h"
 #import "NSString+MRQuotesString.h"
 #import "UIViewController+MRErrorAlert.h"
+#import "MRNetworkManager.h"
 
 
 @interface MRMeetingDetails ()
@@ -42,7 +43,17 @@
 }
 
 - (IBAction)cancelButton:(id)sender {
-    [self createAlertToConfirmDeleting];
+    [self createAlertToConfirmDeleting:^{
+        [[MRNetworkManager sharedManager] deleteMeeting:self.meeting.meetingId completion:^(id success, NSError *error) {
+            if (error) {
+                [self createAlertForError:error];
+            } else {
+                [self createAlertWithMessage:success completion:^{
+                    [self performSegueWithIdentifier:@"unwindToSheduleVC" sender:self];
+                }];
+            }
+        }];
+    }];
 }
 
 @end

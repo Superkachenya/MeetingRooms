@@ -24,6 +24,11 @@ NSString *const kFree = @"FreeNow";
 
 @implementation MRCustomRoomsCell
 
+- (void)prepareForReuse {
+    self.roomStatusLabel.textColor = [UIColor getUIColorFromHexString:@"#008ffb"];
+    self.roomStatusLabel.text = kFree;
+}
+
 - (void)configureCellWithRoom:(MRRoom *)room {
     self.roomTitleLabel.text = room.roomTitle;
     self.roomDescriptionLabel.text = room.roomDescription;

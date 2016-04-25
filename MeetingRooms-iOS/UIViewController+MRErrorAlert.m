@@ -31,19 +31,29 @@ static NSUInteger const kForbidden = 403;
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
     [self presentViewController:alert animated:YES completion:nil];
-    [self performSelector:@selector(closeAlert) withObject:nil afterDelay:1.5];
+    double delayInSeconds = 1.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [alert dismissViewControllerAnimated:YES completion:nil];
+    });
 }
 
-- (void)createAlertWithMessage:(NSString *)message {
-    
+- (void)createAlertWithMessage:(NSString *)message completion:(MRCompletionSuccess)block {
+    MRCompletionSuccess copyBlock = [block copy];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Success!"
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
     [self presentViewController:alert animated:YES completion:nil];
-    [self performSelector:@selector(closeAlert) withObject:nil afterDelay:1.5];
+    double delayInSeconds = 1.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        copyBlock();
+        [alert dismissViewControllerAnimated:YES completion:nil];
+    });
 }
 
-- (void)createAlertToConfirmDeleting {
+- (void)createAlertToConfirmDeleting:(MRConfirmDelete)block {
+    MRConfirmDelete copyBlock = [block copy];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Are you sure"
                                                                    message:@"You want to cancel this meeting?"
                                                             preferredStyle:UIAlertControllerStyleAlert];
@@ -56,15 +66,11 @@ static NSUInteger const kForbidden = 403;
     UIAlertAction *yesButton = [UIAlertAction actionWithTitle:@"Yes"
                                                        style:UIAlertActionStyleDefault
                                                      handler:^(UIAlertAction * _Nonnull action) {
-                                                         [self performSegueWithIdentifier:@"unwindToSheduleVC" sender:self];
+                                                         copyBlock();
                                                      }];
     [alert addAction:noButton];
     [alert addAction:yesButton];
     [self presentViewController:alert animated:YES completion:nil];
-}
-
-- (void) closeAlert {
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

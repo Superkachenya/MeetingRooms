@@ -29,8 +29,8 @@
 - (void)prepareForReuse {
     [super prepareForReuse];
     
-    self.timeIntervalLabel.textColor = [UIColor whiteColor];
-    self.titleMeetingLabel.textColor = [UIColor whiteColor];
+    self.timeIntervalLabel.textColor = [UIColor getUIColorFromHexString:@"#008FFB"];
+    self.titleMeetingLabel.textColor = [UIColor getUIColorFromHexString:@"#008FFB"];
     for (UIView *point in self.timePoints) {
         point.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB"];
     }
@@ -43,6 +43,12 @@
         for (UIView *point in self.timePoints) {
             point.backgroundColor = [UIColor getUIColorFromHexString:@"#F8E71C"];
         }
+    } else {
+        self.timeIntervalLabel.textColor = [UIColor getUIColorFromHexString:@"#008FFB"];
+        self.titleMeetingLabel.textColor = [UIColor getUIColorFromHexString:@"#008FFB"];
+        for (UIView *point in self.timePoints) {
+            point.backgroundColor = [UIColor getUIColorFromHexString:@"#008FFB"];
+        }
     }
     NSArray *components = [meeting.meetingOwner.email componentsSeparatedByString:@"@"];
     self.titleMeetingLabel.text = [components firstObject];
@@ -54,7 +60,7 @@
     [layer setMasksToBounds:YES];
     [layer setCornerRadius:self.creatorAvatarImage.frame.size.width / 2];
     NSTimeInterval distanceBetweenDates = [meeting.meetingFinish timeIntervalSinceDate:meeting.meetingStart];
-    double secondsInAnHour = 60;
+    NSUInteger secondsInAnHour = 60;
     NSInteger minutesBetweenDates = distanceBetweenDates / secondsInAnHour;
     switch (minutesBetweenDates) {
         case 15:

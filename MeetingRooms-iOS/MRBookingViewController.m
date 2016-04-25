@@ -332,8 +332,9 @@ static double const kWidthOfCell               = 20.0;
             if (error) {
                 [self createAlertForError:error];
             } else {
-                [self performSegueWithIdentifier:@"toSheduleFromBooking" sender:self];
-                [self createAlertWithMessage:success];
+                [self createAlertWithMessage:success completion:^{
+                    [self performSegueWithIdentifier:@"toSheduleFromBooking" sender:self];
+                }];
             }
         }];
     }

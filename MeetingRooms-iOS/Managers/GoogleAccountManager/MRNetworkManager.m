@@ -132,8 +132,9 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3503";
     NSString *dateString = [formatter stringFromDate:date];
     NSString *tempString = [NSString stringWithFormat:@"%@/api/v1/users/%ld/bookings?date=%@&limit=10&offset=%lu", baseURL, (long)self.owner.userId.integerValue, dateString, (long)offset];
     [self.manager GET:tempString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if ([responseObject isKindOfClass:[NSDictionary class]]) {
-            NSArray *bookings =  [responseObject valueForKey:@"bookings"];
+        if ([responseObject isKindOfClass:[NSArray class]]) {
+            NSDictionary *dict = [responseObject firstObject];
+            NSArray *bookings = dict[@"bookings"];
             NSMutableArray *arrayOfMeetings = [NSMutableArray new];
             for (id meeting in bookings) {
                 MRMeeting *newMeeting = [[MRMeeting alloc] initMeetingForUser:self.owner withJSON:meeting];
@@ -165,5 +166,16 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3503";
         copyBlock(nil, error);
     }];
 
+}
+
+- (void)deleteMeeting:(NSNumber *)meetingId completion:(MRCompletion)block {
+    MRCompletion copyBlock = [block copy];
+    NSString *tempstring = [NSString stringWithFormat:@"%@/api/v1/bookings/%ld",baseURL,meetingId.integerValue];
+    [self.manager DELETE:tempstring parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSString *success = [responseObject valueForKey:@"details"];
+        copyBlock(success, nil);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        copyBlock(nil, error);
+    }];
 }
 @end
