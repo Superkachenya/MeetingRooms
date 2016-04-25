@@ -204,12 +204,7 @@ static const long kWidthOfCell = 20;
     self.clockTimeLabel.text = [formater stringFromDate:actualTime];
     formater.dateFormat = @"MMMM d";
     self.clockDateLabel.text = [formater stringFromDate:actualTime];
-    formater.dateFormat = @"mm";
     [self refleshTimeLabel];
-    int time = [[formater stringFromDate:actualTime] intValue];
-    if (time == 0 || time == 15 || time == 30 || time == 45) {
-        [self viewUpdate];
-    }
     __weak id weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
         [weakSelf performSelector:@selector(updateClocks) withObject:nil afterDelay:delay];
