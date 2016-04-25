@@ -67,6 +67,7 @@
             self.intervalViewSpace.constant = 28;
             break;
         default:
+            self.intervalViewSpace.constant = 40;
             break;
     }
     NSComparisonResult result = [meeting.meetingFinish compare:[NSDate date]];
