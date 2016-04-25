@@ -48,9 +48,9 @@ static NSInteger const kSunday = 1;
     self.currentDate = [NSDate date];
     self.calendar = [NSCalendar currentCalendar];
     self.manager = [MRNetworkManager sharedManager];
-    [self loadMeetingsToDate:[NSDate date]];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = kMinimalRowHeight;
+    [self loadMeetingsToDate:self.currentDate];
     [self configureViewsForDays];
     [self configureLabels];
 }
@@ -84,22 +84,19 @@ static NSInteger const kSunday = 1;
 }
 
 - (void)configureLabels {
-    NSDate *nearestMonday = [self findNearestMonday];
-    NSDateComponents *dayComponent = [NSDateComponents new];
-    dayComponent.day = 0;
-    for (UILabel *label in self.weekdayLabels) {
-        NSDate *nextDate = [self.calendar dateByAddingComponents:dayComponent toDate:nearestMonday options:0];
-        [self.manager getAllOwnersMeetingsForDate:nextDate offset:0
-                              WithCompletionBlock:^(id success, NSError *error) {
-                                  if (error) {
-                                      [self createAlertForError:error];
-                                  } else {
-                                      NSArray *tempArray = success;
-                                      label.text = [NSString stringWithFormat:@"%lu", (long)tempArray.count];
-                                  }
-                              }];
-        dayComponent.day++;
-    }
+    [self.manager getAllMeetingsForWeekSinceDate:[self findNearestMonday] completion:^(id success, NSError *error) {
+        if (error) {
+            [self createAlertForError:error];
+        } else {
+            NSArray *tempArray = success;
+            NSUInteger index;
+            for (UILabel *weekday in self.weekdayLabels) {
+                index = [self.weekdayLabels indexOfObject:weekday];
+                NSNumber *todaysCount = tempArray[index];
+                weekday.text = todaysCount.stringValue;
+            }
+        }
+    }];
 }
 
 - (NSDate *)findNearestMonday {
@@ -170,7 +167,6 @@ static NSInteger const kSunday = 1;
     self.currentDate = date;
     self.arrayOfAllMeetings = nil;
     [self loadMeetingsToDate:date];
-    [self configureLabels];
     [self configureViewsForDays];
 }
 
@@ -204,7 +200,6 @@ static NSInteger const kSunday = 1;
                         [self loadMeetingsToDate:date];
                         [self configureLabels];
                         [self configureViewsForDays];
-
                     }
                     completion:nil];
 }

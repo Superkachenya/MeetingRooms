@@ -146,21 +146,20 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3503";
     }];
 }
 
-- (void)getAllMeetingsForWeekSinceData:(NSDate *)date completion:(MRCompletion)block{
+- (void)getAllMeetingsForWeekSinceDate:(NSDate *)date completion:(MRCompletion)block{
     MRCompletion copyBlock = [block copy];
     NSDateFormatter *formatter = [NSDateFormatter new];
     formatter.dateFormat = @"YYYY-MM-dd";
     NSString *dateString = [formatter stringFromDate:date];
     NSString *tempString = [NSString stringWithFormat:@"%@/api/v1/users/%ld/bookings?date=%@&week=true", baseURL, (long)self.owner.userId.integerValue, dateString];
     [self.manager GET:tempString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if ([responseObject isKindOfClass:[NSDictionary class]]) {
-            NSArray *bookings =  [responseObject valueForKey:@"bookings"];
-            NSMutableArray *arrayOfMeetings = [NSMutableArray new];
-            for (id meeting in bookings) {
-                MRMeeting *newMeeting = [[MRMeeting alloc] initMeetingForUser:self.owner withJSON:meeting];
-                [arrayOfMeetings addObject:newMeeting];
+        NSMutableArray *arrayOfCounts = [NSMutableArray new];
+        if ([responseObject isKindOfClass:[NSArray class]]) {
+            for (id count in responseObject) {
+                NSNumber *todayCount = [count valueForKey:@"count"];
+                [arrayOfCounts addObject:todayCount];
             }
-            copyBlock(arrayOfMeetings, nil);
+            copyBlock([arrayOfCounts copy], nil);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         copyBlock(nil, error);

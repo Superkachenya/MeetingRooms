@@ -22,5 +22,6 @@ typedef void(^MRCompletion)(id success, NSError *error);
 - (void)getRoomInfoById:(NSNumber *)roomId toDate:(NSDate *)date completion:(MRCompletion)block;
 - (void)bookMeetingInRoom:(NSNumber *)roomId from:(NSNumber *)start to:(NSNumber *)finish withMessage:(NSString *)message completion:(MRCompletion)block;
 - (void)getAllOwnersMeetingsForDate:(NSDate *)date offset:(NSUInteger)offset WithCompletionBlock:(MRCompletion)block;
+- (void)getAllMeetingsForWeekSinceDate:(NSDate *)date completion:(MRCompletion)block;
 
 @end
