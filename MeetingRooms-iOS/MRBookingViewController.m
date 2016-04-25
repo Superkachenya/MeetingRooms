@@ -457,7 +457,7 @@ static double const kWidthOfCell               = 20.0;
             NSUInteger startAbstractTime = [NSDate timeToAbstractTime:meetting.meetingStart visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];
             NSUInteger endAbstractTime = [NSDate timeToAbstractTime:meetting.meetingFinish visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];
             for (NSUInteger i = startAbstractTime; i < endAbstractTime; i++) {
-                [self.dictonaryOfMeeting setObject:meetting forKey:[NSString stringWithFormat:@"%ld",i]];
+                [self.dictonaryOfMeeting setObject:meetting forKey:[NSString stringWithFormat:@"%ld",(unsigned long)i]];
             }
         }
     }

@@ -29,7 +29,12 @@ NSString *const kFree = @"FreeNow";
     self.roomDescriptionLabel.text = room.roomDescription;
     NSDateFormatter *formatter = [NSDateFormatter new];
     formatter.dateFormat = @"HH:mm";
+    NSComparisonResult result = [room.nearestTime compare:[NSDate date]];
+    if (result == NSOrderedAscending) {
+        self.nearestTimeLabel.text = @"Free Today";
+    } else {
     self.nearestTimeLabel.text = [@"till " stringByAppendingString:[formatter stringFromDate:room.nearestTime]];
+    }
     if (room.isEmpty.boolValue) {
         self.roomStatusLabel.textColor = [UIColor getUIColorFromHexString:@"#008ffb"];
         self.roomStatusLabel.text = kFree;

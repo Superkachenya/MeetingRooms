@@ -260,10 +260,10 @@
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Igrovaya" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIx-CN-ljO">
-                                                            <rect key="frame" x="8" y="35" width="150" height="26"/>
+                                                            <rect key="frame" x="8" y="35" width="256" height="26"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="26" id="8D0-v6-onl"/>
-                                                                <constraint firstAttribute="width" constant="150" id="ka8-H4-Zop"/>
+                                                                <constraint firstAttribute="width" constant="256" id="ka8-H4-Zop"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="GlacialIndifference-Regular" family="Glacial Indifference" pointSize="13"/>
                                                             <color key="textColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="0.5" colorSpace="calibratedRGB"/>
@@ -288,9 +288,9 @@
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="till 14:45" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QJV-Tc-tyk">
-                                                            <rect key="frame" x="485" y="44" width="51" height="17"/>
+                                                            <rect key="frame" x="433" y="44" width="103" height="17"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="51" id="bv4-0b-q1g"/>
+                                                                <constraint firstAttribute="width" constant="103" id="bv4-0b-q1g"/>
                                                                 <constraint firstAttribute="height" constant="17" id="dq2-Qy-n5x"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="GlacialIndifference-Regular" family="Glacial Indifference" pointSize="13"/>
@@ -2246,6 +2246,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="monthDateLabel" destination="hMy-Zv-eXb" id="1zg-G7-esL"/>
+                        <outlet property="swipeView" destination="iRJ-Co-SCB" id="sdj-N3-BRd"/>
                         <outlet property="tableView" destination="23I-C5-O1D" id="22X-jd-8Sj"/>
                         <outlet property="yearLabel" destination="y3g-00-Evr" id="EsH-gR-vdv"/>
                         <outletCollection property="dateButtons" destination="q10-2h-sV2" id="EUN-N0-K2S"/>
@@ -2276,13 +2277,15 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="evY-Jf-qJW" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="qB8-40-bav" userLabel="Exit" sceneMemberID="exit"/>
-                <swipeGestureRecognizer direction="left" id="MOh-Ze-ZtG">
+                <swipeGestureRecognizer direction="left" id="MOh-Ze-ZtG" userLabel="LeftSwipe">
                     <connections>
+                        <action selector="swipeDidSwipeLeft:" destination="j75-ug-qLs" id="tEx-fc-sTR"/>
                         <outlet property="delegate" destination="j75-ug-qLs" id="gz0-QM-q55"/>
                     </connections>
                 </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="right" id="VDB-St-hmj">
+                <swipeGestureRecognizer direction="right" id="VDB-St-hmj" userLabel="RightSwipe">
                     <connections>
+                        <action selector="swipeDidSwipeRight:" destination="j75-ug-qLs" id="QbV-SC-gXw"/>
                         <outlet property="delegate" destination="j75-ug-qLs" id="44x-IW-fNc"/>
                     </connections>
                 </swipeGestureRecognizer>
