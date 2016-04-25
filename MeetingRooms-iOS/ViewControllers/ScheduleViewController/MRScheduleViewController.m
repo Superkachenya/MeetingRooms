@@ -179,6 +179,14 @@ static NSInteger const kSunday = 1;
                       duration:0.5
                        options:UIViewAnimationOptionTransitionFlipFromRight
                     animations:^{
+                        NSDateComponents *dayComponent = [NSDateComponents new];
+                        dayComponent.day = 7;
+                        NSDate *date = [self.calendar dateByAddingComponents:dayComponent toDate:[self findNearestMonday] options:0];
+                        self.currentDate = date;
+                        self.arrayOfAllMeetings = nil;
+                        [self loadMeetingsToDate:date];
+                        [self configureLabels];
+                        [self configureViewsForDays];
                     }
                     completion:nil];
 }
@@ -188,6 +196,15 @@ static NSInteger const kSunday = 1;
                       duration:0.5
                        options:UIViewAnimationOptionTransitionFlipFromLeft
                     animations:^{
+                        NSDateComponents *dayComponent = [NSDateComponents new];
+                        dayComponent.day = -7;
+                        NSDate *date = [self.calendar dateByAddingComponents:dayComponent toDate:[self findNearestMonday] options:0];
+                        self.currentDate = date;
+                        self.arrayOfAllMeetings = nil;
+                        [self loadMeetingsToDate:date];
+                        [self configureLabels];
+                        [self configureViewsForDays];
+
                     }
                     completion:nil];
 }
