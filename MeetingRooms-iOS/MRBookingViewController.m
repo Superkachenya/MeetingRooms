@@ -506,7 +506,7 @@ static double const kWidthOfCell               = 20.0;
 - (void) createDictionaryWithMeeting {
     self.dictonaryOfMeeting = [NSMutableDictionary new];
     if ([self.room.meetings count]) {
-        MRMeeting* meetting = [MRMeeting new];
+        MRMeeting* meetting = nil;
         for (NSUInteger i = 0; i < [self.room.meetings count]; i++) {
             meetting = self.room.meetings[i];
             NSUInteger startAbstractTime = [NSDate timeToAbstractTime:meetting.meetingStart visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];

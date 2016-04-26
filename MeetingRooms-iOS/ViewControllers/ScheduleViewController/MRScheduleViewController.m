@@ -185,9 +185,9 @@ static NSInteger const kPreviousWeek = -7;
                         NSDateComponents *dayComponent = [NSDateComponents new];
                         dayComponent.day = kNextWeek;
                         NSDate *date = [self.calendar dateByAddingComponents:dayComponent toDate:[self findNearestMonday] options:0];
-                        self.currentDate = date;
+                        [self checkCurrentWeekOfDate:date];
                         self.arrayOfAllMeetings = nil;
-                        [self loadMeetingsToDate:date];
+                        [self loadMeetingsToDate:self.currentDate];
                         [self configureLabels];
                         [self configureViewsForDays];
                     }
@@ -202,13 +202,24 @@ static NSInteger const kPreviousWeek = -7;
                         NSDateComponents *dayComponent = [NSDateComponents new];
                         dayComponent.day = kPreviousWeek;
                         NSDate *date = [self.calendar dateByAddingComponents:dayComponent toDate:[self findNearestMonday] options:0];
-                        self.currentDate = date;
+                        [self checkCurrentWeekOfDate:date];
                         self.arrayOfAllMeetings = nil;
-                        [self loadMeetingsToDate:date];
+                        [self loadMeetingsToDate:self.currentDate];
                         [self configureLabels];
                         [self configureViewsForDays];
                     }
                     completion:nil];
+}
+
+- (void)checkCurrentWeekOfDate:(NSDate *)date {
+    NSInteger showingWeek = [self.calendar component:NSCalendarUnitWeekOfYear fromDate:date];
+    NSInteger currrentWeek = [self.calendar component:NSCalendarUnitWeekOfYear fromDate:[NSDate date]];
+    if (showingWeek == currrentWeek) {
+        self.currentDate = [NSDate date];
+    } else {
+        self.currentDate = date;
+    }
+
 }
 
 @end

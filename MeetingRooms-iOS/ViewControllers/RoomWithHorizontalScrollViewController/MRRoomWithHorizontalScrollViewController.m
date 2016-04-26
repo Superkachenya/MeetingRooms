@@ -121,13 +121,13 @@ static const long kWidthOfCell = 20;
 - (void) createDictionaryWithMeeting {
     self.dictonaryOfMeeting = [NSMutableDictionary new];
     if ([self.room.meetings count]) {
-        MRMeeting* meetting = [MRMeeting new];
-        for (long i = 0; i < [self.room.meetings count]; i++) {
+        MRMeeting* meetting = nil;
+        for (NSUInteger i = 0; i < [self.room.meetings count]; i++) {
             meetting = self.room.meetings[i];
-            long startAbstractTime = [NSDate timeToAbstractTime:meetting.meetingStart visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];
-            long endAbstractTime = [NSDate timeToAbstractTime:meetting.meetingFinish visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];
-            for (long i = startAbstractTime; i < endAbstractTime; i++) {
-                [self.dictonaryOfMeeting setObject:meetting forKey:[NSString stringWithFormat:@"%ld",i]];
+            NSUInteger startAbstractTime = [NSDate timeToAbstractTime:meetting.meetingStart visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];
+            NSUInteger endAbstractTime = [NSDate timeToAbstractTime:meetting.meetingFinish visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];
+            for (NSUInteger i = startAbstractTime; i < endAbstractTime; i++) {
+                [self.dictonaryOfMeeting setObject:meetting forKey:[NSString stringWithFormat:@"%ld",(unsigned long)i]];
             }
         }
     }
