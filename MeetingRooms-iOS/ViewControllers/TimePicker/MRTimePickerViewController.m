@@ -25,7 +25,6 @@
                                     NSCalendarUnitDay|
                                     NSCalendarUnitMonth|
                                     NSCalendarUnitYear fromDate:self.minDate];
-    
     NSDate *comparisonDate = [NSDate date];
     NSDateComponents *compareComponents = [calendar components:NSCalendarUnitDay|
                                            NSCalendarUnitMonth

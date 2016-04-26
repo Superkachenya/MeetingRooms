@@ -44,7 +44,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MRCustomRoomsCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    MRCustomRoomsCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"kRoomsCell" forIndexPath:indexPath];
     MRRoom *currentRoom = self.rooms[indexPath.row];
     [cell configureCellWithRoom:currentRoom];
     return cell;

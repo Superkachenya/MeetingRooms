@@ -207,7 +207,7 @@
                                 <color key="sectionIndexBackgroundColor" red="0.18823529411764706" green="0.1764705882352941" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="sectionIndexTrackingBackgroundColor" red="0.18823529411764706" green="0.1764705882352941" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" rowHeight="79" id="5Wo-M9-u7G" customClass="MRCustomRoomsCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="kRoomsCell" rowHeight="79" id="5Wo-M9-u7G" customClass="MRCustomRoomsCell">
                                         <rect key="frame" x="0.0" y="1" width="544" height="79"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5Wo-M9-u7G" id="JW8-4r-pIp" userLabel="CONTENT">
@@ -786,8 +786,8 @@
                                 <include reference="w27-0P-61j"/>
                                 <include reference="2N1-Sz-rBN"/>
                                 <include reference="X3J-sy-IlK"/>
-                                <include reference="Op0-FV-uf8"/>
                                 <include reference="lFd-tQ-XCp"/>
+                                <include reference="Op0-FV-uf8"/>
                                 <exclude reference="rHA-ch-vrr"/>
                             </mask>
                         </variation>

@@ -29,9 +29,9 @@ typedef NS_ENUM(NSUInteger, MRRedCircle) {
     MRSixtyMinutesRedCircle
 };
 
-static NSInteger const kSunday = 1;
-static NSUInteger const kMonday = 2;
-static NSInteger const kSaturday = 7;
+static NSInteger const kSunday                 = 1;
+static NSInteger const kMonday                 = 2;
+static NSInteger const kSaturday               = 7;
 static NSTimeInterval const kFifteenMinutes    = 900.0;
 static NSTimeInterval const kThirtyMinutes     = 1800.0;
 static NSTimeInterval const kFourtyFiveMinutes = 2700.0;
@@ -517,4 +517,5 @@ static double const kWidthOfCell               = 20.0;
         }
     }
 }
+
 @end

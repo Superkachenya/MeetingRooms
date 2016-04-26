@@ -109,8 +109,8 @@ static const long kWidthOfCell = 20;
 
 # pragma mark - Helpers
 
-- (long) getCentralCellRowByIndexPath:(long)index {
-    long keyOfCell = index + self.countOfHidenCellOnView;
+- (NSInteger)getCentralCellRowByIndexPath:(NSInteger)index {
+    NSInteger keyOfCell = index + self.countOfHidenCellOnView;
     if (index > self.indexOfLastShowCell) {
         keyOfCell = index - self.countOfHidenCellOnView;
     }
@@ -118,7 +118,7 @@ static const long kWidthOfCell = 20;
     return keyOfCell;
 }
 
-- (void) createDictionaryWithMeeting {
+- (void)createDictionaryWithMeeting {
     self.dictonaryOfMeeting = [NSMutableDictionary new];
     if ([self.room.meetings count]) {
         MRMeeting* meetting = nil;
@@ -133,7 +133,7 @@ static const long kWidthOfCell = 20;
     }
 }
 
-- (void) showInfo:(MRMeeting*)meeting {
+- (void)showInfo:(MRMeeting*)meeting {
     if (meeting) {
         self.userAvatar.image = nil;
         [self.userAvatar setImageWithURL:meeting.meetingOwner.avatar];
@@ -156,7 +156,7 @@ static const long kWidthOfCell = 20;
     }
 }
 
-- (void) changeColorOfMeetingDetailsByMeeting:(MRMeeting*) meeting andAbstractTime:(NSUInteger)abstractTime {
+- (void)changeColorOfMeetingDetailsByMeeting:(MRMeeting*) meeting andAbstractTime:(NSUInteger)abstractTime {
     NSUInteger currentAbstractTime = [NSDate timeToAbstractTime:[NSDate new] visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];
     if (currentAbstractTime <= abstractTime) {
         if (meeting) {
@@ -190,7 +190,7 @@ static const long kWidthOfCell = 20;
             self.timeLabel.text = [NSString stringWithFormat:@"%dh. %dm. to the ending",timeToFree / 60,timeToFree % 60];
         }
     } else {
-        self.timeLabel.text = @"Free now!";
+        self.timeLabel.text = @"Free now";
     }
 }
 
@@ -209,7 +209,7 @@ static const long kWidthOfCell = 20;
     });
 }
 
-- (NSDate*) getTimeFreeRoom:(long)forTimeInAbstractTime {
+- (NSDate*)getTimeFreeRoom:(long)forTimeInAbstractTime {
     MRMeeting* meetting = [self.dictonaryOfMeeting objectForKey:[NSString stringWithFormat:@"%ld",forTimeInAbstractTime]];
     if (!meetting) {
         return nil;
@@ -222,7 +222,7 @@ static const long kWidthOfCell = 20;
     }
 }
 
-- (void) viewUpdate {
+- (void)viewUpdate {
     long abstractTime = [NSDate timeToAbstractTime:[NSDate date] visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];
     self.indexOfCellWithNowLine = [NSIndexPath indexPathForRow:abstractTime inSection:0].row;
     [self downloadAndUpdateDate];
@@ -248,7 +248,7 @@ static const long kWidthOfCell = 20;
     }];
 }
 
-#pragma mark - Navigation -
+#pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"toVerticalScreen"]) {
