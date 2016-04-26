@@ -14,7 +14,7 @@
 #import "UIViewController+MRErrorAlert.h"
 #import "MRMeetingDetails.h"
 
-static CGFloat const kMinimalRowHeight = 116.0;
+static CGFloat   const kMinimalRowHeight = 116.0;
 static NSInteger const kSunday = 1;
 static NSInteger const kNextWeek = 7;
 static NSInteger const kPreviousWeek = -7;
@@ -62,7 +62,7 @@ static NSInteger const kPreviousWeek = -7;
     return UIStatusBarStyleLightContent;
 }
 
-#pragma mark - UIViewController helpers
+#pragma mark - UIViewControllerHelpers
 
 - (void)configureViewsForDays {
     NSDateFormatter *dateFormatter = [NSDateFormatter new];

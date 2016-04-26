@@ -17,9 +17,9 @@
     NSArray *components = [timeString componentsSeparatedByString: @":"];
     NSNumberFormatter *formater = [NSNumberFormatter new];
     formater.numberStyle = NSNumberFormatterDecimalStyle;
-    long hours = [formater numberFromString:components[0]].longValue;
-    long minute = [formater numberFromString:components[1]].longValue;
-    long abstractTime = 0;
+    NSUInteger hours = [formater numberFromString:components[0]].longValue;
+    NSUInteger minute = [formater numberFromString:components[1]].longValue;
+    NSUInteger abstractTime = 0;
     if ((hours >= 8 ) && (hours <= 20)) {
         abstractTime = ((hours  - 8) * 4);
         if (minute >= 45) {

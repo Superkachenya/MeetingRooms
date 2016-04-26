@@ -38,8 +38,8 @@ static NSUInteger const kForbidden = 403;
     });
 }
 
-- (void)createAlertWithMessage:(NSString *)message completion:(MRCompletionSuccess)block {
-    MRCompletionSuccess copyBlock = [block copy];
+- (void)createAlertWithMessage:(NSString *)message completion:(MRCompletionAlert)block {
+    MRCompletionAlert copyBlock = [block copy];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Success!"
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
@@ -52,8 +52,8 @@ static NSUInteger const kForbidden = 403;
     });
 }
 
-- (void)createAlertToConfirmDeleting:(MRConfirmDelete)block {
-    MRConfirmDelete copyBlock = [block copy];
+- (void)createAlertToConfirmDeleting:(MRCompletionAlert)block {
+    MRCompletionAlert copyBlock = [block copy];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Are you sure"
                                                                    message:@"You want to cancel this meeting?"
                                                             preferredStyle:UIAlertControllerStyleAlert];

@@ -21,4 +21,5 @@
 
 - (instancetype) initMeetingForRoomWithJSON:(id)JSON;
 - (instancetype)initMeetingForUser:(MRUser *)user withJSON:(id)JSON;
+
 @end
