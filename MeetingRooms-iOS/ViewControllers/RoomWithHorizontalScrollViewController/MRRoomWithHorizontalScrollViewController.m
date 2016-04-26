@@ -18,8 +18,10 @@
 #import "MRNetworkManager.h"
 #import "UIViewController+MRErrorAlert.h"
 #import "MRRoomWithVerticalScrollViewController.h"
+#import "UIImageView+AFNetworking.h"
 #import "UIColor+MRColorFromHEX.h"
 #import "MRBookingViewController.h"
+#import "NSString+MRQuotesString.h"
 
 static const long kCountOfTimeSegment = 48;
 static const long kWidthOfCell = 20;
@@ -71,7 +73,7 @@ static const long kWidthOfCell = 20;
     [self viewUpdate];
 }
 
-#pragma mark - UITableViewDataSource - 
+#pragma mark - UITableViewDataSource -
 
 - (NSInteger)tableView:(PTEHorizontalTableView *)horizontalTableView numberOfRowsInSection:(NSInteger)section {
     return kCountOfTimeSegment + (self.countOfHidenCellOnView * 2) ;
@@ -131,22 +133,17 @@ static const long kWidthOfCell = 20;
     }
 }
 
-- (void) showInfo:(MRMeeting*) meet {
-    if (meet) {
-        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-            UIImage* avatar = [UIImage imageWithData:[[NSData alloc] initWithContentsOfURL:meet.meetingOwner.avatar]];
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                self.userAvatar.image = avatar;
-            });
-        });
-        self.name.text = [meet.meetingOwner.email componentsSeparatedByString: @"@"][0];
-        self.detail.text = [NSString stringWithFormat:@"<< %@ >>",meet.meetingInfo];
+- (void) showInfo:(MRMeeting*)meeting {
+    if (meeting) {
+        [self.userAvatar setImageWithURL:meeting.meetingOwner.avatar];
+        self.name.text = [meeting.meetingOwner.email componentsSeparatedByString: @"@"][0];
+        self.detail.text = [NSString embedStringinQuotes:meeting.meetingInfo];
         [self.detail setTextAlignment:NSTextAlignmentCenter];
         [self.detail setTextColor:[UIColor lightGrayColor]];
         NSDateFormatter *formatter = [NSDateFormatter new];
         [formatter setDateFormat:@"HH:mm"];
-        NSString* timeFirst = [formatter stringFromDate:meet.meetingStart];
-        NSString* timeSecond = [formatter stringFromDate:meet.meetingFinish];
+        NSString* timeFirst = [formatter stringFromDate:meeting.meetingStart];
+        NSString* timeSecond = [formatter stringFromDate:meeting.meetingFinish];
         self.time.text = [NSString stringWithFormat:@"%@ - %@",timeFirst , timeSecond];
         CALayer * layer = [self.userAvatar layer];
         [layer setMasksToBounds:YES];
