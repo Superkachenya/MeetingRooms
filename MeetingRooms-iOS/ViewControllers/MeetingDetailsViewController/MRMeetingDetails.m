@@ -36,9 +36,9 @@
     self.messageView.text = [NSString embedStringinQuotes:self.meeting.meetingInfo];
     NSComparisonResult result = [self.meeting.meetingStart compare:[NSDate date]];
     if (result == NSOrderedAscending) {
-        self.cancelButton.enabled = NO;
+        self.cancelButton.hidden = YES;
     } else {
-        self.cancelButton.enabled = YES;
+        self.cancelButton.hidden = NO;
     }
 }
 
