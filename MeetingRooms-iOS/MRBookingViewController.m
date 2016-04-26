@@ -48,6 +48,10 @@ static double const kWidthOfCell               = 20.0;
 @property (weak, nonatomic) IBOutlet UILabel *dateButtonLabel;
 @property (strong, nonatomic) IBOutletCollection(UIView) NSArray *timeCircles;
 @property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *redCircles;
+@property (weak, nonatomic) IBOutlet UIButton *fifteenButton;
+@property (weak, nonatomic) IBOutlet UIButton *thirtyButton;
+@property (weak, nonatomic) IBOutlet UIButton *fourtyFiveButton;
+@property (weak, nonatomic) IBOutlet UIButton *sixtyButton;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *checkInTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *checkOutTimeLabel;
@@ -214,6 +218,7 @@ static double const kWidthOfCell               = 20.0;
     self.checkOutTimeLabel.text = [self.timeFormatter stringFromDate:self.finishDate];
     [self.popover dismissPopoverAnimated:YES];
     [self downloadAndUpdateDate];
+    
 }
 
 #pragma mark - FSCalendarDataSource
@@ -269,6 +274,7 @@ static double const kWidthOfCell               = 20.0;
         self.startDate = [self createDateFromTime:self.timePickerTime andDate:self.calendarDate];
         self.timeButtonLabel.text = [self.timeFormatter stringFromDate:date];
         [self addFifteenMinutes:self];
+        [self setDurationPossibleButtons];
     };
     self.popover = [[WYPopoverController alloc] initWithContentViewController:controller];
     self.popover.delegate = self;
@@ -375,6 +381,32 @@ static double const kWidthOfCell               = 20.0;
 
 #pragma mark - Helpers
 
+- (NSNumber *)convertDateToMiliseconds:(NSDate *)date {
+    NSTimeInterval miliseconds = [date timeIntervalSince1970] * kmilisecInSecond;
+    NSNumber *result = @(miliseconds);
+    return result;
+}
+
+- (NSDate *)createDateFromTime:(NSDate *)time andDate:(NSDate *)date {
+    if (!date) {
+        date = [NSDate date];
+    }
+    if (!time) {
+        time = [NSDate date];
+    }
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *resultComponents = [NSDateComponents new];
+    NSDateComponents *timeComponents = [calendar components:NSCalendarUnitHour|NSCalendarUnitMinute fromDate:time];
+    NSDateComponents *dateComponents = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:date];
+    resultComponents.hour = timeComponents.hour;
+    resultComponents.minute = timeComponents.minute;
+    resultComponents.day = dateComponents.day;
+    resultComponents.month = dateComponents.month;
+    resultComponents.year = dateComponents.year;
+    NSDate *result = [calendar dateFromComponents:resultComponents];
+    return result;
+}
+
 - (void)showInRedCircle:(MRRedCircle)circle {
     for (UIImageView *redCircle in self.redCircles) {
         if ([redCircle isEqual:self.redCircles[circle]]) {
@@ -384,6 +416,34 @@ static double const kWidthOfCell               = 20.0;
         }
     }
 }
+
+- (void)setDurationPossibleButtons {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:NSCalendarUnitHour|NSCalendarUnitMinute fromDate:self.startDate];
+    if (components.hour == 19 && components.minute == 45) {
+        self.sixtyButton.enabled = NO;
+        self.fourtyFiveButton.enabled = NO;
+        self.thirtyButton.enabled = NO;
+        self.fifteenButton.enabled = YES;
+    } else if (components.hour == 19 && components.minute == 30){
+        self.sixtyButton.enabled = NO;
+        self.fourtyFiveButton.enabled = NO;
+        self.thirtyButton.enabled = YES;
+        self.fifteenButton.enabled = YES;
+    } else if (components.hour == 19 && components.minute == 15){
+        self.sixtyButton.enabled = NO;
+        self.fourtyFiveButton.enabled = YES;
+        self.thirtyButton.enabled = YES;
+        self.fifteenButton.enabled = YES;
+    } else {
+        self.sixtyButton.enabled = YES;
+        self.fourtyFiveButton.enabled = YES;
+        self.thirtyButton.enabled = YES;
+        self.fifteenButton.enabled = YES;
+    }
+}
+
+#pragma mark - HorizontalScrollScreenHelpers
 
 - (void) viewUpdate {
     NSUInteger abstractTime = [NSDate timeToAbstractTime:[NSDate date] visiblePath:kCountOfTimeSegment andHidenPath:self.countOfHidenCellOnView];
@@ -412,32 +472,6 @@ static double const kWidthOfCell               = 20.0;
     NSIndexPath* ip = [NSIndexPath indexPathForRow:abstractTime - self.countOfHidenCellOnView inSection:0];
     [self.tableView scrollToRowAtIndexPath:ip atScrollPosition:UITableViewScrollPositionTop animated:YES];
     self.indexOfCellWithNowLine = [NSIndexPath indexPathForRow:abstractTime inSection:0].row;
-}
-
-- (NSNumber *)convertDateToMiliseconds:(NSDate *)date {
-    NSTimeInterval miliseconds = [date timeIntervalSince1970] * kmilisecInSecond;
-    NSNumber *result = @(miliseconds);
-    return result;
-}
-
-- (NSDate *)createDateFromTime:(NSDate *)time andDate:(NSDate *)date {
-    if (!date) {
-        date = [NSDate date];
-    }
-    if (!time) {
-        time = [NSDate date];
-    }
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *resultComponents = [NSDateComponents new];
-    NSDateComponents *timeComponents = [calendar components:NSCalendarUnitHour|NSCalendarUnitMinute fromDate:time];
-    NSDateComponents *dateComponents = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:date];
-    resultComponents.hour = timeComponents.hour;
-    resultComponents.minute = timeComponents.minute;
-    resultComponents.day = dateComponents.day;
-    resultComponents.month = dateComponents.month;
-    resultComponents.year = dateComponents.year;
-    NSDate *result = [calendar dateFromComponents:resultComponents];
-    return result;
 }
 
 - (void)addTimeInterval:(NSTimeInterval)interval {
