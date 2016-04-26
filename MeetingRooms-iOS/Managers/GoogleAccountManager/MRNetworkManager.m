@@ -170,7 +170,7 @@ NSString *const baseURL = @"http://redmine.cleveroad.com:3503";
 
 - (void)deleteMeeting:(NSNumber *)meetingId completion:(MRCompletion)block {
     MRCompletion copyBlock = [block copy];
-    NSString *tempstring = [NSString stringWithFormat:@"%@/api/v1/bookings/%ld", baseURL, meetingId.integerValue];
+    NSString *tempstring = [NSString stringWithFormat:@"%@/api/v1/bookings/%ld", baseURL, (long)meetingId.integerValue];
     [self.manager DELETE:tempstring parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSString *success = [responseObject valueForKey:@"details"];
         copyBlock(success, nil);

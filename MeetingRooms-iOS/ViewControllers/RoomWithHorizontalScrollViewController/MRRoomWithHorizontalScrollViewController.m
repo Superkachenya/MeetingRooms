@@ -135,6 +135,7 @@ static const long kWidthOfCell = 20;
 
 - (void) showInfo:(MRMeeting*)meeting {
     if (meeting) {
+        self.userAvatar.image = nil;
         [self.userAvatar setImageWithURL:meeting.meetingOwner.avatar];
         self.name.text = [meeting.meetingOwner.email componentsSeparatedByString: @"@"][0];
         self.detail.text = [NSString embedStringinQuotes:meeting.meetingInfo];
