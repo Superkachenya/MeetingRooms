@@ -30,6 +30,10 @@
                                            NSCalendarUnitMonth
                                                       fromDate:comparisonDate];
     if (components.day == compareComponents.day && components.month == compareComponents.month) {
+        if (components.minute > 45) {
+            components.hour ++;
+
+        }
         self.timePicker.minimumDate = [NSDate date];
     } else {
         components.hour = 8;
